@@ -8,12 +8,12 @@ package megamar;
  *
  * @author pedro.lizondo
  */
-public class CreditosClientes extends javax.swing.JDialog {
+public class CreditosClientesHistorial extends javax.swing.JDialog {
 
     /**
      * Creates new form CreditosClientes
      */
-    public CreditosClientes(java.awt.Dialog parent, boolean modal) {
+    public CreditosClientesHistorial(java.awt.Dialog parent, boolean modal) {
         super(parent,modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -96,13 +96,13 @@ public class CreditosClientes extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreditosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreditosClientesHistorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreditosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreditosClientesHistorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreditosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreditosClientesHistorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreditosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CreditosClientesHistorial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

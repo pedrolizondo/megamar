@@ -31,6 +31,20 @@ public class NewJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCalendarDemo1 = new com.toedter.calendar.demo.JCalendarDemo();
+        jDateChooserBeanInfo1 = new com.toedter.calendar.JDateChooserBeanInfo();
+
+        javax.swing.GroupLayout jCalendarDemo1Layout = new javax.swing.GroupLayout(jCalendarDemo1.getContentPane());
+        jCalendarDemo1.getContentPane().setLayout(jCalendarDemo1Layout);
+        jCalendarDemo1Layout.setHorizontalGroup(
+            jCalendarDemo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jCalendarDemo1Layout.setVerticalGroup(
+            jCalendarDemo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,5 +105,7 @@ public class NewJDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.demo.JCalendarDemo jCalendarDemo1;
+    private com.toedter.calendar.JDateChooserBeanInfo jDateChooserBeanInfo1;
     // End of variables declaration//GEN-END:variables
 }

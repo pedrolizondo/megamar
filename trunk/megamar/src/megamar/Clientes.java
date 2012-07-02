@@ -23,10 +23,11 @@ import javax.swing.JOptionPane;
  *
  * @author Lizondo1
  */
-public class Clientes extends javax.swing.JFrame {
+public class Clientes extends javax.swing.JDialog {
     public String idzona;
     /** Creates new form Clientes */
-    public Clientes(String id) {
+    public Clientes(String id, java.awt.Frame parent, boolean modal) {
+        super(parent,modal);
         initComponents();
         this.setSize(new Dimension(420, 650)); 
         jpanelmodificarcliente.setVisible(false);
@@ -610,7 +611,7 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton5ActionPerformed
 
 private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-    ListadoClientes L = new ListadoClientes(this, idzona,this,true);
+    ListadoClientes L = new ListadoClientes(idzona,this,true);
     L.setVisible(true);
 }//GEN-LAST:event_jButton8ActionPerformed
 
