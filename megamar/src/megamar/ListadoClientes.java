@@ -23,14 +23,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Lizondo1
  */
 public class ListadoClientes extends javax.swing.JDialog {
-    private JFrame frameclientes;
+    //private JFrame frameclientes;
     private String idzona;
     /** Creates new form ListadoClientes */
-    public ListadoClientes(JFrame framecli, String idz, java.awt.Frame parent, boolean modal) {
+    public ListadoClientes(String idz, java.awt.Dialog parent, boolean modal) {
         super(parent,modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        frameclientes = framecli;
+        //frameclientes = framecli;
         idzona = idz;
         completartablaclientes(idzona,"");   //idzona, dni o apellido
     }
