@@ -181,7 +181,7 @@ private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    Creditos C = new Creditos(labelidzona.getText(),this,true);
+    Creditos C = new Creditos(labelidzona.getText(),labelzona.getText(),this,true);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem5ActionPerformed
 

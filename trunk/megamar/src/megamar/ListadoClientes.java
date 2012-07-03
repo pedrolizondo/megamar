@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListadoClientes extends javax.swing.JDialog {
     //private JFrame frameclientes;
     private String idzona;
+    private String idcliente;    
     /** Creates new form ListadoClientes */
     public ListadoClientes(String idz, java.awt.Dialog parent, boolean modal) {
         super(parent,modal);
@@ -33,6 +34,10 @@ public class ListadoClientes extends javax.swing.JDialog {
         //frameclientes = framecli;
         idzona = idz;
         completartablaclientes(idzona,"");   //idzona, dni o apellido
+    }
+    
+    public String getidcliente(){
+        return idcliente;
     }
 
     /** This method is called from within the constructor to
@@ -127,7 +132,7 @@ public class ListadoClientes extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,7 +143,9 @@ private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:even
 }//GEN-LAST:event_txtbuscarKeyReleased
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    //frameclientes
+    int fila = tablaclientes.getSelectedRow();
+    idcliente = String.valueOf(tablaclientes.getValueAt(fila,0));
+    this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -199,15 +206,14 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void completartablaclientes(String idzona, String buscar) {
-        
-        String consulta = "Select idcliente as Codigo, dni as DNI,nombre as Nombre,apellido as Apellido,telefono as Telefono,num_creditos as Creditos,perno as Perno,estado as Estado,r.descripcion as Rubro from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona='"+idzona+"' and (dni like '%"+buscar+"%' or apellido like '%"+buscar+"%') ";        try {
+        String consulta = "Select idcliente as Codigo, dni as DNI,nombre as Nombre,apellido as Apellido,telefono as Telefono,num_creditos as Creditos,perno as Perno,estado as Estado,r.descripcion as Rubro from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona='" + idzona + "' and (dni like '%" + buscar + "%' or apellido like '%" + buscar + "%') ";
+        try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
 
             DefaultTableModel modelo = new DefaultTableModel();
             tablaclientes.setModel(modelo);
             ConversorRSaDefaultTableModel.completar(rs, modelo);
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar la tabla de clientes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
