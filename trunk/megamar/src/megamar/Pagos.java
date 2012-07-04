@@ -11,27 +11,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author pedro.lizondo
  */
-public class Creditos extends javax.swing.JDialog {
+public class Pagos extends javax.swing.JDialog {
     private String idzona;
     private int num_creditos;
     private int id_cliente;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
+
     /**
-     * Creates new form creditos
+     * Creates new form Pagos
      */
-    public Creditos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
+    public Pagos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        jdfechacredito.setLocale(Locale.getDefault());  //Define el idioma del calendar
+        jdfechapago.setLocale(Locale.getDefault());  //Define el idioma del calendar
         idzona = idz;
         labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
-        completarcomboplan();
     }
 
     /**
@@ -43,28 +44,14 @@ public class Creditos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton4 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        labelzona = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtcodigocliente = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jbvercreditos = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtcreditoinicial = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtinteres = new javax.swing.JTextField();
-        jdfechacredito = new com.toedter.calendar.JDateChooser();
-        jLabel8 = new javax.swing.JLabel();
-        txtcuota = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtcomision = new javax.swing.JTextField();
-        comboplanes = new javax.swing.JComboBox();
-        jPanel1 = new javax.swing.JPanel();
-        labelzona = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -86,19 +73,48 @@ public class Creditos extends javax.swing.JDialog {
         txtbarriocomercial = new javax.swing.JTextField();
         txttelefono = new javax.swing.JTextField();
         txtrubro = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtcreditoinicial = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtinteres = new javax.swing.JTextField();
+        jdfechapago = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        txtcuota = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtcomision = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablacreditos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Creditos");
+        setTitle("Pagos");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
-        jButton4.setText("Aceptar");
-        jButton4.setPreferredSize(new java.awt.Dimension(111, 41));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
+
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
+        labelzona.setText("nombre zona");
+        labelzona.setToolTipText("");
+        labelzona.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelzona)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelzona)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Cliente"));
 
@@ -158,128 +174,6 @@ public class Creditos extends javax.swing.JDialog {
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbvercreditos))
                 .addContainerGap())
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Crédito"));
-
-        jLabel2.setText("Fecha de Crédito");
-
-        jLabel3.setText("Crédito incial ($)");
-
-        jLabel4.setText("Plan (semanas)");
-
-        txtcreditoinicial.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtcreditoinicialKeyReleased(evt);
-            }
-        });
-
-        jLabel6.setText("Interés (%)");
-
-        txtinteres.setEditable(false);
-
-        jdfechacredito.setDateFormatString("dd/MM/yyyy");
-
-        jLabel8.setText("Cuota ($)");
-
-        txtcuota.setEditable(false);
-
-        jLabel10.setText("Comision Cobrador (%)");
-
-        txtcomision.setEditable(false);
-
-        comboplanes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboplanesActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jdfechacredito, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(comboplanes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(txtcuota, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(txtcomision, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcomision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jdfechacredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(comboplanes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
-        );
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
-
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
-        labelzona.setText("nombre zona");
-        labelzona.setToolTipText("");
-        labelzona.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelzona)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelzona)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Cliente"));
@@ -375,6 +269,95 @@ public class Creditos extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Crédito"));
+
+        jLabel2.setText("Fecha de Crédito");
+
+        jLabel3.setText("Pago ($)");
+
+        txtcreditoinicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcreditoinicialKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setText("Incremento ($)");
+
+        jdfechapago.setDateFormatString("dd/MM/yyyy");
+
+        jLabel8.setText("Cuota ($)");
+
+        txtcuota.setEditable(false);
+
+        jLabel10.setText("Comision Cobrador (%)");
+
+        txtcomision.setEditable(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jdfechapago, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2))
+                .addGap(64, 64, 64)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(txtcuota, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(txtcomision, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel10))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtcuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtcomision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jdfechapago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
+        jButton4.setText("Aceptar");
+        jButton4.setPreferredSize(new java.awt.Dimension(111, 41));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Cancel.png"))); // NOI18N
         jButton6.setText("Cancelar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -382,6 +365,30 @@ public class Creditos extends javax.swing.JDialog {
                 jButton6ActionPerformed(evt);
             }
         });
+
+        tablacreditos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablacreditosMouseClicked(evt);
+            }
+        });
+        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tablacreditosFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablacreditos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -394,7 +401,9 @@ public class Creditos extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -402,7 +411,7 @@ public class Creditos extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -412,99 +421,62 @@ public class Creditos extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void jbvercreditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbvercreditosActionPerformed
-    CreditosClientesHistorial C = new CreditosClientesHistorial(this, true, id_cliente);
-    C.setVisible(true);
-}//GEN-LAST:event_jbvercreditosActionPerformed
-
-private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-    ListadoClientes L = new ListadoClientes(idzona, this, true);
-    L.setVisible(true);
-    if (L.getidcliente().equals("")) {
-        //return;
-    } else {
-        txtcodigocliente.setText(L.getidcliente());
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         cargardatos();
         jbvercreditos.setEnabled(true);
-    }
-}//GEN-LAST:event_jButton8ActionPerformed
+        cargartablacreditos();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (txtcodigocliente.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese el codigo del cliente o presione el boton Ver listado de Clientes.","ERROR", JOptionPane.ERROR_MESSAGE);
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        ListadoClientes L = new ListadoClientes(idzona, this, true);
+        L.setVisible(true);
+        if (L.getidcliente().equals("")) {
+            //return;
         } else {
+            txtcodigocliente.setText(L.getidcliente());
             cargardatos();
             jbvercreditos.setEnabled(true);
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jbvercreditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbvercreditosActionPerformed
+        CreditosClientesHistorial C = new CreditosClientesHistorial(this, true, id_cliente);
+        C.setVisible(true);
+    }//GEN-LAST:event_jbvercreditosActionPerformed
 
     private void txtcreditoinicialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyReleased
-        if (comboplanes.getSelectedIndex() == 0 || txtinteres.getText().equals("")) {
-            //return
-        }else{
-            int credito = Integer.parseInt(txtcreditoinicial.getText());
-            int interes = Integer.parseInt(txtinteres.getText());
-            int plan = Integer.parseInt(comboplanes.getSelectedItem().toString());
-            float compra = (credito * interes) / 100 + credito;
-            float cuota = compra / plan;
-            txtcuota.setText(Float.toString(cuota));
-        }
+       
     }//GEN-LAST:event_txtcreditoinicialKeyReleased
-
-    private void comboplanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboplanesActionPerformed
-        String consulta = "Select interes, comision from plan where idplan = '" + comboplanes.getSelectedIndex() + "' ";
-        if (comboplanes.getSelectedIndex() == 0 || txtcreditoinicial.getText().equals("")) {
-            //return
-        } else {
-            try {
-                Conectar();
-                ResultSet rs = stmt.executeQuery(consulta);
-                rs.beforeFirst();
-                while (rs.next()) {
-                    txtinteres.setText(rs.getString("interes"));
-                    txtcomision.setText(rs.getString("comision"));
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al cargar los RUBROS.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            int credito = Integer.parseInt(txtcreditoinicial.getText());
-            int interes = Integer.parseInt(txtinteres.getText());
-            int plan = Integer.parseInt(comboplanes.getSelectedItem().toString());
-            float compra = (credito * interes) / 100 + credito;
-            float cuota = compra / plan;
-            txtcuota.setText(Float.toString(cuota));
-        }
-    }//GEN-LAST:event_comboplanesActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
         //System.out.println(jdfechacredito.getDate().toString());
-        
+
         float compra = Float.parseFloat(txtcreditoinicial.getText());
-        String plan = comboplanes.getSelectedItem().toString();
+        //String plan = comboplanes.getSelectedItem().toString();
         String interes = txtinteres.getText();
         String comision = txtcomision.getText();
         String cuota = txtcuota.getText();
         String pagado = "0";
-        String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
+        String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
         String fecha_ultimo_pago = "0000-00-00";
-        /*Calculo de la fecha de cancelacion*/
+        /*
+         * Calculo de la fecha de cancelacion
+         */
         Calendar c1 = Calendar.getInstance();
-        c1.setTime(jdfechacredito.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
-        c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
+        c1.setTime(jdfechapago.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
+//        c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
         //System.out.println("La fecha de hoy más  X días es : " + FORMATO_YYYY_MM_DD.format(c1.getTime()));
         //jdfechacredito.add(jdfechacredito.getDate(), 5);
         String fecha_cancelacion = (String) FORMATO_YYYY_MM_DD.format(c1.getTime());
@@ -512,14 +484,18 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String estado = "DEBE";
         float saldo = compra;
         String idcliente = txtcodigocliente.getText();
-        
-        /*Alta del CREDITO*/
-        String consulta = "insert into credito (compra,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente) "
+
+        /*
+         * Alta del CREDITO
+         */
+/*        String consulta = "insert into credito (compra,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente) "
                 + "values('" + compra + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
                 + " '" + fecha_cancelacion + "', '" + credito_numero + "', '" + estado + "', '" + saldo + "', '" + idcliente + "' )";
+                 
+*/
         try {
             Conectar();
-            int done = stmt.executeUpdate(consulta);
+            //int done = stmt.executeUpdate(consulta);
             //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
             JOptionPane.showMessageDialog(null, "Se guardaron los datos del Credito.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
@@ -527,25 +503,38 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo cargar los datos del cliente", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
-        
-        /*Modificacion de los datos del Cliente*/
+
+        /*
+         * Modificacion de los datos del Cliente
+         */
         String consulta2 = "update cliente "
-            + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
-            + "where idcliente='" + idcliente + "'";
-    
-    try{
-          Conectar();
-            int done= stmt.executeUpdate(consulta2);
+                + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
+                + "where idcliente='" + idcliente + "'";
+
+        try {
+            Conectar();
+            int done = stmt.executeUpdate(consulta2);
             //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
             //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
-        }catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null,ex.getMessage(),"Error! No se pudo actualizar los datos del Cliente.",JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
         }
-    db.destroy();
+        db.destroy();
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
+        //jButtonModificar.setEnabled(true);
+    }//GEN-LAST:event_tablacreditosMouseClicked
+
+    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
+        //jButtonModificar.setEnabled(false);
+    }//GEN-LAST:event_tablacreditosFocusLost
 
     /**
      * @param args the command line arguments
@@ -568,28 +557,35 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Creditos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Creditos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Creditos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Creditos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /*
-         * Create and display the form
+         * Create and display the dialog
          */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new Creditos().setVisible(true);
+                Pagos dialog = new Pagos(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox comboplanes;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -605,7 +601,6 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -617,9 +612,11 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbvercreditos;
-    private com.toedter.calendar.JDateChooser jdfechacredito;
+    private com.toedter.calendar.JDateChooser jdfechapago;
     private javax.swing.JLabel labelzona;
+    private javax.swing.JTable tablacreditos;
     private javax.swing.JTextField txtbarriocomercial;
     private javax.swing.JTextField txtbarrioparticular;
     private javax.swing.JTextField txtcodigocliente;
@@ -634,7 +631,6 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JTextField txtrubro;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
-
     private conexion db;
     private Statement stmt;
     
@@ -649,20 +645,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }
     
-    private void completarcomboplan() {
-        String consulta = "Select semanas from plan";
-         try {
-            Conectar();
-            ResultSet rs = stmt.executeQuery(consulta);
-            rs.beforeFirst();
-            comboplanes.addItem("-");
-            while (rs.next()) {
-                comboplanes.addItem(rs.getString(1));
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los RUBROS.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    
     
     private void cargardatos() {
         id_cliente = Integer.parseInt(txtcodigocliente.getText());
@@ -711,5 +694,27 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         txtbarriocomercial.setText("");
         txttelefono.setText("");
         txtrubro.setText("");
+    }
+        
+    private void cargartablacreditos() {
+        //String consulta = "SELECT idcredito, compra as 'Compra' FROM credito where idcliente = '"+idcliente+"'";
+        String consulta = "SELECT idcredito, compra as 'Compra', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+            + "fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', estado as 'Estado', pagado as 'Pagado', credito_numero as 'Credito Num', "
+            + "comision as 'Comision(%)', saldo as 'Saldo' "
+            + "FROM credito where idcliente = '"+id_cliente+"'";
+        /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            DefaultTableModel modelo = new DefaultTableModel();
+            tablacreditos.setModel(modelo);
+            ConversorRSaDefaultTableModel.completar(rs, modelo);
+            //codigo para ocultar la primera columna (idplan)
+            tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

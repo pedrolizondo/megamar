@@ -4,6 +4,12 @@
  */
 package megamar;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pedro.lizondo
@@ -13,10 +19,11 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     /**
      * Creates new form CreditosClientes
      */
-    public CreditosClientesHistorial(java.awt.Dialog parent, boolean modal) {
+    public CreditosClientesHistorial(java.awt.Dialog parent, boolean modal,int idcliente) {
         super(parent,modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        cargartablacreditos(idcliente);
     }
 
     /**
@@ -28,26 +35,43 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablacreditos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Cancel.png"))); // NOI18N
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tablacreditos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Fecha Compra", "Monto", "Plan", "Interes", "Fecha Cancelacion"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("Salir");
+        tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablacreditosMouseClicked(evt);
+            }
+        });
+        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tablacreditosFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablacreditos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,9 +80,9 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 946, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 573, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -66,14 +90,26 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
+        //jButtonModificar.setEnabled(true);
+    }//GEN-LAST:event_tablacreditosMouseClicked
+
+    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
+        //jButtonModificar.setEnabled(false);
+    }//GEN-LAST:event_tablacreditosFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,6 +155,42 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablacreditos;
     // End of variables declaration//GEN-END:variables
+    private conexion db;
+    private Statement stmt;
+
+    public void Conectar() {
+        try {
+            db = new conexion();      //instancia de la clase conexion.java
+            db.init();
+            Connection conn = db.getMyConnection();
+            stmt = conn.createStatement();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void cargartablacreditos(int idcliente) {
+        //String consulta = "SELECT idcredito, compra as 'Compra' FROM credito where idcliente = '"+idcliente+"'";
+        String consulta = "SELECT idcredito, compra as 'Compra',(compra*interes/100)+compra as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+            + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
+            + "comision as 'Comision(%)', saldo as 'Saldo' "
+            + "FROM credito where idcliente = '"+idcliente+"'";
+        /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            DefaultTableModel modelo = new DefaultTableModel();
+            tablacreditos.setModel(modelo);
+            ConversorRSaDefaultTableModel.completar(rs, modelo);
+            //codigo para ocultar la primera columna (idplan)
+            tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
 }

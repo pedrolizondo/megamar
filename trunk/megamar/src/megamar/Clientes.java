@@ -613,8 +613,12 @@ private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
     ListadoClientes L = new ListadoClientes(idzona,this,true);
     L.setVisible(true);
-    txtcodigocliente.setText(L.getidcliente());
-    cargardatos();
+    if (L.getidcliente().equals("")) {
+        //return;
+    } else {
+        txtcodigocliente.setText(L.getidcliente());
+        cargardatos();
+    }
 }//GEN-LAST:event_jButton8ActionPerformed
 
     private void comborubro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comborubro1ActionPerformed

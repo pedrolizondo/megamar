@@ -18,17 +18,20 @@ import java.awt.Toolkit;
  * @author Lizondo1
  */
 public class Principal extends javax.swing.JFrame {
-
+    private String zona;
+    private int idzona;
     /** Creates new form Principal */
-    public Principal(String zona, int idzona) {
+    public Principal(String nombrezona, int idz) {
         initComponents();
         //codigo para maximizar la ventana principal al iniciar el sistema
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize((int) d.getWidth(), (int) d.getHeight());
         this.setTitle(this.getTitle() + " - " + zona);
-        this.labelzona.setText(zona);
-        this.labelidzona.setVisible(false);
-        this.labelidzona.setText(Integer.toString(idzona));
+        //this.labelzona.setText(zona);
+        //this.labelidzona.setVisible(false);
+        //this.labelidzona.setText(Integer.toString(idzona));
+        zona = nombrezona;
+        idzona = idz;
     }
 
     /** This method is called from within the constructor to
@@ -41,7 +44,6 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         labelzona = new javax.swing.JLabel();
-        labelidzona = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -60,8 +62,6 @@ public class Principal extends javax.swing.JFrame {
         labelzona.setFont(new java.awt.Font("Calibri", 2, 48)); // NOI18N
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
-
-        labelidzona.setText("idzona");
 
         jMenu1.setText("Actualizaciones");
 
@@ -116,6 +116,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/planes_24.png"))); // NOI18N
         jMenuItem6.setText("Pagos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -140,19 +145,15 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(983, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelzona, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelidzona, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(1014, Short.MAX_VALUE)
+                .addComponent(labelzona)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(labelzona)
-                .addGap(75, 75, 75)
-                .addComponent(labelidzona)
-                .addGap(0, 658, Short.MAX_VALUE))
+                .addGap(0, 747, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("");
@@ -161,7 +162,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    Clientes C = new Clientes(labelidzona.getText(),this,true);
+    Clientes C = new Clientes(Integer.toString(idzona),this,true);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -181,7 +182,7 @@ private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    Creditos C = new Creditos(labelidzona.getText(),labelzona.getText(),this,true);
+    Creditos C = new Creditos(Integer.toString(idzona),zona,this,true);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -189,6 +190,11 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     Usuarios U = new Usuarios(this,true);
     U.setVisible(true);
 }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        Pagos P = new Pagos(Integer.toString(idzona), zona, this, true);
+        P.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,7 +243,6 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JLabel labelidzona;
     private javax.swing.JLabel labelzona;
     // End of variables declaration//GEN-END:variables
 }

@@ -78,6 +78,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Pagos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -129,11 +132,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="983" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labelzona" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelidzona" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace pref="1014" max="32767" attributes="0"/>
+              <Component id="labelzona" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -142,9 +142,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="labelzona" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-              <Component id="labelidzona" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="658" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="747" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -157,11 +155,6 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelidzona">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="idzona"/>
       </Properties>
     </Component>
   </SubComponents>
