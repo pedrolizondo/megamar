@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListadoClientes extends javax.swing.JDialog {
     //private JFrame frameclientes;
     private String idzona;
-    private String idcliente;    
+    private String idcliente="";
     /** Creates new form ListadoClientes */
     public ListadoClientes(String idz, java.awt.Dialog parent, boolean modal) {
         super(parent,modal);
@@ -58,6 +58,7 @@ public class ListadoClientes extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listado de Clientes");
+        setPreferredSize(new java.awt.Dimension(1024, 570));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Cliente"));
 
@@ -92,6 +93,7 @@ public class ListadoClientes extends javax.swing.JDialog {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
         jButton1.setText("Seleccionar");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -109,6 +111,11 @@ public class ListadoClientes extends javax.swing.JDialog {
 
             }
         ));
+        tablaclientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaclientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaclientes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,7 +127,9 @@ public class ListadoClientes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,10 +138,10 @@ public class ListadoClientes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -147,6 +156,10 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     idcliente = String.valueOf(tablaclientes.getValueAt(fila,0));
     this.dispose();
 }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tablaclientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaclientesMouseClicked
+        jButton1.setEnabled(true);
+    }//GEN-LAST:event_tablaclientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -206,7 +219,10 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     private void completartablaclientes(String idzona, String buscar) {
-        String consulta = "Select idcliente as Codigo, dni as DNI,nombre as Nombre,apellido as Apellido,telefono as Telefono,num_creditos as Creditos,perno as Perno,estado as Estado,r.descripcion as Rubro from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona='" + idzona + "' and (dni like '%" + buscar + "%' or apellido like '%" + buscar + "%') ";
+        String consulta = "Select idcliente as 'Codigo', CONCAT(apellido,', ',nombre) as 'Nombre', dni as DNI, num_creditos as Creditos, r.descripcion as 'Rubro', "
+                + "domicilio_particular as 'Domicilio Particular', barrio_particular as 'Barrio Particular', domicilio_comercial as 'Domicilio Comercial', "
+                + "barrio_comercial as 'Barrio Comercial', telefono as 'Telefono', perno as 'Perno', estado as 'Estado' "
+                + "from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona='" + idzona + "' and (dni like '%" + buscar + "%' or apellido like '%" + buscar + "%') ";
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
@@ -214,6 +230,22 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             DefaultTableModel modelo = new DefaultTableModel();
             tablaclientes.setModel(modelo);
             ConversorRSaDefaultTableModel.completar(rs, modelo);
+            //codigo para ocultar la primera columna (idplan)
+            tablaclientes.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(1).setMaxWidth(100);
+            tablaclientes.getColumnModel().getColumn(1).setMinWidth(100);
+            tablaclientes.getColumnModel().getColumn(2).setMaxWidth(70);
+            tablaclientes.getColumnModel().getColumn(2).setMinWidth(70);
+            tablaclientes.getColumnModel().getColumn(3).setMaxWidth(60);
+            tablaclientes.getColumnModel().getColumn(3).setMinWidth(60);
+            tablaclientes.getColumnModel().getColumn(9).setMaxWidth(70);
+            tablaclientes.getColumnModel().getColumn(9).setMinWidth(70);
+            tablaclientes.getColumnModel().getColumn(10).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(10).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(11).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(11).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(0).setPreferredWidth(50);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar la tabla de clientes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
