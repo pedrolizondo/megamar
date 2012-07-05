@@ -19,8 +19,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Pagos extends javax.swing.JDialog {
     private String idzona;
-    private int num_creditos;
+    //private int num_creditos;
     private int id_cliente;
+    private int valor_cuota;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
 
     /**
@@ -51,6 +52,7 @@ public class Pagos extends javax.swing.JDialog {
         txtcodigocliente = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jbvercreditos = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -75,9 +77,9 @@ public class Pagos extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtcreditoinicial = new javax.swing.JTextField();
+        txtpago = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtinteres = new javax.swing.JTextField();
+        txtincremento = new javax.swing.JTextField();
         jdfechapago = new com.toedter.calendar.JDateChooser();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -89,17 +91,18 @@ public class Pagos extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         txtcompra = new javax.swing.JTextField();
         txtpagado = new javax.swing.JTextField();
-        txtatraso = new javax.swing.JTextField();
+        txtatrasototal = new javax.swing.JTextField();
         txtsaldo = new javax.swing.JTextField();
-        txtincremento = new javax.swing.JTextField();
-        jbvercreditos = new javax.swing.JButton();
+        txtincrementototal = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablacreditos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pagos");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24));
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
         labelzona.setText("nombre zona");
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
@@ -111,7 +114,7 @@ public class Pagos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelzona)
-                .addContainerGap(539, Short.MAX_VALUE))
+                .addContainerGap(744, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,6 +145,15 @@ public class Pagos extends javax.swing.JDialog {
             }
         });
 
+        jbvercreditos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/clientes_32.png"))); // NOI18N
+        jbvercreditos.setText("Seleccionar Credito");
+        jbvercreditos.setEnabled(false);
+        jbvercreditos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbvercreditosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -155,7 +167,9 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbvercreditos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +179,8 @@ public class Pagos extends javax.swing.JDialog {
                     .addComponent(jLabel15)
                     .addComponent(txtcodigocliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbvercreditos))
                 .addContainerGap())
         );
 
@@ -240,15 +255,15 @@ public class Pagos extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(80, 80, 80)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,13 +283,15 @@ public class Pagos extends javax.swing.JDialog {
 
         jLabel3.setText("Pago ($)");
 
-        txtcreditoinicial.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtpago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtcreditoinicialKeyReleased(evt);
+                txtpagoKeyReleased(evt);
             }
         });
 
         jLabel6.setText("Incremento ($)");
+
+        txtincremento.setText("0");
 
         jdfechapago.setDateFormatString("dd/MM/yyyy");
 
@@ -289,14 +306,14 @@ public class Pagos extends javax.swing.JDialog {
                         .addComponent(jdfechapago, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtpago, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2))
-                .addContainerGap(357, Short.MAX_VALUE))
+                .addContainerGap(562, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,8 +324,8 @@ public class Pagos extends javax.swing.JDialog {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtinteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtpago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -343,28 +360,43 @@ public class Pagos extends javax.swing.JDialog {
 
         jLabel5.setText("Saldo");
 
-        jLabel7.setText("Atraso");
+        jLabel7.setText("Atraso Total");
 
-        jLabel11.setText("Incremento");
+        jLabel11.setText("Incremento Total");
 
         txtcompra.setEditable(false);
 
         txtpagado.setEditable(false);
 
-        txtatraso.setEditable(false);
+        txtatrasototal.setEditable(false);
 
         txtsaldo.setEditable(false);
 
-        txtincremento.setEditable(false);
+        txtincrementototal.setEditable(false);
 
-        jbvercreditos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/clientes_32.png"))); // NOI18N
-        jbvercreditos.setText("Seleccionar Credito");
-        jbvercreditos.setEnabled(false);
-        jbvercreditos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbvercreditosActionPerformed(evt);
+        tablacreditos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablacreditosMouseClicked(evt);
             }
         });
+        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tablacreditosFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablacreditos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -373,7 +405,6 @@ public class Pagos extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbvercreditos)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,23 +415,26 @@ public class Pagos extends javax.swing.JDialog {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtatraso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtatrasototal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(191, Short.MAX_VALUE))
+                            .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, 0, 858, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jbvercreditos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -411,10 +445,10 @@ public class Pagos extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpagado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtatraso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtatrasototal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -430,6 +464,7 @@ public class Pagos extends javax.swing.JDialog {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -459,9 +494,13 @@ public class Pagos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        cargardatos();
-        jbvercreditos.setEnabled(true);
-        cargartablacreditos();
+        if (txtcodigocliente.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el codigo del cliente o presione el boton Ver listado de Clientes.","ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            cargardatos();
+            jbvercreditos.setEnabled(true);
+            cargartablacreditos();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -490,66 +529,75 @@ public class Pagos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jbvercreditosActionPerformed
 
-    private void txtcreditoinicialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyReleased
+    private void txtpagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpagoKeyReleased
        
-    }//GEN-LAST:event_txtcreditoinicialKeyReleased
+    }//GEN-LAST:event_txtpagoKeyReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
-        //System.out.println(jdfechacredito.getDate().toString());
-
-        float compra = Float.parseFloat(txtcreditoinicial.getText());
-        //String plan = comboplanes.getSelectedItem().toString();
-        String interes = txtinteres.getText();
-        //String comision = txtcomision.getText();
-        //String cuota = txtcuota.getText();
-        String pagado = "0";
-        String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
-        String fecha_ultimo_pago = "0000-00-00";
+        if(txtincremento.getText().equals("")){
+            txtincremento.setText("0");
+        }
+        int pago = Integer.parseInt(txtpago.getText());
+        String fecha_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
+        int incremento = Integer.parseInt(txtincremento.getText());
+        int incremento_total = Integer.parseInt(txtincrementototal.getText());
+        int saldo = Integer.parseInt(txtsaldo.getText());
+        int atraso = 0;
+        int atraso_total = Integer.parseInt(txtatrasototal.getText());
         /*
-         * Calculo de la fecha de cancelacion
+         * Falta definir el idusuario (login)
          */
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(jdfechapago.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
-//        c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
-        //System.out.println("La fecha de hoy más  X días es : " + FORMATO_YYYY_MM_DD.format(c1.getTime()));
-        //jdfechacredito.add(jdfechacredito.getDate(), 5);
-        String fecha_cancelacion = (String) FORMATO_YYYY_MM_DD.format(c1.getTime());
-        int credito_numero = num_creditos + 1;
-        String estado = "DEBE";
-        float saldo = compra;
-        String idcliente = txtcodigocliente.getText();
+        String id_usuario = "1";
+        int fila = tablacreditos.getSelectedRow();
+        int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
+        int pagado = Integer.parseInt(txtpagado.getText());
+        
+
+        
+        //int totalapagar = valor_cuota + atraso_total + incremento;      //Monto Total a Pagar en la semana
+        int totalapagar = valor_cuota + atraso_total;
+        atraso = valor_cuota - pago;                    //Calculo del Atraso para esta semana
+        atraso_total = atraso_total + atraso;           //Calculo del Atraso Acumulado
+        
+        
+        if (atraso > 0) {                   //Entonces hay atraso esta semana
+            
+            atraso_total = atraso_total + atraso;       //Calculo del Atraso Total
+        }else{
+            atraso = totalapagar - pago;
+        }
+        
 
         /*
-         * Alta del CREDITO
+         * Alta del PAGO
          */
-/*        String consulta = "insert into credito (compra,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente) "
-                + "values('" + compra + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
-                + " '" + fecha_cancelacion + "', '" + credito_numero + "', '" + estado + "', '" + saldo + "', '" + idcliente + "' )";
-                 
-*/
+        String consulta = "insert into pago values('" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "' )";
         try {
             Conectar();
-            //int done = stmt.executeUpdate(consulta);
-            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null, "Se guardaron los datos del Credito.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            int done = stmt.executeUpdate(consulta);
+            JOptionPane.showMessageDialog(null, "Se guardaron los datos del Pago.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo cargar los datos del cliente", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos del pago", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
 
+      
         /*
-         * Modificacion de los datos del Cliente
+         * Modificacion de la tabla Credito
          */
-        String consulta2 = "update cliente "
-                + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
-                + "where idcliente='" + idcliente + "'";
+        
+        saldo = saldo + incremento - pago; //El incremento modifica el Saldo del cliente
+        incremento_total = incremento_total + incremento;
+        pagado = pagado + pago;
+        
+        String consulta2 = "update credito "
+                + "set pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"' "
+                + "where idcredito='" + id_credito + "'";
 
         try {
             Conectar();
             int done = stmt.executeUpdate(consulta2);
-            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
             //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
         } catch (Exception ex) {
@@ -562,6 +610,34 @@ public class Pagos extends javax.swing.JDialog {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
+        int fila = tablacreditos.getSelectedRow();
+        int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
+
+        String consulta = "SELECT compra, pagado, saldo, atraso_total, incremento_total, cuota "
+                + "FROM credito where idcredito = '" + id_credito + "'";
+
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            rs.beforeFirst();
+            while (rs.next()) {
+                txtcompra.setText(rs.getString("compra"));
+                txtpagado.setText(rs.getString("pagado"));
+                txtsaldo.setText(rs.getString("saldo"));
+                txtatrasototal.setText(rs.getString("atraso_total"));
+                txtincrementototal.setText(rs.getString("incremento_total"));
+                valor_cuota = Integer.parseInt(rs.getString("cuota"));
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos del Credito.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tablacreditosMouseClicked
+
+    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
+        //jButtonModificar.setEnabled(false);
+    }//GEN-LAST:event_tablacreditosFocusLost
 
     /**
      * @param args the command line arguments
@@ -643,22 +719,24 @@ public class Pagos extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbvercreditos;
     private com.toedter.calendar.JDateChooser jdfechapago;
     private javax.swing.JLabel labelzona;
-    private javax.swing.JTextField txtatraso;
+    private javax.swing.JTable tablacreditos;
+    private javax.swing.JTextField txtatrasototal;
     private javax.swing.JTextField txtbarriocomercial;
     private javax.swing.JTextField txtbarrioparticular;
     private javax.swing.JTextField txtcodigocliente;
     private javax.swing.JTextField txtcompra;
-    private javax.swing.JTextField txtcreditoinicial;
     private javax.swing.JTextField txtdni;
     private javax.swing.JTextField txtdomiciliocomercial;
     private javax.swing.JTextField txtdomicilioparticular;
     private javax.swing.JTextField txtincremento;
-    private javax.swing.JTextField txtinteres;
+    private javax.swing.JTextField txtincrementototal;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtpagado;
+    private javax.swing.JTextField txtpago;
     private javax.swing.JTextField txtrubro;
     private javax.swing.JTextField txtsaldo;
     private javax.swing.JTextField txttelefono;
@@ -707,7 +785,7 @@ public class Pagos extends javax.swing.JDialog {
                     txtbarriocomercial.setText(rs.getString("barrio_comercial"));
                     txttelefono.setText(rs.getString("telefono"));
                     txtrubro.setText(rs.getString("descripcion"));
-                    num_creditos = rs.getInt("num_creditos");
+                    //num_creditos = rs.getInt("num_creditos");
                 }
             }
         } catch (Exception ex) {
@@ -729,22 +807,21 @@ public class Pagos extends javax.swing.JDialog {
     }
         
     private void cargartablacreditos() {
-        //String consulta = "SELECT idcredito, compra as 'Compra' FROM credito where idcliente = '"+idcliente+"'";
         String consulta = "SELECT idcredito, compra as 'Compra', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
-            + "fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', estado as 'Estado', pagado as 'Pagado', credito_numero as 'Credito Num', "
-            + "comision as 'Comision(%)', saldo as 'Saldo' "
+            + "pagado as 'Pagado', fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', estado as 'Estado', "
+            + "saldo as 'Saldo' "
             + "FROM credito where idcliente = '"+id_cliente+"'";
         /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
             DefaultTableModel modelo = new DefaultTableModel();
-            //tablacreditos.setModel(modelo);
+            tablacreditos.setModel(modelo);
             ConversorRSaDefaultTableModel.completar(rs, modelo);
             //codigo para ocultar la primera columna (idplan)
-            //tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
-            //tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
-            //tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
