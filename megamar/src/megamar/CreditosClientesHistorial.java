@@ -15,7 +15,11 @@ import javax.swing.table.DefaultTableModel;
  * @author pedro.lizondo
  */
 public class CreditosClientesHistorial extends javax.swing.JDialog {
-
+    private int id_credito;
+    private float compra;
+    private float pagado;
+    private float saldo;
+    //private float incremento;
     /**
      * Creates new form CreditosClientes
      */
@@ -25,6 +29,21 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         cargartablacreditos(idcliente);
     }
+    public int getidcredito(){
+        return id_credito;
+    }
+    public float getcompra(){
+        return compra;
+    }
+    public float getpagado(){
+        return pagado;
+    }
+    public float getsaldo(){
+        return saldo;
+    }
+    /*public float getincremento(){
+        return incremento;
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +57,7 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablacreditos = new javax.swing.JTable();
+        jbseleccionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,6 +93,15 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tablacreditos);
 
+        jbseleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
+        jbseleccionar.setText("Seleccionar");
+        jbseleccionar.setEnabled(false);
+        jbseleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbseleccionarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +111,9 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 946, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 728, Short.MAX_VALUE)
+                        .addComponent(jbseleccionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -92,7 +123,9 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jbseleccionar))
                 .addContainerGap())
         );
 
@@ -100,7 +133,7 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
-        //jButtonModificar.setEnabled(true);
+        jbseleccionar.setEnabled(true);
     }//GEN-LAST:event_tablacreditosMouseClicked
 
     private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
@@ -110,6 +143,15 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+private void jbseleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbseleccionarActionPerformed
+    int fila = tablacreditos.getSelectedRow();
+    id_credito = Integer.parseInt(tablacreditos.getValueAt(fila,0).toString());
+    compra = Float.parseFloat(tablacreditos.getValueAt(fila,1).toString());
+    pagado = Float.parseFloat(tablacreditos.getValueAt(fila,8).toString());
+    saldo = Float.parseFloat(tablacreditos.getValueAt(fila,12).toString());
+    this.dispose();
+}//GEN-LAST:event_jbseleccionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,6 +197,7 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbseleccionar;
     private javax.swing.JTable tablacreditos;
     // End of variables declaration//GEN-END:variables
     private conexion db;

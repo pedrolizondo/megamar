@@ -26,8 +26,8 @@ public class Principal extends javax.swing.JFrame {
         //codigo para maximizar la ventana principal al iniciar el sistema
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize((int) d.getWidth(), (int) d.getHeight());
-        this.setTitle(this.getTitle() + " - " + zona);
-        //this.labelzona.setText(zona);
+        this.setTitle(this.getTitle() + " - " + nombrezona);
+        this.labelzona.setText(nombrezona);
         //this.labelidzona.setVisible(false);
         //this.labelidzona.setText(Integer.toString(idzona));
         zona = nombrezona;
