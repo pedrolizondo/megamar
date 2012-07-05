@@ -462,7 +462,11 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     private void comboplanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboplanesActionPerformed
         String consulta = "Select interes, comision from plan where idplan = '" + comboplanes.getSelectedIndex() + "' ";
-        if (comboplanes.getSelectedIndex() == 0 || txtcreditoinicial.getText().equals("")) {
+        if (comboplanes.getSelectedIndex() == 0){
+            txtinteres.setText("");
+            txtcuota.setText("");
+            txtcomision.setText("");            
+        }else if(txtcreditoinicial.getText().equals("")) {
             //return
         } else {
             try {
@@ -492,7 +496,14 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
         //System.out.println(jdfechacredito.getDate().toString());
-        
+        if(comboplanes.getSelectedIndex()== 0 ){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un Plan(semanas) de la lista desplegable.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(txtcreditoinicial.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el monto del credito en cuadro Credito Inicial.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         float compra = Float.parseFloat(txtcreditoinicial.getText());
         String plan = comboplanes.getSelectedItem().toString();
         String interes = txtinteres.getText();
@@ -673,7 +684,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
             rs.last();
-            System.out.println(rs.getRow());
+            //System.out.println(rs.getRow());
             if (rs.getRow() == 0) {
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
