@@ -22,6 +22,7 @@ public class Pagos extends javax.swing.JDialog {
     //private int num_creditos;
     private int id_cliente;
     private int valor_cuota;
+    private float compra_total;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
 
     /**
@@ -552,22 +553,13 @@ public class Pagos extends javax.swing.JDialog {
         int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
         int pagado = Integer.parseInt(txtpagado.getText());
         
-
-        
         //int totalapagar = valor_cuota + atraso_total + incremento;      //Monto Total a Pagar en la semana
         int totalapagar = valor_cuota + atraso_total;
+        saldo = saldo - pago;                           //Calculo del Saldo
         atraso = valor_cuota - pago;                    //Calculo del Atraso para esta semana
         atraso_total = atraso_total + atraso;           //Calculo del Atraso Acumulado
+        pagado = pagado + pago;                         //Calculo de lo que lleva Pagado el Cliente
         
-        
-        if (atraso > 0) {                   //Entonces hay atraso esta semana
-            
-            atraso_total = atraso_total + atraso;       //Calculo del Atraso Total
-        }else{
-            atraso = totalapagar - pago;
-        }
-        
-
         /*
          * Alta del PAGO
          */
@@ -587,12 +579,12 @@ public class Pagos extends javax.swing.JDialog {
          * Modificacion de la tabla Credito
          */
         
-        saldo = saldo + incremento - pago; //El incremento modifica el Saldo del cliente
+        compra_total = compra_total + incremento;           //El incremento modifica la Compro Total del cliente
         incremento_total = incremento_total + incremento;
-        pagado = pagado + pago;
+        
         
         String consulta2 = "update credito "
-                + "set pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"' "
+                + "set compra_total='"+compra_total+"', pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"' "
                 + "where idcredito='" + id_credito + "'";
 
         try {
@@ -615,7 +607,7 @@ public class Pagos extends javax.swing.JDialog {
         int fila = tablacreditos.getSelectedRow();
         int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
 
-        String consulta = "SELECT compra, pagado, saldo, atraso_total, incremento_total, cuota "
+        String consulta = "SELECT compra,compra_total, pagado, saldo, atraso_total, incremento_total, cuota "
                 + "FROM credito where idcredito = '" + id_credito + "'";
 
         try {
@@ -624,6 +616,7 @@ public class Pagos extends javax.swing.JDialog {
             rs.beforeFirst();
             while (rs.next()) {
                 txtcompra.setText(rs.getString("compra"));
+                compra_total = Float.parseFloat(rs.getString("compra_total"));
                 txtpagado.setText(rs.getString("pagado"));
                 txtsaldo.setText(rs.getString("saldo"));
                 txtatrasototal.setText(rs.getString("atraso_total"));
@@ -807,7 +800,7 @@ public class Pagos extends javax.swing.JDialog {
     }
         
     private void cargartablacreditos() {
-        String consulta = "SELECT idcredito, compra as 'Compra', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+        String consulta = "SELECT idcredito, compra as 'Compra', (compra*interes/100)+compra as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
             + "pagado as 'Pagado', fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', estado as 'Estado', "
             + "saldo as 'Saldo' "
             + "FROM credito where idcliente = '"+id_cliente+"'";
