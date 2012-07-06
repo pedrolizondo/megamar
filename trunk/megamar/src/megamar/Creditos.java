@@ -4,13 +4,16 @@
  */
 package megamar;
 
+import com.toedter.calendar.JDateChooser;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +23,7 @@ public class Creditos extends javax.swing.JDialog {
     private String idzona;
     private int num_creditos;
     private int id_cliente;
+    private float compra_total;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
     /**
      * Creates new form creditos
@@ -27,6 +31,7 @@ public class Creditos extends javax.swing.JDialog {
     public Creditos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         jdfechacredito.setLocale(Locale.getDefault());  //Define el idioma del calendar
         idzona = idz;
         labelzona.setText(nomzona);
@@ -57,7 +62,7 @@ public class Creditos extends javax.swing.JDialog {
         txtcreditoinicial = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtinteres = new javax.swing.JTextField();
-        jdfechacredito = new com.toedter.calendar.JDateChooser();
+        jdfechacredito = new com.toedter.calendar.JDateChooser("dd/MM/yyyy", "##/##/##", '_');
         jLabel8 = new javax.swing.JLabel();
         txtcuota = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -87,6 +92,8 @@ public class Creditos extends javax.swing.JDialog {
         txttelefono = new javax.swing.JTextField();
         txtrubro = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablacreditos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creditos");
@@ -103,6 +110,12 @@ public class Creditos extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Cliente"));
 
         jLabel15.setText("Codigo");
+
+        txtcodigocliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcodigoclienteKeyPressed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Sherlocks_Tool.png"))); // NOI18N
         jButton7.setText("Buscar");
@@ -145,7 +158,7 @@ public class Creditos extends javax.swing.JDialog {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbvercreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,6 +182,9 @@ public class Creditos extends javax.swing.JDialog {
         jLabel4.setText("Plan (semanas)");
 
         txtcreditoinicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcreditoinicialKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtcreditoinicialKeyReleased(evt);
             }
@@ -179,6 +195,11 @@ public class Creditos extends javax.swing.JDialog {
         txtinteres.setEditable(false);
 
         jdfechacredito.setDateFormatString("dd/MM/yyyy");
+        jdfechacredito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jdfechacreditoKeyPressed(evt);
+            }
+        });
 
         jLabel8.setText("Cuota ($)");
 
@@ -353,15 +374,15 @@ public class Creditos extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(60, 60, 60)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(71, 71, 71))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,6 +404,30 @@ public class Creditos extends javax.swing.JDialog {
             }
         });
 
+        tablacreditos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablacreditosMouseClicked(evt);
+            }
+        });
+        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tablacreditosFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablacreditos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -395,9 +440,11 @@ public class Creditos extends javax.swing.JDialog {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, 0, 865, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -410,12 +457,14 @@ public class Creditos extends javax.swing.JDialog {
                 .addGap(1, 1, 1)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -443,6 +492,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, "Ingrese el codigo del cliente o presione el boton Ver listado de Clientes.","ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             cargardatos();
+            cargartablacreditos();
+            jdfechacredito.setDate(new Date());
             jbvercreditos.setEnabled(true);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -454,8 +505,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             int credito = Integer.parseInt(txtcreditoinicial.getText());
             int interes = Integer.parseInt(txtinteres.getText());
             int plan = Integer.parseInt(comboplanes.getSelectedItem().toString());
-            float compra = (credito * interes) / 100 + credito;
-            float cuota = compra / plan;
+            compra_total = (credito * interes) / 100 + credito;
+            float cuota = compra_total / plan;
             txtcuota.setText(Float.toString(cuota));
         }
     }//GEN-LAST:event_txtcreditoinicialKeyReleased
@@ -483,8 +534,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             int credito = Integer.parseInt(txtcreditoinicial.getText());
             int interes = Integer.parseInt(txtinteres.getText());
             int plan = Integer.parseInt(comboplanes.getSelectedItem().toString());
-            float compra = (credito * interes) / 100 + credito;
-            float cuota = compra / plan;
+            compra_total = (credito * interes) / 100 + credito;
+            float cuota = compra_total / plan;
             txtcuota.setText(Float.toString(cuota));
         }
     }//GEN-LAST:event_comboplanesActionPerformed
@@ -525,8 +576,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String idcliente = txtcodigocliente.getText();
         
         /*Alta del CREDITO*/
-        String consulta = "insert into credito (compra,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente) "
-                + "values('" + compra + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
+        String consulta = "insert into credito (compra,compra_total,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente) "
+                + "values('" + compra + "', '" + compra_total + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
                 + " '" + fecha_cancelacion + "', '" + credito_numero + "', '" + estado + "', '" + saldo + "', '" + idcliente + "' )";
         try {
             Conectar();
@@ -557,6 +608,33 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     db.destroy();
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
+        
+    }//GEN-LAST:event_tablacreditosMouseClicked
+
+    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
+        //jButtonModificar.setEnabled(false);
+    }//GEN-LAST:event_tablacreditosFocusLost
+
+    private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            jButton7ActionPerformed(null);
+            jdfechacredito.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_txtcodigoclienteKeyPressed
+
+    private void jdfechacreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdfechacreditoKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            txtcreditoinicial.requestFocus();
+        }
+    }//GEN-LAST:event_jdfechacreditoKeyPressed
+
+    private void txtcreditoinicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            comboplanes.requestFocus();
+        }
+    }//GEN-LAST:event_txtcreditoinicialKeyPressed
 
     /**
      * @param args the command line arguments
@@ -628,9 +706,11 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbvercreditos;
     private com.toedter.calendar.JDateChooser jdfechacredito;
     private javax.swing.JLabel labelzona;
+    private javax.swing.JTable tablacreditos;
     private javax.swing.JTextField txtbarriocomercial;
     private javax.swing.JTextField txtbarrioparticular;
     private javax.swing.JTextField txtcodigocliente;
@@ -722,5 +802,26 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         txtbarriocomercial.setText("");
         txttelefono.setText("");
         txtrubro.setText("");
+    }
+
+    private void cargartablacreditos() {
+        String consulta = "SELECT idcredito, compra as 'Compra',(compra*interes/100)+compra as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+            + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
+            + "comision as 'Comision(%)', saldo as 'Saldo' "
+            + "FROM credito where idcliente = '"+id_cliente+"'";
+        /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            DefaultTableModel modelo = new DefaultTableModel();
+            tablacreditos.setModel(modelo);
+            ConversorRSaDefaultTableModel.completar(rs, modelo);
+            //codigo para ocultar la primera columna (idplan)
+            tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
+            tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

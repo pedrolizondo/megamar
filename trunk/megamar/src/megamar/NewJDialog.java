@@ -10,6 +10,10 @@
  */
 package megamar;
 
+import com.toedter.calendar.JDateChooser;
+import java.awt.FlowLayout;
+import javax.swing.JDialog;
+
 /**
  *
  * @author Lizondo1
@@ -20,6 +24,9 @@ public class NewJDialog extends javax.swing.JDialog {
     public NewJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //JDateChooser jdf = new JDateChooser("dd/MM/yyyy", "##/##/##", '_');
+        //this.add(jdf);
+        //this.setLayout(new FlowLayout());
     }
 
     /** This method is called from within the constructor to
