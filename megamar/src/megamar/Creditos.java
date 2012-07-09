@@ -194,8 +194,10 @@ public class Creditos extends javax.swing.JDialog {
 
         txtinteres.setEditable(false);
 
-        jdfechacredito.setDateFormatString("dd/MM/yyyy");
         jdfechacredito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jdfechacreditoKeyTyped(evt);
+            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jdfechacreditoKeyPressed(evt);
             }
@@ -247,7 +249,7 @@ public class Creditos extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(txtcomision, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +283,7 @@ public class Creditos extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 24));
         labelzona.setText("nombre zona");
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
@@ -293,7 +295,7 @@ public class Creditos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelzona)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(705, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +376,7 @@ public class Creditos extends javax.swing.JDialog {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -440,11 +442,10 @@ public class Creditos extends javax.swing.JDialog {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, 0, 865, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, 0, 885, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -457,7 +458,7 @@ public class Creditos extends javax.swing.JDialog {
                 .addGap(1, 1, 1)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -484,6 +485,9 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         txtcodigocliente.setText(L.getidcliente());
         cargardatos();
         jbvercreditos.setEnabled(true);
+        cargartablacreditos();
+        jdfechacredito.setDate(new Date());
+        jdfechacredito.requestFocusInWindow();
     }
 }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -572,7 +576,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String fecha_cancelacion = (String) FORMATO_YYYY_MM_DD.format(c1.getTime());
         int credito_numero = num_creditos + 1;
         String estado = "DEBE";
-        float saldo = compra;
+        float saldo = compra_total;
         String idcliente = txtcodigocliente.getText();
         
         /*Alta del CREDITO*/
@@ -618,16 +622,14 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_tablacreditosFocusLost
 
     private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
-        if(evt.getKeyCode() == evt.VK_ENTER){
+        if (evt.getKeyCode() == evt.VK_ENTER) {
             jButton7ActionPerformed(null);
             jdfechacredito.requestFocusInWindow();
         }
     }//GEN-LAST:event_txtcodigoclienteKeyPressed
 
     private void jdfechacreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdfechacreditoKeyPressed
-        if(evt.getKeyCode() == evt.VK_ENTER){
-            txtcreditoinicial.requestFocus();
-        }
+        
     }//GEN-LAST:event_jdfechacreditoKeyPressed
 
     private void txtcreditoinicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyPressed
@@ -635,6 +637,14 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             comboplanes.requestFocus();
         }
     }//GEN-LAST:event_txtcreditoinicialKeyPressed
+
+private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdfechacreditoKeyTyped
+    int k = (int) evt.getKeyChar();
+    if (k == 10) {
+        //transfiere el foco si presionas enter
+        txtcreditoinicial.requestFocusInWindow();
+    }
+}//GEN-LAST:event_jdfechacreditoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -805,7 +815,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
 
     private void cargartablacreditos() {
-        String consulta = "SELECT idcredito, compra as 'Compra',(compra*interes/100)+compra as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+        String consulta = "SELECT idcredito, compra as 'Compra',compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
             + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
             + "comision as 'Comision(%)', saldo as 'Saldo' "
             + "FROM credito where idcliente = '"+id_cliente+"'";
