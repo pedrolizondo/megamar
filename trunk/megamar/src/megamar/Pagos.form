@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
@@ -32,7 +32,7 @@
                   <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="701" max="32767" attributes="0"/>
                       <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton4" min="-2" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="labelzona" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="744" max="32767" attributes="0"/>
+                  <EmptySpace pref="748" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -131,7 +131,7 @@
                   <Component id="jButton8" min="-2" pref="193" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jbvercreditos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="248" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -158,6 +158,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtcodigocliente">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtcodigoclienteKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
@@ -403,7 +406,7 @@
                       </Group>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="562" max="32767" attributes="0"/>
+                  <EmptySpace pref="598" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -461,9 +464,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdfechapago">
-          <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
-          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new com.toedter.calendar.JDateChooser(&quot;dd/MM/yyyy&quot;, &quot;##/##/##&quot;, &apos;_&apos;)"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -532,9 +535,9 @@
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               <Component id="txtincrementototal" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="376" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" min="0" pref="858" max="32767" attributes="1"/>
+                      <Component id="jScrollPane1" alignment="0" min="0" pref="892" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

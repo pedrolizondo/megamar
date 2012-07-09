@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +36,7 @@ public class Pagos extends javax.swing.JDialog {
         idzona = idz;
         labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
+        txtcodigocliente.requestFocus();
     }
 
     /**
@@ -81,7 +83,7 @@ public class Pagos extends javax.swing.JDialog {
         txtpago = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtincremento = new javax.swing.JTextField();
-        jdfechapago = new com.toedter.calendar.JDateChooser();
+        jdfechapago = new com.toedter.calendar.JDateChooser("dd/MM/yyyy", "##/##/##", '_');
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -103,7 +105,7 @@ public class Pagos extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 24));
         labelzona.setText("nombre zona");
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
@@ -115,7 +117,7 @@ public class Pagos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelzona)
-                .addContainerGap(744, Short.MAX_VALUE))
+                .addContainerGap(748, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,6 +130,12 @@ public class Pagos extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Cliente"));
 
         jLabel15.setText("Codigo");
+
+        txtcodigocliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcodigoclienteKeyPressed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Sherlocks_Tool.png"))); // NOI18N
         jButton7.setText("Buscar");
@@ -170,7 +178,7 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbvercreditos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,8 +302,6 @@ public class Pagos extends javax.swing.JDialog {
 
         txtincremento.setText("0");
 
-        jdfechapago.setDateFormatString("dd/MM/yyyy");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -314,7 +320,7 @@ public class Pagos extends javax.swing.JDialog {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2))
-                .addContainerGap(562, Short.MAX_VALUE))
+                .addContainerGap(598, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,8 +432,8 @@ public class Pagos extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, 0, 858, Short.MAX_VALUE))
+                        .addGap(0, 376, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, 0, 892, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -465,7 +471,7 @@ public class Pagos extends javax.swing.JDialog {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 701, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -501,6 +507,7 @@ public class Pagos extends javax.swing.JDialog {
             cargardatos();
             jbvercreditos.setEnabled(true);
             cargartablacreditos();
+            jdfechapago.setDate(new Date());
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -513,6 +520,9 @@ public class Pagos extends javax.swing.JDialog {
             txtcodigocliente.setText(L.getidcliente());
             cargardatos();
             jbvercreditos.setEnabled(true);
+            cargartablacreditos();
+            jdfechapago.setDate(new Date());
+            jdfechapago.requestFocusInWindow();
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -553,13 +563,17 @@ public class Pagos extends javax.swing.JDialog {
         int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
         int pagado = Integer.parseInt(txtpagado.getText());
         
-        //int totalapagar = valor_cuota + atraso_total + incremento;      //Monto Total a Pagar en la semana
-        int totalapagar = valor_cuota + atraso_total;
-        saldo = saldo - pago;                           //Calculo del Saldo
-        atraso = valor_cuota - pago;                    //Calculo del Atraso para esta semana
-        atraso_total = atraso_total + atraso;           //Calculo del Atraso Acumulado
-        pagado = pagado + pago;                         //Calculo de lo que lleva Pagado el Cliente
-        
+        int totalapagar = valor_cuota + atraso_total;       //Monto que debe pagar el Cliente en esta semana(Valor de la cuota + atraso total)
+        atraso = totalapagar - pago;                        //Calculo del atraso.
+        if(atraso < 0){
+            atraso = 0;                                     //Si el atraso es menor que 0 entonces no hay atraso.
+        }
+        atraso_total = atraso;                              //El atraso es el nuevo atraso_total
+        saldo = saldo - pago + incremento;                  //Calculo del Saldo. El incremento modifica el saldo.
+        pagado = pagado + pago;                             //Calculo de lo que lleva Pagado el Cliente.
+        compra_total = compra_total + incremento;           //El incremento modifica tambien la Compra Total del cliente.
+        incremento_total = incremento_total + incremento;
+
         /*
          * Alta del PAGO
          */
@@ -579,8 +593,6 @@ public class Pagos extends javax.swing.JDialog {
          * Modificacion de la tabla Credito
          */
         
-        compra_total = compra_total + incremento;           //El incremento modifica la Compro Total del cliente
-        incremento_total = incremento_total + incremento;
         
         
         String consulta2 = "update credito "
@@ -631,6 +643,14 @@ public class Pagos extends javax.swing.JDialog {
     private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
         //jButtonModificar.setEnabled(false);
     }//GEN-LAST:event_tablacreditosFocusLost
+
+private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
+    if (evt.getKeyCode() == evt.VK_ENTER) {
+        jButton7ActionPerformed(null);
+        jdfechapago.setDate(new Date());
+        jdfechapago.requestFocusInWindow();
+    }
+}//GEN-LAST:event_txtcodigoclienteKeyPressed
 
     /**
      * @param args the command line arguments
@@ -759,7 +779,7 @@ public class Pagos extends javax.swing.JDialog {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
             rs.last();
-            System.out.println(rs.getRow());
+            //System.out.println(rs.getRow());
             if (rs.getRow() == 0) {
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
@@ -800,7 +820,7 @@ public class Pagos extends javax.swing.JDialog {
     }
         
     private void cargartablacreditos() {
-        String consulta = "SELECT idcredito, compra as 'Compra', (compra*interes/100)+compra as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
+        String consulta = "SELECT idcredito, compra as 'Compra', compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
             + "pagado as 'Pagado', fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', estado as 'Estado', "
             + "saldo as 'Saldo' "
             + "FROM credito where idcliente = '"+id_cliente+"'";
