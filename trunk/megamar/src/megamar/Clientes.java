@@ -81,7 +81,6 @@ public class Clientes extends javax.swing.JDialog {
         comborubro = new javax.swing.JComboBox();
         jpanelmodificarcliente = new javax.swing.JPanel();
         jbguardarcambios = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -114,6 +113,7 @@ public class Clientes extends javax.swing.JDialog {
         jbbuscar = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jbeliminarcliente = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestion de Clientes");
@@ -153,7 +153,7 @@ public class Clientes extends javax.swing.JDialog {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,6 +174,11 @@ public class Clientes extends javax.swing.JDialog {
         jbguardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbguardarActionPerformed(evt);
+            }
+        });
+        jbguardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jbguardarKeyTyped(evt);
             }
         });
 
@@ -327,18 +332,15 @@ public class Clientes extends javax.swing.JDialog {
             jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanelnuevoclienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jpanelnuevoclienteLayout.createSequentialGroup()
-                        .addGroup(jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelnuevoclienteLayout.createSequentialGroup()
-                        .addGap(0, 120, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jbguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpanelnuevoclienteLayout.setVerticalGroup(
             jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,11 +349,11 @@ public class Clientes extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpanelnuevoclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbguardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpanelmodificarcliente.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -368,14 +370,6 @@ public class Clientes extends javax.swing.JDialog {
         jbguardarcambios.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jbguardarcambiosKeyTyped(evt);
-            }
-        });
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Cancel.png"))); // NOI18N
-        jButton6.setText("Cancelar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
             }
         });
 
@@ -432,6 +426,7 @@ public class Clientes extends javax.swing.JDialog {
         jPanel10.setLayout(new java.awt.GridLayout(11, 0, 5, 5));
 
         txtidcliente1.setEditable(false);
+        txtidcliente1.setFocusable(false);
         jPanel10.add(txtidcliente1);
 
         txtdni1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -514,12 +509,12 @@ public class Clientes extends javax.swing.JDialog {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -576,7 +571,7 @@ public class Clientes extends javax.swing.JDialog {
                     .addComponent(jbbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcodigocliente)
                     .addComponent(jButton8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jbeliminarcliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Delete.png"))); // NOI18N
@@ -584,6 +579,14 @@ public class Clientes extends javax.swing.JDialog {
         jbeliminarcliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbeliminarclienteActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/acerca.png"))); // NOI18N
+        jButton2.setText("Cambiar Zona");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -595,14 +598,17 @@ public class Clientes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelmodificarclienteLayout.createSequentialGroup()
+                    .addGroup(jpanelmodificarclienteLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpanelmodificarclienteLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbeliminarcliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbguardarcambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbguardarcambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jpanelmodificarclienteLayout.setVerticalGroup(
@@ -615,10 +621,11 @@ public class Clientes extends javax.swing.JDialog {
                 .addGap(1, 1, 1)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jbguardarcambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbeliminarcliente))
+                .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbguardarcambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbeliminarcliente)))
                 .addContainerGap())
         );
 
@@ -630,9 +637,9 @@ public class Clientes extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpanelmodificarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpanelnuevocliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpanelnuevocliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpanelmodificarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -710,18 +717,15 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     this.setSize(new Dimension(420, 650));
     jpanelnuevocliente.setVisible(true);
     jpanelmodificarcliente.setVisible(false);
+    txtdni.requestFocus();
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    this.setSize(new Dimension(550, 720));
+    this.setSize(new Dimension(550, 740));
     jpanelnuevocliente.setVisible(false);
     jpanelmodificarcliente.setVisible(true);
     txtcodigocliente.requestFocus();
 }//GEN-LAST:event_jButton4ActionPerformed
-
-private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    this.dispose();
-}//GEN-LAST:event_jButton6ActionPerformed
 
 private void jbguardarcambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbguardarcambiosActionPerformed
     int idcliente = Integer.parseInt(txtidcliente1.getText());
@@ -860,9 +864,9 @@ private void txtdni1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt
     }
     if (k == 10) {
         if(!existedni(txtdni.getText())){
-            txtdni.transferFocus();         //transfiere el foco si presionas enter
+            txtdni1.transferFocus();         //transfiere el foco si presionas enter
         }
-    } else if (!Character.isDigit(k) || txtdni.getText().length() > 7) {
+    } else if (!Character.isDigit(k) || txtdni1.getText().length() > 7) {
         evt.setKeyChar((char) KeyEvent.VK_CLEAR);
     }
 }//GEN-LAST:event_txtdni1KeyTyped
@@ -947,7 +951,7 @@ private void comborubro1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
 private void jbguardarcambiosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbguardarcambiosKeyTyped
     int k = (int) evt.getKeyChar();
     if (k == 10) {
-        jbguardarcambiosActionPerformed(null);
+        jbguardarcambios.doClick();
     }
 }//GEN-LAST:event_jbguardarcambiosKeyTyped
 
@@ -955,12 +959,13 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     int k = (int) evt.getKeyChar();
     if (k == 10) {
         //transfiere el foco si presionas enter
-        jbbuscarActionPerformed(null);
+        jbbuscar.doClick();
+        txtdni1.requestFocus();
     }
 }//GEN-LAST:event_txtcodigoclienteKeyPressed
 
 private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarclienteActionPerformed
-    String consulta = "Select * from cliente where idcliente = '" + txtidcliente1.getText() + "' and saldo > 0";
+        String consulta = "Select * from credito where idcliente = '" + txtidcliente1.getText() + "' and saldo > 0";
     try {
         Conectar();
         ResultSet rs = stmt.executeQuery(consulta);
@@ -969,20 +974,37 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
             int res = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el Cliente seleccionado?");
             if (res == JOptionPane.OK_OPTION) {
                 consulta = "Delete from cliente where idcliente='" + txtidcliente1.getText() + "' ";
-                rs = stmt.executeQuery(consulta);
+                int done = stmt.executeUpdate(consulta);
                 consulta = "Delete from credito where idcliente='" + txtidcliente1.getText() + "' ";
-                rs = stmt.executeQuery(consulta);
+                done = stmt.executeUpdate(consulta);
                 consulta = "Delete from pago where idcliente='" + txtidcliente1.getText() + "' ";
-                rs = stmt.executeQuery(consulta);
+                done = stmt.executeUpdate(consulta);
             }
             JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Cliente seleccionado.","Baja de Cliente", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se puede eliminar al Cliente seleccionado porque registra creditos impagos.\nVerifique el historial de los Creditos del Cliente.","Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error al verificar los Creditos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }//GEN-LAST:event_jbeliminarclienteActionPerformed
+
+    private void jbguardarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbguardarKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            jbguardar.doClick();
+        }
+    }//GEN-LAST:event_jbguardarKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ClienteCambiarZona C = new ClienteCambiarZona(this, true, txtidcliente1.getText());
+        C.setVisible(true);
+        if (C.getcambiozona() == true) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1024,9 +1046,9 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JComboBox comborubro;
     private javax.swing.JComboBox comborubro1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
