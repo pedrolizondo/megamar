@@ -25,6 +25,7 @@ public class Pagos extends javax.swing.JDialog {
     private int valor_cuota;
     private float compra_total;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
+    private boolean clientevalido;
 
     /**
      * Creates new form Pagos
@@ -37,6 +38,10 @@ public class Pagos extends javax.swing.JDialog {
         labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
         txtcodigocliente.requestFocus();
+    }
+    
+    public boolean getclientevalido(){
+        return clientevalido;
     }
 
     /**
@@ -502,12 +507,15 @@ public class Pagos extends javax.swing.JDialog {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (txtcodigocliente.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese el codigo del cliente o presione el boton Ver listado de Clientes.","ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingrese el codigo del cliente o presione el boton Ver listado de Clientes.", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             cargardatos();
-            jbvercreditos.setEnabled(true);
-            cargartablacreditos();
-            jdfechapago.setDate(new Date());
+            if (getclientevalido() == true) {
+                jbvercreditos.setEnabled(true);
+                cargartablacreditos();
+                jdfechapago.setDate(new Date());
+                jdfechapago.requestFocus();
+            }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -646,9 +654,7 @@ public class Pagos extends javax.swing.JDialog {
 
 private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
     if (evt.getKeyCode() == evt.VK_ENTER) {
-        jButton7ActionPerformed(null);
-        jdfechapago.setDate(new Date());
-        jdfechapago.requestFocusInWindow();
+        jButton7.doClick();
     }
 }//GEN-LAST:event_txtcodigoclienteKeyPressed
 
@@ -783,6 +789,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             if (rs.getRow() == 0) {
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
+                clientevalido = false;
             }else if (rs.getString("perno").equals("SI")) {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado esta marcado como PERNO!. No se le puede asignar un credito. \nSi desea darle un credito debe modificar el campo PERNO en el menu Actualizaciones -> Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
@@ -807,7 +814,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     }
     
     private void limpiarcampos() {
-        //txtidcliente.setText("");
+        txtcodigocliente.setText("");
         txtdni.setText("");
         txtnombre.setText("");
         //txtapellido.setText("");
