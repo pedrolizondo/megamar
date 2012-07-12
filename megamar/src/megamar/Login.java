@@ -41,11 +41,11 @@ public class Login extends javax.swing.JFrame {
         txtusuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtpass = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         combozonas = new javax.swing.JComboBox();
+        txtpass = new javax.swing.JPasswordField();
         jbaceptar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -54,6 +54,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
 
+        txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtusuario.setPreferredSize(new java.awt.Dimension(150, 20));
         txtusuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -69,19 +70,20 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user_32.png"))); // NOI18N
         jLabel1.setText("Usuario");
 
-        txtpass.setPreferredSize(new java.awt.Dimension(6, 10));
-        txtpass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtpassKeyTyped(evt);
-            }
-        });
-
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/acerca.png"))); // NOI18N
         jLabel6.setText("Zona");
 
         combozonas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 combozonasKeyTyped(evt);
+            }
+        });
+
+        txtpass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtpass.setPreferredSize(new java.awt.Dimension(150, 20));
+        txtpass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtpassKeyTyped(evt);
             }
         });
 
@@ -102,14 +104,14 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel6)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(combozonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)))
-                    .addComponent(combozonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                    .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,8 +131,8 @@ public class Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
+                            .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(combozonas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))))
@@ -230,14 +232,6 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_txtusuarioKeyTyped
 
-    private void txtpassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpassKeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k == 10) {
-            //transfiere el foco si presionas enter
-            txtpass.transferFocus();
-        }
-    }//GEN-LAST:event_txtpassKeyTyped
-
     private void combozonasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_combozonasKeyTyped
         int k = (int) evt.getKeyChar();
         if (k == 10) {
@@ -253,6 +247,15 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             jbaceptar.doClick();
         }
     }//GEN-LAST:event_jbaceptarKeyTyped
+
+    private void txtpassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpassKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            txtpass.transferFocus();
+        }
+
+    }//GEN-LAST:event_txtpassKeyTyped
 
     /**
      * @param args the command line arguments
@@ -299,7 +302,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbaceptar;
-    private javax.swing.JTextField txtpass;
+    private javax.swing.JPasswordField txtpass;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
     private conexion db;

@@ -595,14 +595,10 @@ public class Pagos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos del pago", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
-
-      
+        
         /*
          * Modificacion de la tabla Credito
          */
-        
-        
-        
         String consulta2 = "update credito "
                 + "set compra_total='"+compra_total+"', pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"' "
                 + "where idcredito='" + id_credito + "'";
