@@ -18,12 +18,10 @@ import javax.swing.JOptionPane;
  * @author Administrador
  */
 public class conexion {
-    
-  private Connection myConnection;
 
+    private Connection myConnection;
 
-  public conexion() {
-
+    public conexion() {
     }
 
     public void init() {
@@ -34,45 +32,38 @@ public class conexion {
             JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public Connection getMyConnection(){
+
+    public Connection getMyConnection() {
         return myConnection;
     }
-    
-    
-    public void close(ResultSet rs){
-        
-        if(rs !=null){
-            try{
-               rs.close();
+
+    public void close(ResultSet rs) {
+
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (Exception e) {
             }
-            catch(Exception e){}
-        
         }
     }
-    
-     public void close(java.sql.Statement stmt){
-        
-        if(stmt !=null){
-            try{
-               stmt.close();
+
+    public void close(java.sql.Statement stmt) {
+
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (Exception e) {
             }
-            catch(Exception e){}
-        
         }
     }
-     
-  public void destroy(){
-  
-    if(myConnection !=null){
-    
-         try{
-               myConnection.close();
+
+    public void destroy() {
+
+        if (myConnection != null) {
+            try {
+                myConnection.close();
+            } catch (Exception e) {
             }
-            catch(Exception e){}
-        
-       
-  }
-    
-  }
+        }
+    }
 }
