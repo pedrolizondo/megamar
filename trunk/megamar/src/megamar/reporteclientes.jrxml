@@ -13,12 +13,9 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="zona" class="java.lang.String">
-		<defaultValueExpression><![CDATA['1']]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[Select idcliente as 'Codigo', CONCAT(apellido,', ',nombre) as 'Nombre', dni as DNI, num_creditos as Creditos, r.descripcion as 'Rubro', domicilio_particular as 'Domicilio Particular', barrio_particular as 'Barrio Particular', domicilio_comercial as 'Domicilio Comercial', barrio_comercial as 'Barrio Comercial', telefono as 'Telefono', estado as 'Estado' 
-from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona= $P{zona}]]>
+from cliente c, rubro r where c.idrubro=r.idrubro]]>
 	</queryString>
 	<field name="Codigo" class="java.lang.Integer"/>
 	<field name="Nombre" class="java.lang.String"/>

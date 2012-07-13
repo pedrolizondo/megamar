@@ -235,12 +235,13 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // End of variables declaration//GEN-END:variables
     private conexion db;
     private Statement stmt;
+    private Connection conn;
     
     public void Conectar() {
         try {
             db = new conexion();      //instancia de la clase conexion.java
             db.init();
-            Connection conn = db.getMyConnection();
+             conn = db.getMyConnection();
             stmt = conn.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -281,23 +282,31 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     public void CrearReporte(String idzona){
-        Conectar();
-        String archivo = "reporteclientes.jrxml";
-        /*JasperReport report = JasperCompileManager.compileReport(archivo);
-        JasperPrint print = JasperFillManager.fillReport(report, null, db.getMyConnection());
-        JRViewer viewer = new JRViewer(print);
-        viewer.setOpaque(true);
-        viewer.setVisible(true);
-        */
-        JasperReport masterReport = null;
+        /*try {
+            Conectar();
+            String archivo = "reporteclientes.jrxml";
+            JasperReport reporte = JasperCompileManager.compileReport(archivo);
+            JasperPrint print = JasperFillManager.fillReport(reporte, null, db.getMyConnection());
+            JasperViewer.viewReport(print);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }*/
+        try {
+            JasperReport reporte = JasperCompileManager.compileReport("reporteclientes.jrxml");
+            JasperPrint print = JasperFillManager.fillReport(reporte, null, db.getMyConnection());
+            JasperViewer.viewReport(print);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        /*JasperReport masterReport = null;
         try{
             masterReport = (JasperReport) JRLoader.loadObjectFromFile(archivo);
         }catch(JRException e){
             System.out.println("Error la cargar el reporte: "+e.getMessage());
-        }
+        }*/
         
         //Parametro
-        Map parametro = new HashMap();
+        /*Map parametro = new HashMap();
         parametro.put("zona", idzona);
         try {
             //Reporte diseñado y compilado con iReport
@@ -308,6 +317,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             jviewer.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(ListadoClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }
