@@ -12,6 +12,16 @@ package megamar;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -32,6 +42,7 @@ public class Principal extends javax.swing.JFrame {
         //this.labelidzona.setText(Integer.toString(idzona));
         zona = nombrezona;
         idzona = idz;
+        Conectar();
     }
 
     /** This method is called from within the constructor to
@@ -50,6 +61,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -102,6 +115,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu4.setText("Informes");
+
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/planes_24.png"))); // NOI18N
+        jMenuItem8.setText("Listado de Clientes");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu4);
 
         jMenu2.setText("Gestion");
 
@@ -196,6 +222,24 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         P.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+        try {
+            JasperReport reporte = JasperCompileManager.compileReport("reporteclientes.jrxml");
+            Map parametros = new HashMap();
+            parametros.put("idzona", idzona);
+
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            JasperViewer view = new JasperViewer(print);
+            view.setTitle("Ejemplo Jasper Report");
+            view.setVisible(true);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,6 +279,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -243,6 +288,22 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JLabel labelzona;
     // End of variables declaration//GEN-END:variables
+
+    private conexion db;
+    private Statement stmt;
+    private Connection conn;
+    
+    public void Conectar() {
+        try {
+            db = new conexion();      //instancia de la clase conexion.java
+            db.init();
+             conn = db.getMyConnection();
+            stmt = conn.createStatement();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
