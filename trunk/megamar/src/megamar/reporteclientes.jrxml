@@ -13,9 +13,10 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="idzona" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[Select idcliente as 'Codigo', CONCAT(apellido,', ',nombre) as 'Nombre', dni as DNI, num_creditos as Creditos, r.descripcion as 'Rubro', domicilio_particular as 'Domicilio Particular', barrio_particular as 'Barrio Particular', domicilio_comercial as 'Domicilio Comercial', barrio_comercial as 'Barrio Comercial', telefono as 'Telefono', estado as 'Estado' 
-from cliente c, rubro r where c.idrubro=r.idrubro]]>
+from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona=$P{idzona}]]>
 	</queryString>
 	<field name="Codigo" class="java.lang.Integer"/>
 	<field name="Nombre" class="java.lang.String"/>
@@ -34,8 +35,8 @@ from cliente c, rubro r where c.idrubro=r.idrubro]]>
 	<title>
 		<band height="136" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="164" height="126"/>
-				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
+				<reportElement x="1" y="0" width="164" height="126"/>
+				<imageExpression><![CDATA["src\\megamar\\coffee.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Title" x="172" y="0" width="461" height="62"/>
@@ -45,22 +46,15 @@ from cliente c, rubro r where c.idrubro=r.idrubro]]>
 				<text><![CDATA[Megamar Financiera]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="303" y="62" width="196" height="22"/>
+				<reportElement style="SubTitle" x="336" y="76" width="177" height="27"/>
 				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+					<font fontName="Times New Roman" size="22" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
+				<text><![CDATA[Listado de Clientes]]></text>
 			</staticText>
 			<image>
 				<reportElement x="633" y="-73" width="219" height="209"/>
-				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
+				<imageExpression><![CDATA["src\\megamar\\coffee_stain.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

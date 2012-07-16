@@ -789,6 +789,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             }else if (rs.getString("perno").equals("SI")) {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado esta marcado como PERNO!. No se le puede asignar un credito. \nSi desea darle un credito debe modificar el campo PERNO en el menu Actualizaciones -> Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
+                clientevalido = false;
             } else {
                 rs.beforeFirst();
                 while (rs.next()) {
@@ -803,6 +804,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                     txtrubro.setText(rs.getString("descripcion"));
                     //num_creditos = rs.getInt("num_creditos");
                 }
+                clientevalido = true;
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
@@ -820,6 +822,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         txtbarriocomercial.setText("");
         txttelefono.setText("");
         txtrubro.setText("");
+        tablacreditos.setModel(null);
     }
         
     private void cargartablacreditos() {
