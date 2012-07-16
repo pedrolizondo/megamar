@@ -14,9 +14,9 @@ package megamar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+/*
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,7 +28,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
-import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.view.JasperViewer;*/
 
 
 /**
@@ -282,6 +282,9 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }
     
     public void CrearReporte(){
+        
+        
+        
         /*try {
             Conectar();
             String archivo = "reporteclientes.jrxml";
@@ -291,19 +294,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }*/
-        try {
-            JasperReport reporte = JasperCompileManager.compileReport("src/megamar/reporteclientes.jrxml");
-            Map parametros = new HashMap();
-            parametros.put("idzona", idzona);
-            
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-            //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print);
-            view.setTitle("Ejemplo Jasper Report");
-            view.setVisible(true);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        
         /*JasperReport masterReport = null;
         try{
             masterReport = (JasperReport) JRLoader.loadObjectFromFile(archivo);
