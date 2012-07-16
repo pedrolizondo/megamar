@@ -186,7 +186,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_tablaclientesMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CrearReporte("1");
+        CrearReporte();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -281,7 +281,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }
     
-    public void CrearReporte(String idzona){
+    public void CrearReporte(){
         /*try {
             Conectar();
             String archivo = "reporteclientes.jrxml";
@@ -292,9 +292,15 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             System.out.println(e.getMessage());
         }*/
         try {
-            JasperReport reporte = JasperCompileManager.compileReport("reporteclientes.jrxml");
-            JasperPrint print = JasperFillManager.fillReport(reporte, null, db.getMyConnection());
-            JasperViewer.viewReport(print);
+            JasperReport reporte = JasperCompileManager.compileReport("src/megamar/reporteclientes.jrxml");
+            Map parametros = new HashMap();
+            parametros.put("idzona", idzona);
+            
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            JasperViewer view = new JasperViewer(print);
+            view.setTitle("Ejemplo Jasper Report");
+            view.setVisible(true);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

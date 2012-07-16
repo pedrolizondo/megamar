@@ -24,7 +24,7 @@ public class Creditos extends javax.swing.JDialog {
     private int num_creditos;
     private int id_cliente;
     private float compra_total;
-    private boolean clientevalido = true;
+    private boolean clientevalido;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
     /**
      * Creates new form creditos
@@ -804,6 +804,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                     txtrubro.setText(rs.getString("descripcion"));
                     num_creditos = rs.getInt("num_creditos");
                 }
+                clientevalido = true;
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
@@ -821,6 +822,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
         txtbarriocomercial.setText("");
         txttelefono.setText("");
         txtrubro.setText("");
+        tablacreditos.setModel(null);
     }
 
     private void cargartablacreditos() {
@@ -840,7 +842,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
             tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
