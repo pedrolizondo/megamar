@@ -4,6 +4,7 @@
  */
 package megamar;
 
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,11 +27,12 @@ public class Pagos extends javax.swing.JDialog {
     private float compra_total;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
     private boolean clientevalido;
+    private String idusuario;
 
     /**
      * Creates new form Pagos
      */
-    public Pagos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
+    public Pagos(String idz, String nomzona, String idus, java.awt.Frame parent,boolean modal) {
         super(parent, modal);
         initComponents();
         jdfechapago.setLocale(Locale.getDefault());  //Define el idioma del calendar
@@ -38,6 +40,8 @@ public class Pagos extends javax.swing.JDialog {
         labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
         txtcodigocliente.requestFocus();
+        jpanelpago.setVisible(false);
+        idusuario = idus;
     }
     
     public boolean getclientevalido(){
@@ -82,7 +86,7 @@ public class Pagos extends javax.swing.JDialog {
         txtbarriocomercial = new javax.swing.JTextField();
         txttelefono = new javax.swing.JTextField();
         txtrubro = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jpanelpago = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtpago = new javax.swing.JTextField();
@@ -122,14 +126,11 @@ public class Pagos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelzona)
-                .addContainerGap(748, Short.MAX_VALUE))
+                .addContainerGap(783, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelzona)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(labelzona)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Cliente"));
@@ -183,7 +184,7 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbvercreditos)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addContainerGap(294, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +278,7 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +292,7 @@ public class Pagos extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Pago"));
+        jpanelpago.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Pago"));
 
         jLabel2.setText("Fecha del Pago");
 
@@ -301,45 +302,48 @@ public class Pagos extends javax.swing.JDialog {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtpagoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtpagoKeyTyped(evt);
+            }
         });
 
         jLabel6.setText("Incremento ($)");
 
         txtincremento.setText("0");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpanelpagoLayout = new javax.swing.GroupLayout(jpanelpago);
+        jpanelpago.setLayout(jpanelpagoLayout);
+        jpanelpagoLayout.setHorizontalGroup(
+            jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpanelpagoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpanelpagoLayout.createSequentialGroup()
                         .addComponent(jdfechapago, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtpago, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2))
-                .addContainerGap(598, Short.MAX_VALUE))
+                .addContainerGap(601, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        jpanelpagoLayout.setVerticalGroup(
+            jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelpagoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpanelpagoLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtincremento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtpago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jpanelpagoLayout.createSequentialGroup()
+                        .addGroup(jpanelpagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -403,11 +407,6 @@ public class Pagos extends javax.swing.JDialog {
                 tablacreditosMouseClicked(evt);
             }
         });
-        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tablacreditosFocusLost(evt);
-            }
-        });
         jScrollPane1.setViewportView(tablacreditos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -417,10 +416,11 @@ public class Pagos extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, 0, 897, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtpagado, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -436,17 +436,15 @@ public class Pagos extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 376, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, 0, 892, Short.MAX_VALUE))
+                            .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -455,11 +453,11 @@ public class Pagos extends javax.swing.JDialog {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpagado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtatrasototal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtincrementototal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -467,19 +465,18 @@ public class Pagos extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 701, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpanelpago, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -489,12 +486,12 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpanelpago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -513,8 +510,6 @@ public class Pagos extends javax.swing.JDialog {
             if (getclientevalido() == true) {
                 jbvercreditos.setEnabled(true);
                 cargartablacreditos();
-                jdfechapago.setDate(new Date());
-                jdfechapago.requestFocus();
             }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -558,15 +553,15 @@ public class Pagos extends javax.swing.JDialog {
         }
         int pago = Integer.parseInt(txtpago.getText());
         String fecha_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
+        String fecha_carga_pago = (String) FORMATO_YYYY_MM_DD.format(new Date());
         int incremento = Integer.parseInt(txtincremento.getText());
         int incremento_total = Integer.parseInt(txtincrementototal.getText());
         int saldo = Integer.parseInt(txtsaldo.getText());
         int atraso = 0;
         int atraso_total = Integer.parseInt(txtatrasototal.getText());
-        /*
-         * Falta definir el idusuario (login)
-         */
-        String id_usuario = "1";
+        
+        String id_usuario = idusuario;
+        
         int fila = tablacreditos.getSelectedRow();
         int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
         int pagado = Integer.parseInt(txtpagado.getText());
@@ -585,7 +580,7 @@ public class Pagos extends javax.swing.JDialog {
         /*
          * Alta del PAGO
          */
-        String consulta = "insert into pago values('" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "' )";
+        String consulta = "insert into pago values('" + compra_total + "', '" + pagado + "', '" + saldo + "', '" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "', '" + fecha_carga_pago + "' )";
         try {
             Conectar();
             int done = stmt.executeUpdate(consulta);
@@ -599,8 +594,18 @@ public class Pagos extends javax.swing.JDialog {
         /*
          * Modificacion de la tabla Credito
          */
+        String estado;
+        if(pagado >= compra_total){
+            estado = "PAGADO";
+            JOptionPane.showMessageDialog(null,"Se completo el pago del Credito.","Aviso", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            estado = "DEBE";
+        }
+            
+        
+        
         String consulta2 = "update credito "
-                + "set compra_total='"+compra_total+"', pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"' "
+                + "set compra_total='"+compra_total+"', pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"', estado='"+estado+"' "
                 + "where idcredito='" + id_credito + "'";
 
         try {
@@ -612,7 +617,9 @@ public class Pagos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
-        this.dispose();
+        limpiarcampos();
+        txtcodigocliente.requestFocus();
+        //this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -642,17 +649,23 @@ public class Pagos extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Credito.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        jpanelpago.setVisible(true);
+        txtpago.requestFocusInWindow();
     }//GEN-LAST:event_tablacreditosMouseClicked
-
-    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
-        //jButtonModificar.setEnabled(false);
-    }//GEN-LAST:event_tablacreditosFocusLost
 
 private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
     if (evt.getKeyCode() == evt.VK_ENTER) {
         jButton7.doClick();
     }
 }//GEN-LAST:event_txtcodigoclienteKeyPressed
+
+    private void txtpagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpagoKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            txtpago.transferFocus();
+        }
+    }//GEN-LAST:event_txtpagoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -726,7 +739,6 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -737,6 +749,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbvercreditos;
     private com.toedter.calendar.JDateChooser jdfechapago;
+    private javax.swing.JPanel jpanelpago;
     private javax.swing.JLabel labelzona;
     private javax.swing.JTable tablacreditos;
     private javax.swing.JTextField txtatrasototal;
@@ -785,11 +798,9 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             if (rs.getRow() == 0) {
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
-                clientevalido = false;
             }else if (rs.getString("perno").equals("SI")) {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado esta marcado como PERNO!. No se le puede asignar un credito. \nSi desea darle un credito debe modificar el campo PERNO en el menu Actualizaciones -> Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
-                clientevalido = false;
             } else {
                 rs.beforeFirst();
                 while (rs.next()) {
@@ -815,34 +826,56 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         txtcodigocliente.setText("");
         txtdni.setText("");
         txtnombre.setText("");
-        //txtapellido.setText("");
         txtdomicilioparticular.setText("");
         txtbarrioparticular.setText("");
         txtdomiciliocomercial.setText("");
         txtbarriocomercial.setText("");
         txttelefono.setText("");
         txtrubro.setText("");
-        tablacreditos.setModel(null);
+        txtcompra.setText("");
+        txtpagado.setText("");
+        txtsaldo.setText("");
+        txtatrasototal.setText("");
+        txtincrementototal.setText("");
+        tablacreditos.setModel(new DefaultTableModel());
+        jpanelpago.setVisible(false);
+        clientevalido = false;
+        txtpago.setText("");
+        txtincremento.setText("");
     }
         
     private void cargartablacreditos() {
+        boolean creditos = false;
         String consulta = "SELECT idcredito, compra as 'Compra', compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
-            + "pagado as 'Pagado', fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', estado as 'Estado', "
-            + "saldo as 'Saldo' "
-            + "FROM credito where idcliente = '"+id_cliente+"'";
+                + "pagado as 'Pagado', fecha_compra as 'Fecha Compra', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', estado as 'Estado', "
+                + "saldo as 'Saldo' "
+                + "FROM credito where idcliente = '" + id_cliente + "' and estado = 'DEBE' ";
         /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
-            DefaultTableModel modelo = new DefaultTableModel();
-            tablacreditos.setModel(modelo);
-            ConversorRSaDefaultTableModel.completar(rs, modelo);
-            //codigo para ocultar la primera columna (idplan)
-            tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
-            tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
-            tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            rs.last();
+            if (rs.getRow() > 0) {
+                rs.beforeFirst();
+                DefaultTableModel modelo = new DefaultTableModel();
+                tablacreditos.setModel(modelo);
+                ConversorRSaDefaultTableModel.completar(rs, modelo);
+                //codigo para ocultar la primera columna (idplan)
+                tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
+                tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
+                tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+                tablacreditos.changeSelection(0, 0, false, true);
+                creditos = true;
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar la tabla de Creditos de Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        if (creditos) {
+            //tablacreditosMouseClicked(new MouseEvent(this, 0, 0, 0, 0, 0, 0, creditos));
+            tablacreditosMouseClicked(null);
+            jdfechapago.setDate(new Date());
+            txtpago.requestFocusInWindow();
+        }
+
     }
 }

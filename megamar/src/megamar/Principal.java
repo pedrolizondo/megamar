@@ -30,8 +30,11 @@ import net.sf.jasperreports.view.JasperViewer;
 public class Principal extends javax.swing.JFrame {
     private String zona;
     private int idzona;
+    private String idusuario;
+    private String perfil;
+    
     /** Creates new form Principal */
-    public Principal(String nombrezona, int idz) {
+    public Principal(String nombrezona, int idz, String idu, String perf) {
         initComponents();
         //codigo para maximizar la ventana principal al iniciar el sistema
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,6 +45,8 @@ public class Principal extends javax.swing.JFrame {
         //this.labelidzona.setText(Integer.toString(idzona));
         zona = nombrezona;
         idzona = idz;
+        idusuario = idu;
+        perfil = perf;
         Conectar();
     }
 
@@ -66,13 +71,15 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        JMenu5 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Megamar Financiera");
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 48)); // NOI18N
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 48));
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
 
@@ -151,6 +158,19 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        JMenu5.setText("Cobradores");
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user_24.png"))); // NOI18N
+        jMenuItem9.setText("Liquidar Sueldo");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        JMenu5.add(jMenuItem9);
+
+        jMenuBar1.add(JMenu5);
+
         jMenu3.setText("Administrar");
 
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user_24.png"))); // NOI18N
@@ -218,14 +238,13 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Pagos P = new Pagos(Integer.toString(idzona), zona, this, true);
+        Pagos P = new Pagos(Integer.toString(idzona), zona, idusuario, this, true);
         P.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        
         try {
-            JasperReport reporte = JasperCompileManager.compileReport("reporteclientes.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
             Map parametros = new HashMap();
             parametros.put("idzona", idzona);
 
@@ -234,11 +253,19 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             JasperViewer view = new JasperViewer(print);
             view.setTitle("Ejemplo Jasper Report");
             view.setVisible(true);
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        /*
+         * Calculo del estado de la Zona y Total a cobrar
+         */
+        
+        String consulta ="SELECT sum(c.compra_total) FROM credito c, cliente x WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and x.idzona = 1";
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,6 +303,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu JMenu5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -289,6 +317,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel labelzona;
     // End of variables declaration//GEN-END:variables
 

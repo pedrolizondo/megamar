@@ -202,6 +202,8 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     
     String consulta = "Select * from login where usuario = '" + txtusuario.getText() + "' and pass = md5('" + txtpass.getText() + "') ";
     boolean access = false;
+    String id_usuario = null;
+    String perfil = null;
     try {
         Conectar();
         ResultSet rs = stmt.executeQuery(consulta);
@@ -211,13 +213,15 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos. \nPor favor verifique los datos ingresados. ", "Error", JOptionPane.ERROR_MESSAGE);
             limpiarcampos();
         } else {
+            id_usuario = rs.getString("idusuario");
+            perfil = rs.getString("perfil");
             access = true;
         }
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
     }
     if (access == true) {
-        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex());
+        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil);
         P.setVisible(true);
     }
 }//GEN-LAST:event_jbaceptarActionPerformed
