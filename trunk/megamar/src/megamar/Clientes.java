@@ -796,7 +796,7 @@ private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     if (k == 10) {
         //transfiere el foco si presionas enter
         txttelefono.transferFocus();
-    } else if (!Character.isDigit(k) || txtdni.getText().length() > 7) {
+    } else if (!Character.isDigit(k)) {
         evt.setKeyChar((char) KeyEvent.VK_CLEAR);
     }
 }//GEN-LAST:event_txttelefonoKeyTyped
