@@ -737,24 +737,23 @@ private void jbguardarcambiosActionPerformed(java.awt.event.ActionEvent evt) {//
     String domicilio_comercial = txtdomiciliocomercial1.getText();
     String barrio_comercial = txtbarriocomercial1.getText();
     String telefono = txttelefono1.getText();
-    
+
     String perno = comboperno.getSelectedItem().toString();
     int rubro = comborubro1.getSelectedIndex();
-    
+
     String consulta = "update cliente "
             + "set dni='" + dni + "', nombre='" + nombre + "', apellido='" + apellido + "', domicilio_particular='" + domicilio_particular + "', barrio_particular='" + barrio_particular + "', domicilio_comercial='" + domicilio_comercial + "', barrio_comercial='" + barrio_comercial + "', telefono='" + telefono + "', perno='" + perno + "', idrubro='" + rubro + "' "
             + "where idcliente='" + idcliente + "'";
-    
-    try{
-          Conectar();
-            int done= stmt.executeUpdate(consulta);
-            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null,"Se actualizaron los datos del cliente.","Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        }catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null,ex.getMessage(),"Error! No se pudo actualizar los datos del cliente.",JOptionPane.ERROR_MESSAGE);
-        }
+
+    try {
+        Conectar();
+        int done = stmt.executeUpdate(consulta);
+        //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Se actualizaron los datos del cliente.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        db.close(stmt);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del cliente.", JOptionPane.ERROR_MESSAGE);
+    }
     db.destroy();
     this.dispose();
 }//GEN-LAST:event_jbguardarcambiosActionPerformed
