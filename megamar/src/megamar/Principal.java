@@ -70,7 +70,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         JMenu5 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -136,10 +140,10 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu2.setText("Gestion");
+        jMenu2.setText("Creditos");
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/form.png"))); // NOI18N
-        jMenuItem5.setText("Creditos");
+        jMenuItem5.setText("Nuevo Credito");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -147,18 +151,38 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuBar1.add(jMenu2);
+
+        jMenu5.setText("Pagos");
+
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/planes_24.png"))); // NOI18N
-        jMenuItem6.setText("Pagos");
+        jMenuItem6.setText("Nuevo Pago");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        jMenu5.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu5);
 
-        JMenu5.setText("Cobradores");
+        jMenu6.setText("Zonas");
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/zona_24.png"))); // NOI18N
+        jMenuItem10.setText("Estado de Zona");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem10);
+
+        jMenuItem11.setText("Impresion de Recibos");
+        jMenu6.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu6);
+
+        JMenu5.setText("Liquidación");
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user_24.png"))); // NOI18N
         jMenuItem9.setText("Liquidar Sueldo");
@@ -260,12 +284,14 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        /*
-         * Calculo del estado de la Zona y Total a cobrar
-         */
-        
-        String consulta ="SELECT sum(c.compra_total) FROM credito c, cliente x WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and x.idzona = 1";
+        Liquidacion L = new Liquidacion(this, true);
+        L.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        EstadoZonas E = new EstadoZonas(this, true);
+        E.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,8 +334,12 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
