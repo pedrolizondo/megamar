@@ -284,7 +284,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        Liquidacion L = new Liquidacion(this, true);
+        Liquidacion L = new Liquidacion(this, true, idzona);
         L.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 

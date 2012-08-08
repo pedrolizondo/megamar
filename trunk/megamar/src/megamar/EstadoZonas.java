@@ -101,6 +101,12 @@ public class EstadoZonas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbimprimirActionPerformed
+        /*
+         * Cuando se imprime el formulario "Estado de Zona" se registra:
+         * numero de recibos cortados, estado de la zona y total a cobrar por el cobrador.
+         * Estos datos sirven para calcular luego la liquidacion de los cobradores.
+         */
+        
         int fila = tablaestadozona.getSelectedRow();
         String idzona = String.valueOf(tablaestadozona.getValueAt(fila,0));
         String num_recibos = String.valueOf(tablaestadozona.getValueAt(fila,2));
