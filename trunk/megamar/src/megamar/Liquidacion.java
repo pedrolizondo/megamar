@@ -12,7 +12,11 @@ package megamar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,11 +24,18 @@ import javax.swing.JOptionPane;
  * @author Lizondo1
  */
 public class Liquidacion extends javax.swing.JDialog {
-
+    private int idzona;
+    private float pagos [][] = new float[4][3];  //4=dias; 3=porcentajes(5,4,3)
+    private int total_recibos[] = new int[3];    //Total Recibos cortados: 1=5%; 2=4%; 3=5%
+    private int porcentajes [] = new int[3];     //Array que guarda el porcentaje como se pago la comision (5,4,3)
+    private List idpago = new ArrayList();
+    public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
+    private float[] comision_monto = new float[3];
     /** Creates new form Liquidacion */
-    public Liquidacion(java.awt.Frame parent, boolean modal, int idzona) {
+    public Liquidacion(java.awt.Frame parent, boolean modal, int idz) {
         super(parent, modal);
         initComponents();
+        idzona = idz;
         cargardatos(idzona);
     }
 
@@ -62,6 +73,12 @@ public class Liquidacion extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txttotalrecibos5 = new javax.swing.JTextField();
+        txttotalrecibos4 = new javax.swing.JTextField();
+        txttotalrecibos3 = new javax.swing.JTextField();
+        txttotalreciboscortados1 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -86,33 +103,45 @@ public class Liquidacion extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
-        txttotalrecibos5 = new javax.swing.JTextField();
-        txttotalrecibos4 = new javax.swing.JTextField();
-        txttotalrecibos3 = new javax.swing.JTextField();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
         txttotalpagos5 = new javax.swing.JTextField();
         txttotalpagos4 = new javax.swing.JTextField();
         txttotalpagos3 = new javax.swing.JTextField();
+        txttotalcobrado1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         txttotalacobrar = new javax.swing.JTextField();
         txttotalcobrado = new javax.swing.JTextField();
         txtdinerocobrado = new javax.swing.JTextField();
+        txttotalreciboscortados = new javax.swing.JTextField();
+        txttotalrecibosnocortados = new javax.swing.JTextField();
+        jPanel19 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        txtcomision5 = new javax.swing.JTextField();
+        txtcomision4 = new javax.swing.JTextField();
+        txtcomision3 = new javax.swing.JTextField();
+        jPanel22 = new javax.swing.JPanel();
+        txtsubtotal5 = new javax.swing.JTextField();
+        txtsubtotal4 = new javax.swing.JTextField();
+        txtsubtotal3 = new javax.swing.JTextField();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        txttotalapagar = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -123,36 +152,44 @@ public class Liquidacion extends javax.swing.JDialog {
         jPanel2.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtrecibolunes5.setEditable(false);
+        txtrecibolunes5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibolunes5.setText("0");
         jPanel2.add(txtrecibolunes5);
 
         txtrecibomartes5.setEditable(false);
+        txtrecibomartes5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomartes5.setText("0");
         jPanel2.add(txtrecibomartes5);
 
         txtrecibomiercoles5.setEditable(false);
+        txtrecibomiercoles5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomiercoles5.setText("0");
         jPanel2.add(txtrecibomiercoles5);
 
         txtrecibojueves5.setEditable(false);
+        txtrecibojueves5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibojueves5.setText("0");
         jPanel2.add(txtrecibojueves5);
 
         jPanel3.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtrecibolunes4.setEditable(false);
+        txtrecibolunes4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibolunes4.setText("0");
         jPanel3.add(txtrecibolunes4);
 
         txtrecibomartes4.setEditable(false);
+        txtrecibomartes4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomartes4.setText("0");
         jPanel3.add(txtrecibomartes4);
 
         txtrecibomiercoles4.setEditable(false);
+        txtrecibomiercoles4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomiercoles4.setText("0");
         jPanel3.add(txtrecibomiercoles4);
 
         txtrecibojueves4.setEditable(false);
+        txtrecibojueves4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibojueves4.setText("0");
         jPanel3.add(txtrecibojueves4);
 
@@ -173,18 +210,22 @@ public class Liquidacion extends javax.swing.JDialog {
         jPanel4.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtrecibolunes3.setEditable(false);
+        txtrecibolunes3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibolunes3.setText("0");
         jPanel4.add(txtrecibolunes3);
 
         txtrecibomartes3.setEditable(false);
+        txtrecibomartes3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomartes3.setText("0");
         jPanel4.add(txtrecibomartes3);
 
         txtrecibomiercoles3.setEditable(false);
+        txtrecibomiercoles3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibomiercoles3.setText("0");
         jPanel4.add(txtrecibomiercoles3);
 
         txtrecibojueves3.setEditable(false);
+        txtrecibojueves3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtrecibojueves3.setText("0");
         jPanel4.add(txtrecibojueves3);
 
@@ -194,29 +235,63 @@ public class Liquidacion extends javax.swing.JDialog {
 
         jLabel7.setText("3%");
 
+        jLabel15.setText("Totales");
+
+        txttotalrecibos5.setEditable(false);
+        txttotalrecibos5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalrecibos5.setText("0");
+
+        txttotalrecibos4.setEditable(false);
+        txttotalrecibos4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalrecibos4.setText("0");
+
+        txttotalrecibos3.setEditable(false);
+        txttotalrecibos3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalrecibos3.setText("0");
+
+        txttotalreciboscortados1.setEditable(false);
+        txttotalreciboscortados1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalreciboscortados1.setText("0");
+
+        jLabel16.setText("TOTAL");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(106, 106, 106)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addGap(59, 59, 59)
                         .addComponent(jLabel7)
-                        .addGap(38, 38, 38)))
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txttotalreciboscortados1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txttotalrecibos5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txttotalrecibos4)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txttotalrecibos3)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -227,12 +302,24 @@ public class Liquidacion extends javax.swing.JDialog {
                     .addComponent(jLabel7)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txttotalrecibos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txttotalrecibos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttotalrecibos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txttotalreciboscortados1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Importe ($)"));
@@ -254,54 +341,66 @@ public class Liquidacion extends javax.swing.JDialog {
         jPanel5.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtpagolunes5.setEditable(false);
+        txtpagolunes5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagolunes5.setText("0");
         jPanel5.add(txtpagolunes5);
 
         txtpagomartes5.setEditable(false);
+        txtpagomartes5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomartes5.setText("0");
         jPanel5.add(txtpagomartes5);
 
         txtpagomiercoles5.setEditable(false);
+        txtpagomiercoles5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomiercoles5.setText("0");
         jPanel5.add(txtpagomiercoles5);
 
         txtpagojueves5.setEditable(false);
+        txtpagojueves5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagojueves5.setText("0");
         jPanel5.add(txtpagojueves5);
 
         jPanel6.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtpagolunes4.setEditable(false);
+        txtpagolunes4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagolunes4.setText("0");
         jPanel6.add(txtpagolunes4);
 
         txtpagomartes4.setEditable(false);
+        txtpagomartes4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomartes4.setText("0");
         jPanel6.add(txtpagomartes4);
 
         txtpagomiercoles4.setEditable(false);
+        txtpagomiercoles4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomiercoles4.setText("0");
         jPanel6.add(txtpagomiercoles4);
 
         txtpagojueves4.setEditable(false);
+        txtpagojueves4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagojueves4.setText("0");
         jPanel6.add(txtpagojueves4);
 
         jPanel7.setLayout(new java.awt.GridLayout(4, 0, 5, 5));
 
         txtpagolunes3.setEditable(false);
+        txtpagolunes3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagolunes3.setText("0");
         jPanel7.add(txtpagolunes3);
 
         txtpagomartes3.setEditable(false);
+        txtpagomartes3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomartes3.setText("0");
         jPanel7.add(txtpagomartes3);
 
         txtpagomiercoles3.setEditable(false);
+        txtpagomiercoles3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagomiercoles3.setText("0");
         jPanel7.add(txtpagomiercoles3);
 
         txtpagojueves3.setEditable(false);
+        txtpagojueves3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtpagojueves3.setText("0");
         jPanel7.add(txtpagojueves3);
 
@@ -311,6 +410,26 @@ public class Liquidacion extends javax.swing.JDialog {
 
         jLabel14.setText("3%");
 
+        jLabel18.setText("Totales");
+
+        txttotalpagos5.setEditable(false);
+        txttotalpagos5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalpagos5.setText("0");
+
+        txttotalpagos4.setEditable(false);
+        txttotalpagos4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalpagos4.setText("0");
+
+        txttotalpagos3.setEditable(false);
+        txttotalpagos3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalpagos3.setText("0");
+
+        txttotalcobrado1.setEditable(false);
+        txttotalcobrado1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalcobrado1.setText("0");
+
+        jLabel17.setText("TOTAL");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -319,21 +438,35 @@ public class Liquidacion extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 33, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel13)
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel14)
+                                .addGap(53, 53, 53))))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txttotalcobrado1)
+                            .addComponent(txttotalpagos5, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txttotalpagos4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel13)
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel14)
-                        .addGap(30, 30, 30)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(txttotalpagos3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,112 +477,28 @@ public class Liquidacion extends javax.swing.JDialog {
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Total de Recibos cortados"));
-
-        jPanel12.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
-
-        jLabel15.setText("Total 5%");
-        jPanel12.add(jLabel15);
-
-        jLabel16.setText("Total 4%");
-        jPanel12.add(jLabel16);
-
-        jLabel17.setText("Total 3%");
-        jPanel12.add(jLabel17);
-
-        jPanel13.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
-
-        txttotalrecibos5.setEditable(false);
-        txttotalrecibos5.setText("0");
-        jPanel13.add(txttotalrecibos5);
-
-        txttotalrecibos4.setEditable(false);
-        txttotalrecibos4.setText("0");
-        jPanel13.add(txttotalrecibos4);
-
-        txttotalrecibos3.setEditable(false);
-        txttotalrecibos3.setText("0");
-        jPanel13.add(txttotalrecibos3);
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder("Total de cobranzas"));
-
-        jPanel15.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
-
-        jLabel18.setText("Total 5%");
-        jPanel15.add(jLabel18);
-
-        jLabel19.setText("Total 4%");
-        jPanel15.add(jLabel19);
-
-        jLabel20.setText("Total 3%");
-        jPanel15.add(jLabel20);
-
-        jPanel16.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
-
-        txttotalpagos5.setEditable(false);
-        txttotalpagos5.setText("0");
-        jPanel16.add(txttotalpagos5);
-
-        txttotalpagos4.setEditable(false);
-        txttotalpagos4.setText("0");
-        jPanel16.add(txttotalpagos4);
-
-        txttotalpagos3.setEditable(false);
-        txttotalpagos3.setText("0");
-        jPanel16.add(txttotalpagos3);
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txttotalpagos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txttotalpagos3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txttotalpagos5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttotalcobrado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("TOTALES"));
 
-        jPanel18.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+        jPanel18.setLayout(new java.awt.GridLayout(2, 5, 30, 5));
 
         jLabel21.setText("Total a cobrar ($)");
         jPanel18.add(jLabel21);
@@ -457,22 +506,39 @@ public class Liquidacion extends javax.swing.JDialog {
         jLabel22.setText("Total cobrado ($)");
         jPanel18.add(jLabel22);
 
-        jLabel23.setText("Dinero cobrado (%)");
+        jLabel23.setText("% de Dinero cobrado");
         jPanel18.add(jLabel23);
 
-        jPanel19.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+        jLabel19.setText("Recibos cortados");
+        jPanel18.add(jLabel19);
+
+        jLabel20.setText("Recibos no cortados");
+        jPanel18.add(jLabel20);
 
         txttotalacobrar.setEditable(false);
+        txttotalacobrar.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txttotalacobrar.setText("0");
-        jPanel19.add(txttotalacobrar);
+        jPanel18.add(txttotalacobrar);
 
         txttotalcobrado.setEditable(false);
+        txttotalcobrado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txttotalcobrado.setText("0");
-        jPanel19.add(txttotalcobrado);
+        jPanel18.add(txttotalcobrado);
 
         txtdinerocobrado.setEditable(false);
+        txtdinerocobrado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtdinerocobrado.setText("0");
-        jPanel19.add(txtdinerocobrado);
+        jPanel18.add(txtdinerocobrado);
+
+        txttotalreciboscortados.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalreciboscortados.setText("0");
+        txttotalreciboscortados.setEnabled(false);
+        jPanel18.add(txttotalreciboscortados);
+
+        txttotalrecibosnocortados.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txttotalrecibosnocortados.setText("0");
+        txttotalrecibosnocortados.setEnabled(false);
+        jPanel18.add(txttotalrecibosnocortados);
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -480,57 +546,244 @@ public class Liquidacion extends javax.swing.JDialog {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder("Calculo del pago para el Cobrador"));
+
+        jPanel20.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+
+        jLabel24.setText("Comision 5%");
+        jPanel20.add(jLabel24);
+
+        jLabel25.setText("Comision 4%");
+        jPanel20.add(jLabel25);
+
+        jLabel26.setText("Comision 3%");
+        jPanel20.add(jLabel26);
+
+        jPanel21.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+
+        txtcomision5.setEditable(false);
+        txtcomision5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtcomision5.setText("0");
+        jPanel21.add(txtcomision5);
+
+        txtcomision4.setEditable(false);
+        txtcomision4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtcomision4.setText("0");
+        jPanel21.add(txtcomision4);
+
+        txtcomision3.setEditable(false);
+        txtcomision3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtcomision3.setText("0");
+        jPanel21.add(txtcomision3);
+
+        jPanel22.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+
+        txtsubtotal5.setEditable(false);
+        txtsubtotal5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtsubtotal5.setText("0");
+        jPanel22.add(txtsubtotal5);
+
+        txtsubtotal4.setEditable(false);
+        txtsubtotal4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtsubtotal4.setText("0");
+        jPanel22.add(txtsubtotal4);
+
+        txtsubtotal3.setEditable(false);
+        txtsubtotal3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtsubtotal3.setText("0");
+        jPanel22.add(txtsubtotal3);
+
+        jPanel23.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+
+        jLabel27.setText("Subtotal");
+        jPanel23.add(jLabel27);
+
+        jLabel28.setText("Subtotal");
+        jPanel23.add(jLabel28);
+
+        jLabel29.setText("Subtotal");
+        jPanel23.add(jLabel29);
+
+        jLabel30.setText("TOTAL A PAGAR ($)");
+
+        txttotalapagar.setEditable(false);
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(168, 168, 168)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txttotalapagar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(txttotalapagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
+        );
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Cancel.png"))); // NOI18N
+        jButton2.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel19, javax.swing.GroupLayout.Alignment.LEADING, 0, 682, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String consulta;
+        /*
+         * UPDATE de la tabla "pago". 
+         * Se actualiza el campo "liquidado" de los pagos que se liquidaron.
+         */
+        Object[] array = idpago.toArray();          //array de los id pago que se liquidaron
+        for (int i = 0; i < array.length; i++) {
+            consulta = "update pago set liquidado = 'SI' "
+                    + "where idpago = '"+array[i].toString()+"'";
+            try {
+                Conectar();
+                int done = stmt.executeUpdate(consulta);
+                //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Pago.", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        db.destroy();
+        
+        
+        /*
+         * Se guardan los datos de la liquidacion.
+         */
+        String fecha = (String) FORMATO_YYYY_MM_DD.format(new Date());
+        consulta = "insert into liquidacion(fecha,total,cant_recibos_cortados,cant_recibos_no_cortados,porcentaje_dinero_cobrado,idzona) "
+                + "values ( '"+fecha+"', '"+txttotalapagar.getText()+"', '"+txttotalreciboscortados.getText()+"', '"+txttotalrecibosnocortados.getText()+"', '"+txtdinerocobrado.getText()+"', '"+idzona+"' )";
+        try {
+            Conectar();
+            int done = stmt.executeUpdate(consulta);
+            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se guardaron los datos de la Liquidacion.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            db.close(stmt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos de la Liquidacion", JOptionPane.ERROR_MESSAGE);
+        }
+        db.destroy();
+        
+        /*
+         * Traemos el ultimo idliquidacion en la tabla liquidacion
+         */
+        int idliquidacion = 0;
+        consulta = "select max(idliquidacion) from liquidacion";
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            rs.beforeFirst();
+            while (rs.next()) {
+                idliquidacion = rs.getInt("max(idliquidacion)");
+            }
+            db.close(stmt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error.", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        /*
+         * Se guardan los datos del detalle de liquidacion.
+         */
+        consulta = "insert into detalle_liquidacion values "
+                + "('5', '"+porcentajes[0]+"', '"+comision_monto[0]+"', '"+idliquidacion+"' ), "
+                + "('4', '"+porcentajes[1]+"', '"+comision_monto[1]+"', '"+idliquidacion+"' ), "
+                + "('3', '"+porcentajes[2]+"', '"+comision_monto[2]+"', '"+idliquidacion+"' ) ";
+        try {
+            Conectar();
+            int done = stmt.executeUpdate(consulta);
+            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se guardaron los datos de la Liquidacion.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            db.close(stmt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos de la Liquidacion", JOptionPane.ERROR_MESSAGE);
+        }
+        db.destroy();
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -578,6 +831,8 @@ public class Liquidacion extends javax.swing.JDialog {
          */
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -594,7 +849,14 @@ public class Liquidacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -603,16 +865,14 @@ public class Liquidacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -621,6 +881,9 @@ public class Liquidacion extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtcomision3;
+    private javax.swing.JTextField txtcomision4;
+    private javax.swing.JTextField txtcomision5;
     private javax.swing.JTextField txtdinerocobrado;
     private javax.swing.JTextField txtpagojueves3;
     private javax.swing.JTextField txtpagojueves4;
@@ -646,14 +909,22 @@ public class Liquidacion extends javax.swing.JDialog {
     private javax.swing.JTextField txtrecibomiercoles3;
     private javax.swing.JTextField txtrecibomiercoles4;
     private javax.swing.JTextField txtrecibomiercoles5;
+    private javax.swing.JTextField txtsubtotal3;
+    private javax.swing.JTextField txtsubtotal4;
+    private javax.swing.JTextField txtsubtotal5;
     private javax.swing.JTextField txttotalacobrar;
+    private javax.swing.JTextField txttotalapagar;
     private javax.swing.JTextField txttotalcobrado;
+    private javax.swing.JTextField txttotalcobrado1;
     private javax.swing.JTextField txttotalpagos3;
     private javax.swing.JTextField txttotalpagos4;
     private javax.swing.JTextField txttotalpagos5;
     private javax.swing.JTextField txttotalrecibos3;
     private javax.swing.JTextField txttotalrecibos4;
     private javax.swing.JTextField txttotalrecibos5;
+    private javax.swing.JTextField txttotalreciboscortados;
+    private javax.swing.JTextField txttotalreciboscortados1;
+    private javax.swing.JTextField txttotalrecibosnocortados;
     // End of variables declaration//GEN-END:variables
 
     private conexion db;
@@ -672,25 +943,27 @@ public class Liquidacion extends javax.swing.JDialog {
     private void cargardatos(int idzona) {
         /*
          * Liquidacion
-                
           String consulta =" SELECT p.pago, p.fecha, c.comision "
                 + "FROM pago p, credito c "
                 + "WHERE p.liquidado = 'NO' AND p.idcredito = c.idcredito AND p.fecha_carga_pago BETWEEN  '2012-07-30' AND  '2012-08-03' ";
         */
-        float pagos [][] = new float[4][3];  //4=dias; 3=porcentajes(5,4,3)
+        
         float pago;
         int comision;
-        int total_recibos_5 = 0;
-        int total_recibos_4 = 0;
-        int total_recibos_3 = 0;
-        float total_pagos_5;
-        float total_pagos_4;
-        float total_pagos_3;
+        
+        //int total_recibos_4 = 0;
+        //int total_recibos_3 = 0;
+        float total_pagos[] = new float[3];
+        //float total_pagos_5 = 0;
+        //float total_pagos_4 = 0;
+        //float total_pagos_3 = 0;
         float total_cobrado = 0;
-        int porcentajes [] = new int[3];
         
         
-        String consulta ="SELECT p.pago, p.fecha, c.comision, p.idcliente, x.idzona "
+        /*
+         * Consultamos lo recaudado en la semana y lo separamos por dia y por comision.
+         */
+        String consulta ="SELECT p.idpago, p.pago, p.fecha, c.comision, p.idcliente, x.idzona "
                 + "FROM pago p, credito c, cliente x "
                 + "WHERE p.liquidado = 'NO' AND p.idcredito = c.idcredito AND p.idcliente = x.idcliente AND x.idzona= '"+idzona+"'";
         try {
@@ -699,167 +972,185 @@ public class Liquidacion extends javax.swing.JDialog {
             rs.beforeFirst();
             
             while (rs.next()) {
+                idpago.add(rs.getString("idpago"));
                 pago = rs.getFloat("pago");
                 comision = rs.getInt("comision");
                 Calendar c1 = Calendar.getInstance();
                 c1.setTime(rs.getDate("fecha"));               //Le asignamos la fecha seleccionada en el jdfechacredito
                 //c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
                 int dayOfWeek = c1.get(Calendar.DAY_OF_WEEK);    // 1=Sunday...,6=Friday, 7=Saturday
-                // Recaudacion del dia LUNES //
+                /*
+                 * Recaudacion del dia LUNES
+                 */
                 if(dayOfWeek == 2){
                     if(comision == 5){
                         pagos[0][0] = pagos[0][0] + pago;
                         txtpagolunes5.setText(String.valueOf(pagos[0][0]));
                         int num_recibos = Integer.parseInt(txtrecibolunes5.getText()) + 1;
-                        total_recibos_5++;
+                        total_recibos[0]++;
                         txtrecibolunes5.setText(Integer.toString(num_recibos));
                     }else if(comision ==4){
                         pagos[0][1] = pagos[0][1] + pago;
                         txtpagolunes4.setText(String.valueOf(pagos[0][1]));
                         int num_recibos = Integer.parseInt(txtrecibolunes4.getText()) + 1;
-                        total_recibos_4++;
+                        total_recibos[1]++;
                         txtrecibolunes4.setText(Integer.toString(num_recibos));
                     }else{
                         pagos[0][2] = pagos[0][2] + pago;
                         txtpagolunes3.setText(String.valueOf(pagos[0][2]));
                         int num_recibos = Integer.parseInt(txtrecibolunes3.getText()) + 1;
-                        total_recibos_3++;
+                        total_recibos[2]++;
                         txtrecibolunes3.setText(Integer.toString(num_recibos));
                     }
-                // Recaudacion del dia MARTES //
+                /*
+                 * Recaudacion del dia MARTES
+                 */
                 }else if(dayOfWeek == 3){
                     if(comision == 5){
                         pagos[1][0] = pagos[1][0] + pago;
                         txtpagomartes5.setText(String.valueOf(pagos[1][0]));
                         int num_recibos = Integer.parseInt(txtrecibomartes5.getText()) + 1;
-                        total_recibos_5++;
+                        total_recibos[0]++;
                         txtrecibomartes5.setText(Integer.toString(num_recibos));
                     }else if(comision ==4){
                         pagos[1][1] = pagos[1][1] + pago;
                         txtpagomartes4.setText(String.valueOf(pagos[1][1]));
                         int num_recibos = Integer.parseInt(txtrecibomartes4.getText()) + 1;
-                        total_recibos_4++;
+                        total_recibos[1]++;
                         txtrecibomartes4.setText(Integer.toString(num_recibos));
                     }else{
                         pagos[1][2] = pagos[1][2] + pago;
                         txtpagomartes3.setText(String.valueOf(pagos[1][2]));
                         int num_recibos = Integer.parseInt(txtrecibomartes3.getText()) + 1;
-                        total_recibos_3++;
+                        total_recibos[2]++;
                         txtrecibomartes3.setText(Integer.toString(num_recibos));
                     }
-                // Recaudacion del dia MIERCOLES //    
+                /*
+                 * Recaudacion del dia MIERCOLES
+                 */
                 }else if(dayOfWeek == 4){
                     if(comision == 5){
                         pagos[2][0] = pagos[2][0] + pago;
                         txtpagomiercoles5.setText(String.valueOf(pagos[2][0]));
                         int num_recibos = Integer.parseInt(txtrecibomiercoles5.getText()) + 1;
-                        total_recibos_5++;
+                        total_recibos[0]++;
                         txtrecibomiercoles5.setText(Integer.toString(num_recibos));
                     }else if(comision ==4){
                         pagos[2][1] = pagos[2][1] + pago;
                         txtpagomiercoles4.setText(String.valueOf(pagos[2][1]));
                         int num_recibos = Integer.parseInt(txtrecibomiercoles4.getText()) + 1;
-                        total_recibos_4++;
+                        total_recibos[1]++;
                         txtrecibomiercoles4.setText(Integer.toString(num_recibos));
                     }else{
                         pagos[2][2] = pagos[2][2] + pago;
                         txtpagomiercoles3.setText(String.valueOf(pagos[2][2]));
                         int num_recibos = Integer.parseInt(txtrecibomiercoles3.getText()) + 1;
-                        total_recibos_3++;
+                        total_recibos[2]++;
                         txtrecibomiercoles3.setText(Integer.toString(num_recibos));
                     }
-                // Recaudacion del dia JUEVES //
+                /*
+                 * Recaudacion del dia JUEVES
+                 */
                 }else{
                     if(comision == 5){
                         pagos[3][0] = pagos[3][0] + pago;
                         txtpagojueves5.setText(String.valueOf(pagos[3][0]));
                         int num_recibos = Integer.parseInt(txtrecibojueves5.getText()) + 1;
-                        total_recibos_5++;
+                        total_recibos[0]++;
                         txtrecibojueves5.setText(Integer.toString(num_recibos));
                     }else if(comision ==4){
                         pagos[3][1] = pagos[3][1] + pago;
                         txtpagojueves4.setText(String.valueOf(pagos[3][1]));
                         int num_recibos = Integer.parseInt(txtrecibojueves4.getText()) + 1;
-                        total_recibos_4++;
+                        total_recibos[1]++;
                         txtrecibojueves4.setText(Integer.toString(num_recibos));
                     } else {
                         pagos[3][2] = pagos[3][2] + pago;
                         txtpagojueves3.setText(String.valueOf(pagos[3][2]));
                         int num_recibos = Integer.parseInt(txtrecibojueves3.getText()) + 1;
-                        total_recibos_3++;
+                        total_recibos[2]++;
                         txtrecibojueves3.setText(Integer.toString(num_recibos));
                     }
                 }
-                //System.out.println("Fecha: "+rs.getDate("fecha")+" Dia:"+dayOfWeek);
-                //Calendar cal = new GregorianCalendar(2003, Calendar.JANUARY, 1);
-                //dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);         //
             }
-            total_pagos_5 = pagos[0][0] + pagos[1][0] + pagos[2][0] + pagos[3][0];
-            total_pagos_4 = pagos[0][1] + pagos[1][1] + pagos[2][1] + pagos[3][1];
-            total_pagos_3 = pagos[0][2] + pagos[1][2] + pagos[2][2] + pagos[3][2];
-            total_cobrado = total_pagos_5 + total_pagos_4 + total_pagos_3;
-
-            txttotalrecibos5.setText(Integer.toString(total_recibos_5));
-            txttotalrecibos4.setText(Integer.toString(total_recibos_4));
-            txttotalrecibos3.setText(Integer.toString(total_recibos_3));
             
-            txttotalpagos5.setText(Float.toString(total_pagos_5));
-            txttotalpagos4.setText(Float.toString(total_pagos_4));
-            txttotalpagos3.setText(Float.toString(total_pagos_3));
-            /*
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 3; j++) {
-                    System.out.println("i: " + i + " j: " + j + " Pago:" + pagos[i][j]);
-               }
-            } 
-            */
+            total_pagos[0] = pagos[0][0] + pagos[1][0] + pagos[2][0] + pagos[3][0];
+            total_pagos[1] = pagos[0][1] + pagos[1][1] + pagos[2][1] + pagos[3][1];
+            total_pagos[2] = pagos[0][2] + pagos[1][2] + pagos[2][2] + pagos[3][2];
+            total_cobrado = total_pagos[0] + total_pagos[1] + total_pagos[2];
 
-            JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            txttotalrecibos5.setText(Integer.toString(total_recibos[0]));
+            txttotalrecibos4.setText(Integer.toString(total_recibos[1]));
+            txttotalrecibos3.setText(Integer.toString(total_recibos[2]));
+            txttotalreciboscortados1.setText(Integer.toString(total_recibos[0]+total_recibos[1]+total_recibos[2]));
+            
+            txttotalpagos5.setText(Float.toString(total_pagos[0]));
+            txttotalpagos4.setText(Float.toString(total_pagos[1]));
+            txttotalpagos3.setText(Float.toString(total_pagos[2]));
+            txttotalcobrado1.setText(Float.toString(total_cobrado));
+            
+            //JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error.", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
         consulta = "select * from zona where idzona = '" + idzona + "'";
         int zona_total_recibos = 0;
-        float zona_estado = 0;
+        //float zona_estado = 0;
         float zona_total_cobrar = 0;
-                
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
             rs.beforeFirst();
             while (rs.next()) {
                 zona_total_recibos = rs.getInt("num_recibos");
-                zona_estado = rs.getFloat("estado_zona");
+                //zona_estado = rs.getFloat("estado_zona");
                 zona_total_cobrar = rs.getFloat("total_cobrar");
             }
-            JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error.", JOptionPane.ERROR_MESSAGE);
         }
-        
-        txttotalcobrado.setText(Float.toString(total_cobrado));
+        /*
+         * Datos TOTALES
+         */
         txttotalacobrar.setText(Float.toString(zona_total_cobrar));
+        txttotalcobrado.setText(Float.toString(total_cobrado));
         Float productividad_cobrador = total_cobrado / zona_total_cobrar * 100;
         txtdinerocobrado.setText(Float.toString(productividad_cobrador)+" %");
+        txttotalreciboscortados.setText(txttotalreciboscortados1.getText());
+        txttotalrecibosnocortados.setText(Integer.toString(zona_total_recibos-total_recibos[0]-total_recibos[1]-total_recibos[2]));
+        
         /*
          * Calculo de la comision para el cobrador.
          */
         if(productividad_cobrador <= 84){
-            porcentajes[0] = 3;
+            porcentajes[0] = 4;
             porcentajes[1] = 4;
-            porcentajes[2] = 4;
+            porcentajes[2] = 3;
         }else if (productividad_cobrador >= 95){
-            porcentajes[0] = 3;
+            porcentajes[0] = 5;
             porcentajes[1] = 5;
-            porcentajes[2] = 5;
+            porcentajes[2] = 3;
         }else{
-            porcentajes[0] = 3;
+            porcentajes[0] = 5;
             porcentajes[1] = 4;
-            porcentajes[2] = 5;
+            porcentajes[2] = 3;
         }
+        txtcomision5.setText(Integer.toString(porcentajes[0]));
+        txtcomision4.setText(Integer.toString(porcentajes[1]));
+        txtcomision3.setText(Integer.toString(porcentajes[2]));
         
-        
+        for (int i = 0; i < 3; i++) {
+            comision_monto[i] = total_pagos[i] * porcentajes[i] / 100;
+        }
+        txtsubtotal5.setText(Float.toString(comision_monto[0]));
+        txtsubtotal4.setText(Float.toString(comision_monto[1]));
+        txtsubtotal3.setText(Float.toString(comision_monto[2]));
+
+        txttotalapagar.setText(Float.toString(comision_monto[0] + comision_monto[1] + comision_monto[2]));
     }
 }

@@ -580,7 +580,8 @@ public class Pagos extends javax.swing.JDialog {
         /*
          * Alta del PAGO
          */
-        String consulta = "insert into pago values('" + compra_total + "', '" + pagado + "', '" + saldo + "', '" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "', '" + fecha_carga_pago + "', 'NO' )";
+        String consulta = "insert into pago (compra, pagado, saldo, pago, fecha, incremento, atraso, idcliente, idusuario, idcredito, fecha_carga_pago, liquidado) "
+                + "values('" + compra_total + "', '" + pagado + "', '" + saldo + "', '" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "', '" + fecha_carga_pago + "', 'NO' )";
         try {
             Conectar();
             int done = stmt.executeUpdate(consulta);
