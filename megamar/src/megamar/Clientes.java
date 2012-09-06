@@ -656,6 +656,10 @@ public class Clientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbguardarActionPerformed
+    if(existedni(txtdni.getText())){
+        txtdni.requestFocus();
+        return;
+    }
     
     int idcliente = Integer.parseInt(txtidcliente.getText());
     int dni = Integer.parseInt(txtdni.getText());
@@ -675,11 +679,11 @@ private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         JOptionPane.showMessageDialog(null,"Ingrese el DNI del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
         return;
     }
-    if(nombre == ""){
+    if(nombre.equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el Nombre del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
         return;
     }
-    if(apellido == ""){
+    if(apellido.equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el Apellido del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -779,9 +783,7 @@ private void txtdniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtd
         return;
     }
     if (k == 10) {
-        if(!existedni(txtdni.getText())){
-            txtdni.transferFocus();         //transfiere el foco si presionas enter
-        }
+        txtdni.transferFocus();         //transfiere el foco si presionas enter
     } else if (!Character.isDigit(k) || txtdni.getText().length() > 7) {
         evt.setKeyChar((char) KeyEvent.VK_CLEAR);
     }
