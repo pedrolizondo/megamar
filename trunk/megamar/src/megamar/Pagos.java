@@ -548,6 +548,14 @@ public class Pagos extends javax.swing.JDialog {
     }//GEN-LAST:event_txtpagoKeyReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(txtcodigocliente.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un Cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(txtpago.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el monto del Pago.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if(txtincremento.getText().equals("")){
             txtincremento.setText("0");
         }

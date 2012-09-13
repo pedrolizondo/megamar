@@ -16,6 +16,11 @@
 	<parameter name="idcredito" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\CoLiSa\\Documents\\NetBeansProjects\\trunk\\megamar\\src\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="telefono" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from pago where idcredito = $P{idcredito}]]>
 	</queryString>
@@ -35,19 +40,29 @@
 	<title>
 		<band height="136" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="fdd42426-24ed-4a3f-b350-7cf3a6d3f57a" style="Title" x="170" y="0" width="263" height="62"/>
-				<textElement verticalAlignment="Middle">
-					<font pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee Title]]></text>
+				<reportElement uuid="80c22bd1-f0ef-4a50-bf43-aabb5372bc3a" x="1" y="37" width="38" height="13"/>
+				<textElement/>
+				<text><![CDATA[Cliente:]]></text>
 			</staticText>
+			<image>
+				<reportElement uuid="9f2ee9da-7c6e-479c-bd7b-8926bc8df034" x="351" y="0" width="204" height="67"/>
+				<imageExpression><![CDATA["C:\\Users\\CoLiSa\\Documents\\NetBeansProjects\\trunk\\megamar\\src\\reportes\\logomegamar.JPG"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement uuid="23b6eafc-ce0e-4a5e-9ac9-950cf8b875fc" style="SubTitle" x="219" y="62" width="196" height="22"/>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
+				<reportElement uuid="e0dccb2d-2505-431c-88b7-e7234be5fae0" style="SubTitle" x="1" y="0" width="146" height="23"/>
+				<textElement/>
+				<text><![CDATA[Estado de Cuenta]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="683a3d1c-f95d-4a75-a1a8-678450acb70d" x="47" y="37" width="198" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d8b9a2b6-3886-493c-9426-5564ce75f1a3" x="1" y="54" width="146" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Telefono: "+$P{telefono}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -64,32 +79,32 @@
 			<staticText>
 				<reportElement uuid="f226b672-0b33-46e7-810e-f5824ef39cba" style="Column header" x="0" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[compra]]></text>
+				<text><![CDATA[COMPRA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="300a255a-ea88-4547-aa45-2f454c4538c0" style="Column header" x="92" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[pagado]]></text>
+				<text><![CDATA[PAGADO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="d2703f42-d519-4bca-818c-ce55324cb8be" style="Column header" x="184" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[saldo]]></text>
+				<text><![CDATA[SALDO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="641cbd1f-8769-4f50-aa3b-14f1a6aef472" style="Column header" x="276" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[atraso]]></text>
+				<text><![CDATA[ATRASO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="3c180dc7-851d-4181-b691-271f0835c1fa" style="Column header" x="368" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[pago]]></text>
+				<text><![CDATA[PAGO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="29de7667-6d1a-4b2b-a147-d7ed1d2ced4e" style="Column header" x="460" y="0" width="92" height="15" forecolor="#736343"/>
 				<textElement/>
-				<text><![CDATA[fecha]]></text>
+				<text><![CDATA[FECHA]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -122,7 +137,7 @@
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{pago}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 					<reportElement uuid="ecad5a26-3c89-4243-a44b-22eb8b62b834" style="Detail" x="460" y="0" width="92" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
