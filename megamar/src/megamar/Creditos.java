@@ -11,9 +11,16 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -304,10 +311,7 @@ public class Creditos extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelzona)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(labelzona)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Cliente"));
@@ -442,15 +446,15 @@ public class Creditos extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, 0, 859, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, 0, 859, Short.MAX_VALUE))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -460,7 +464,7 @@ public class Creditos extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
@@ -559,6 +563,10 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
         //System.out.println(jdfechacredito.getDate().toString());
+        if(txtcodigocliente.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un Cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if(comboplanes.getSelectedIndex()== 0 ){
             JOptionPane.showMessageDialog(null, "Por favor seleccione un Plan(semanas) de la lista desplegable.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -617,12 +625,33 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         {
             JOptionPane.showMessageDialog(null,ex.getMessage(),"Error! No se pudo actualizar los datos del Cliente.",JOptionPane.ERROR_MESSAGE);
         }
-    db.destroy();
+        db.destroy();
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
-        
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            int fila = tablacreditos.getSelectedRow();
+            String id = String.valueOf(tablacreditos.getValueAt(fila, 0));
+            try {
+                JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reportecuentacorrientecliente.jasper");
+                //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+                Map parametros = new HashMap();
+                parametros.put("idcredito", id);
+                parametros.put("nombre","Juan Perez");
+                parametros.put("telefono","12345");
+                
+
+                JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+                //JasperViewer.viewReport(print);
+                JasperViewer view = new JasperViewer(print, false);
+                view.setTitle("Detalles del credito.");
+                view.setVisible(true);
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }//GEN-LAST:event_tablacreditosMouseClicked
 
     private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
