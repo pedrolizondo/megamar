@@ -13,17 +13,24 @@ package megamar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author Lizondo1
  */
-public class EstadoZonas extends javax.swing.JDialog {
+public class EstadoZonas extends javax.swing.JFrame {
 
     /** Creates new form EstadoZonas */
     public EstadoZonas(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        //super(parent, modal);
         initComponents();
         cargartabla();
     }
@@ -106,23 +113,43 @@ public class EstadoZonas extends javax.swing.JDialog {
          * numero de recibos cortados, estado de la zona y total a cobrar por el cobrador.
          * Estos datos sirven para calcular luego la liquidacion de los cobradores.
          */
-        
         int fila = tablaestadozona.getSelectedRow();
-        String idzona = String.valueOf(tablaestadozona.getValueAt(fila,0));
-        String num_recibos = String.valueOf(tablaestadozona.getValueAt(fila,2));
-        String estado_zona = String.valueOf(tablaestadozona.getValueAt(fila,3));
-        String total_cobrar = String.valueOf(tablaestadozona.getValueAt(fila,4));
-        
-        String consulta ="UPDATE zona "
-                + "SET num_recibos = '"+num_recibos+"', estado_zona='"+estado_zona+"', total_cobrar='"+total_cobrar+"' "
-                + "WHERE idzona='"+idzona+"'";
+        String idzona = String.valueOf(tablaestadozona.getValueAt(fila, 0));
+        String zona = String.valueOf(tablaestadozona.getValueAt(fila, 1));
+        String num_recibos = String.valueOf(tablaestadozona.getValueAt(fila, 2));
+        String estado_zona = String.valueOf(tablaestadozona.getValueAt(fila, 3));
+        String total_cobrar = String.valueOf(tablaestadozona.getValueAt(fila, 4));
+
+        String consulta = "UPDATE zona "
+                + "SET num_recibos = '" + num_recibos + "', estado_zona='" + estado_zona + "', total_cobrar='" + total_cobrar + "' "
+                + "WHERE idzona='" + idzona + "'";
         try {
             Conectar();
             int done = stmt.executeUpdate(consulta);
             JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
+        }
+
+        try {
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporteestadozona.jasper");
+            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            Map parametros = new HashMap();
+            parametros.put("pzona", zona);
+            parametros.put("pestadozona", estado_zona);
+            parametros.put("ptotalacobrar", total_cobrar);
+            parametros.put("pcantrecibos", num_recibos);
+
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle("Estado de la Zona.");
+            view.setExtendedState(view.MAXIMIZED_BOTH);
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jbimprimirActionPerformed
 

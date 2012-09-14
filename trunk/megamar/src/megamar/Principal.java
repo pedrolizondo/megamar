@@ -268,23 +268,8 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporteclientes.jasper");
-            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
-            Map parametros = new HashMap();
-            parametros.put("idzona", idzona);
-            
-
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-            //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print,false);
-            view.setTitle("Ejemplo Jasper Report");
-            
-            view.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        ImprimirListadoClientes I = new ImprimirListadoClientes(idzona);
+        I.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed

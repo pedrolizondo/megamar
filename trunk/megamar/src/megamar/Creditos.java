@@ -26,7 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author pedro.lizondo
  */
-public class Creditos extends javax.swing.JDialog {
+public class Creditos extends javax.swing.JFrame {
     private String idzona;
     private int num_creditos;
     private int id_cliente;
@@ -37,7 +37,7 @@ public class Creditos extends javax.swing.JDialog {
      * Creates new form creditos
      */
     public Creditos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        //super(parent, modal);
         initComponents();
         
         jdfechacredito.setLocale(Locale.getDefault());  //Define el idioma del calendar
@@ -295,7 +295,7 @@ public class Creditos extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 24));
         labelzona.setText("nombre zona");
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
@@ -427,6 +427,7 @@ public class Creditos extends javax.swing.JDialog {
 
             }
         ));
+        tablacreditos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablacreditosMouseClicked(evt);
@@ -563,15 +564,15 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
         //System.out.println(jdfechacredito.getDate().toString());
-        if(txtcodigocliente.getText().equals("")){
+        if (txtcodigocliente.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un Cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(comboplanes.getSelectedIndex()== 0 ){
+        if (comboplanes.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un Plan(semanas) de la lista desplegable.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(txtcreditoinicial.getText().equals("")){
+        if (txtcreditoinicial.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor ingrese el monto del credito en cuadro Credito Inicial.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -594,7 +595,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String estado = "DEBE";
         float saldo = compra_total;
         String idcliente = txtcodigocliente.getText();
-        
+
         /*Alta del CREDITO*/
         String consulta = "insert into credito (compra,compra_total,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente,atraso_total,incremento_total) "
                 + "values('" + compra + "', '" + compra_total + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
@@ -609,21 +610,20 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo cargar los datos del cliente", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
-        
+
         /*Modificacion de los datos del Cliente*/
         String consulta2 = "update cliente "
-            + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
-            + "where idcliente='" + idcliente + "'";
-    
-    try{
-          Conectar();
-            int done= stmt.executeUpdate(consulta2);
+                + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
+                + "where idcliente='" + idcliente + "'";
+
+        try {
+            Conectar();
+            int done = stmt.executeUpdate(consulta2);
             //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
             //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
             db.close(stmt);
-        }catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null,ex.getMessage(),"Error! No se pudo actualizar los datos del Cliente.",JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
         }
         db.destroy();
         this.dispose();
@@ -633,19 +633,34 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
             int fila = tablacreditos.getSelectedRow();
             String id = String.valueOf(tablacreditos.getValueAt(fila, 0));
+            String monto_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 2));
+            String plan = String.valueOf(tablacreditos.getValueAt(fila, 3));
+            String monto_cuota = String.valueOf(tablacreditos.getValueAt(fila, 5));
+            String fecha_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 6));
+            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));
+            
             try {
                 JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reportecuentacorrientecliente.jasper");
                 //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
                 Map parametros = new HashMap();
                 parametros.put("idcredito", id);
-                parametros.put("nombre","Juan Perez");
-                parametros.put("telefono","12345");
+                parametros.put("pnombre",txtnombre.getText());
+                parametros.put("pcodigo",id_cliente);
+                parametros.put("ptelefono",txttelefono.getText());
+                parametros.put("pdom_particular",txtdomicilioparticular.getText());
+                parametros.put("pdom_comercial",txtdomiciliocomercial.getText());
+                parametros.put("prubro",txtrubro.getText());
+                parametros.put("pmontoprestamo",monto_prestamo);
+                parametros.put("pplan",plan);
+                parametros.put("pmontocuota",monto_cuota);
+                parametros.put("pfechaprestamo",fecha_prestamo);
+                parametros.put("pfechacancelacion",fecha_cancelacion);
                 
-
                 JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
                 //JasperViewer.viewReport(print);
                 JasperViewer view = new JasperViewer(print, false);
                 view.setTitle("Detalles del credito.");
+                view.setExtendedState(view.MAXIMIZED_BOTH);
                 view.setVisible(true);
 
             } catch (Exception e) {
