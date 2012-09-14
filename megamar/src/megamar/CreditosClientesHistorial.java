@@ -23,6 +23,13 @@ public class CreditosClientesHistorial extends javax.swing.JDialog {
     /**
      * Creates new form CreditosClientes
      */
+    public CreditosClientesHistorial(java.awt.Frame parent, boolean modal,int idcliente) {
+        super(parent,modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        cargartablacreditos(idcliente);
+    }
+    
     public CreditosClientesHistorial(java.awt.Dialog parent, boolean modal,int idcliente) {
         super(parent,modal);
         initComponents();
