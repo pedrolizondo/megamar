@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="396"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="precibolunes5" class="java.lang.String"/>
+	<parameter name="precibolunes4" class="java.lang.String"/>
+	<parameter name="precibolunes3" class="java.lang.String"/>
+	<parameter name="precibomartes5" class="java.lang.String"/>
+	<parameter name="precibomartes4" class="java.lang.String"/>
+	<parameter name="precibomartes3" class="java.lang.String"/>
+	<parameter name="precibomiercoles5" class="java.lang.String"/>
+	<parameter name="precibomiercoles4" class="java.lang.String"/>
+	<parameter name="precibomiercoles3" class="java.lang.String"/>
+	<parameter name="precibojueves5" class="java.lang.String"/>
+	<parameter name="precibojueves4" class="java.lang.String"/>
+	<parameter name="precibojueves3" class="java.lang.String"/>
+	<parameter name="ppagolunes5" class="java.lang.String"/>
+	<parameter name="ppagolunes4" class="java.lang.String"/>
+	<parameter name="ppagolunes3" class="java.lang.String"/>
+	<parameter name="ppagomartes5" class="java.lang.String"/>
+	<parameter name="ppagomartes4" class="java.lang.String"/>
+	<parameter name="ppagomartes3" class="java.lang.String"/>
+	<parameter name="ppagomiercoles5" class="java.lang.String"/>
+	<parameter name="ppagomiercoles4" class="java.lang.String"/>
+	<parameter name="ppagomiercoles3" class="java.lang.String"/>
+	<parameter name="ppagojueves5" class="java.lang.String"/>
+	<parameter name="ppagojueves4" class="java.lang.String"/>
+	<parameter name="ppagojueves3" class="java.lang.String"/>
+	<parameter name="ptotalrecibos5" class="java.lang.String"/>
+	<parameter name="ptotalrecibos4" class="java.lang.String"/>
+	<parameter name="ptotalrecibos3" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement mode="Opaque" x="0" y="54" width="555" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="157" y="58" width="125" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Total a cobrar: "+$P{ptotalacobrar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="58" width="152" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Estado de la zona: "+$P{pestadozona}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="353" y="-12" width="221" height="60"/>
+				<imageExpression><![CDATA["C:\\Users\\Lizondo1\\Documents\\NetBeansProjects\\megamar\\src\\reportes\\logomegamar.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="4" y="13" width="349" height="24"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pzona}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="422" y="58" width="132" height="13" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="58" width="125" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Cantidad de Recibos: "+$P{pcantrecibos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="471" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="194" width="194" height="27"/>
+			</rectangle>
+			<textField>
+				<reportElement x="195" y="95" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibojueves5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="194" width="82" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Recibos cobrados]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="315" y="44" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibolunes3}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="195" y="112" width="180" height="82"/>
+			</rectangle>
+			<textField>
+				<reportElement x="435" y="95" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagojueves4}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="375" y="194" width="180" height="27"/>
+			</rectangle>
+			<textField>
+				<reportElement x="315" y="61" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomartes3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="95" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibojueves4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="44" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagolunes3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="78" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomiercoles5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="144" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 4%: "+$P{ptotalrecibos4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="255" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[4%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="78" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomiercoles4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[4%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="194" width="134" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL: ........................]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="495" y="95" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagojueves4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="124" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 5%: "+$P{ptotalrecibos5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="195" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="61" width="194" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Martes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="78" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomiercoles4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="98" y="194" width="97" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Recibos no cobrados]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="375" y="112" width="180" height="82"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="195" y="10" width="180" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Recibos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="61" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomartes4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="10" width="194" height="34"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="61" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomartes4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="10" width="180" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe ($)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="315" y="78" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomiercoles3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="95" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibojueves3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="78" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomiercoles3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="61" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibomartes5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="78" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomiercoles5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="495" y="61" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomartes3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="95" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagojueves5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="44" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagolunes4}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="195" y="194" width="180" height="27"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="495" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="389" y="124" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 5%: "+]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="144" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 4%: "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="95" width="194" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Jueves]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="44" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagolunes5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="61" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{ppagomartes5}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="112" width="194" height="82"/>
+			</rectangle>
+			<textField>
+				<reportElement x="195" y="44" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibolunes5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="44" width="194" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Lunes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="27" width="60" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="389" y="164" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 3%: "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="78" width="194" height="17"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Miércoles]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="205" y="164" width="153" height="20"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA["TOTAL 3%: "+$P{ptotalrecibos3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="224" y="194" width="134" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL: ........................]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="44" width="60" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$P{precibolunes4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="243" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{precibolunes5}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>
