@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteclientes" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f2fdc8f-392b-4b36-8132-ecd81af6e09f">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="109"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -43,8 +43,8 @@ from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona=$P{pidzona} and c
 				<text><![CDATA[Listado de Clientes]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="4eb00c4e-3b09-4176-80f7-0af5fb4db273" x="581" y="0" width="221" height="60"/>
-				<imageExpression><![CDATA["C:\\Users\\Lizondo1\\Documents\\NetBeansProjects\\megamar\\src\\reportes\\logo megamar.png"]]></imageExpression>
+				<reportElement uuid="cb8dca3a-21e7-48de-b92c-31f3f6eb3b3d" x="581" y="0" width="221" height="60"/>
+				<imageExpression><![CDATA["C:\\Users\\CoLiSa\\Documents\\NetBeansProjects\\trunk\\megamar\\src\\reportes\\logomegamar.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
