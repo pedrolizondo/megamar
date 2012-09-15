@@ -17,13 +17,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
  * @author Lizondo1
  */
-public class Liquidacion extends javax.swing.JDialog {
+public class Liquidacion extends javax.swing.JFrame {
     private int idzona;
     private float pagos [][] = new float[4][3];  //4=dias; 3=porcentajes(5,4,3)
     private int total_recibos[] = new int[3];    //Total Recibos cortados: 1=5%; 2=4%; 3=5%
@@ -33,7 +41,7 @@ public class Liquidacion extends javax.swing.JDialog {
     private float[] comision_monto = new float[3];
     /** Creates new form Liquidacion */
     public Liquidacion(java.awt.Frame parent, boolean modal, int idz) {
-        super(parent, modal);
+        //super(parent, modal);
         initComponents();
         idzona = idz;
         cargardatos(idzona);
@@ -783,6 +791,73 @@ public class Liquidacion extends javax.swing.JDialog {
         db.destroy();
         
         
+        
+        Conectar();
+        try {
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporteliquidacion.jasper");
+            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            Map parametros = new HashMap();
+            parametros.put("ptotalacobrar", txttotalacobrar.getText());
+            parametros.put("ptotalcobrado", txttotalcobrado.getText());
+            parametros.put("pdinerocobrado", txtdinerocobrado.getText());
+            parametros.put("ptotalreciboscortados", txttotalreciboscortados.getText());
+            parametros.put("ptotalrecibosnocortados", txttotalrecibosnocortados.getText());
+            
+            parametros.put("precibolunes5", txtrecibolunes5.getText());
+            parametros.put("precibolunes4", txtrecibolunes4.getText());
+            parametros.put("precibolunes3", txtrecibolunes3.getText());
+            parametros.put("precibomartes5", txtrecibomartes5.getText());
+            parametros.put("precibomartes4", txtrecibomartes4.getText());
+            parametros.put("precibomartes3", txtrecibomartes3.getText());
+            parametros.put("precibomiercoles5", txtrecibomiercoles5.getText());
+            parametros.put("precibomiercoles4", txtrecibomiercoles4.getText());
+            parametros.put("precibomiercoles3", txtrecibomiercoles3.getText());
+            parametros.put("precibojueves5", txtrecibojueves5.getText());
+            parametros.put("precibojueves4", txtrecibojueves4.getText());
+            parametros.put("precibojueves3", txtrecibojueves3.getText());
+            
+            parametros.put("ppagolunes5", txtpagolunes5.getText());
+            parametros.put("ppagolunes4", txtpagolunes4.getText());
+            parametros.put("ppagolunes3", txtpagolunes3.getText());
+            parametros.put("ppagomartes5", txtpagomartes5.getText());
+            parametros.put("ppagomartes4", txtpagomartes4.getText());
+            parametros.put("ppagomartes3", txtpagomartes3.getText());
+            parametros.put("ppagomiercoles5", txtpagomiercoles5.getText());
+            parametros.put("ppagomiercoles4", txtpagomiercoles4.getText());
+            parametros.put("ppagomiercoles3", txtpagomiercoles3.getText());
+            parametros.put("ppagojueves5", txtpagojueves5.getText());
+            parametros.put("ppagojueves4", txtpagojueves4.getText());
+            parametros.put("ppagojueves3", txtpagojueves3.getText());
+            
+            parametros.put("ptotalrecibos5", txttotalrecibos5.getText());
+            parametros.put("ptotalrecibos4", txttotalrecibos4.getText());
+            parametros.put("ptotalrecibos3", txttotalrecibos3.getText());
+            parametros.put("ptotalpagos5", txttotalpagos5.getText());
+            parametros.put("ptotalpagos4", txttotalpagos4.getText());
+            parametros.put("ptotalpagos3", txttotalpagos3.getText());
+            
+            parametros.put("ptotalreciboscortados1", txttotalreciboscortados1.getText());
+            parametros.put("ptotalcobrado1", txttotalcobrado1.getText());
+            
+            parametros.put("pcomision5", txtcomision5.getText());
+            parametros.put("pcomision4", txtcomision4.getText());
+            parametros.put("pcomision3", txtcomision3.getText());
+            parametros.put("psubtotal5", txtsubtotal5.getText());
+            parametros.put("psubtotal4", txtsubtotal4.getText());
+            parametros.put("psubtotal3", txtsubtotal3.getText());
+            
+            parametros.put("ptotalapagar", txttotalapagar.getText());
+            
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            JasperViewer view = new JasperViewer(print,false);
+            view.setTitle("Ejemplo Jasper Report");
+            view.setExtendedState(view.MAXIMIZED_BOTH);
+            view.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
