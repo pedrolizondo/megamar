@@ -43,6 +43,7 @@ public class Liquidacion extends javax.swing.JFrame {
     public Liquidacion(java.awt.Frame parent, boolean modal, int idz) {
         //super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         idzona = idz;
         cargardatos(idzona);
     }
