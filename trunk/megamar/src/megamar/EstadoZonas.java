@@ -32,6 +32,7 @@ public class EstadoZonas extends javax.swing.JFrame {
     public EstadoZonas(java.awt.Frame parent, boolean modal) {
         //super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         cargartabla();
     }
 
