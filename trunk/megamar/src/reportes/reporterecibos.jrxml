@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporterecibos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3478011a-6cd2-4dbe-b1ec-bb56f01e93df">
 	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="119"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -33,20 +33,15 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 	<field name="fecha_cancelacion" class="java.sql.Date"/>
 	<field name="barrio_comercial" class="java.lang.String"/>
 	<field name="barrio_particular" class="java.lang.String"/>
+	<field name="fecha_ultimo_pago" class="java.sql.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="53" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
-		<band height="16" splitType="Stretch"/>
+		<band height="35"/>
 	</columnHeader>
 	<detail>
-		<band height="207">
+		<band height="250">
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="eda62300-eed2-4305-a3b8-e5dd9c82a31e" style="Detail" x="0" y="35" width="145" height="15"/>
 				<textElement/>
@@ -67,27 +62,7 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="370a65c1-194c-4d85-bce4-3f519b849070" style="Detail" x="1" y="156" width="60" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="c2ec3557-01d9-472a-b65d-df3b97d0f369" style="Detail" x="61" y="156" width="61" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{pagado}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b5c0135a-6855-46a6-89d9-4a7e32911a49" style="Detail" x="122" y="156" width="48" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-				<reportElement uuid="b1c902cf-4e27-44b0-bde1-33814eea6850" style="Detail" x="208" y="156" width="42" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
 				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="478" y="182" width="68" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{fecha_cancelacion}]]></textFieldExpression>
@@ -152,59 +127,58 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
-				<reportElement uuid="b1c902cf-4e27-44b0-bde1-33814eea6850" style="Detail" x="511" y="156" width="42" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b5c0135a-6855-46a6-89d9-4a7e32911a49" style="Detail" x="422" y="156" width="48" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="370a65c1-194c-4d85-bce4-3f519b849070" style="Detail" x="301" y="156" width="60" height="15"/>
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="0" y="156" width="50" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="c2ec3557-01d9-472a-b65d-df3b97d0f369" style="Detail" x="361" y="156" width="61" height="15"/>
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="50" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pagado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="101" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="219" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="151" y="156" width="68" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fecha_ultimo_pago}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="398" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="516" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="448" y="156" width="68" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fecha_ultimo_pago}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="297" y="156" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="347" y="156" width="50" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{pagado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="25" splitType="Stretch">
-			<frame>
-				<reportElement uuid="d4d35570-7b3c-4484-a4e4-4d184b70720a" mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
-				<textField evaluationTime="Report">
-					<reportElement uuid="a2f0a320-7628-4934-bfb9-06933309d80e" style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement uuid="0b25bc15-f694-48c5-bc16-226ad3222c7c" style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement uuid="3086ed74-0c5f-40db-89d7-a7633aebf07e" style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343"/>
-					<textElement verticalAlignment="Middle">
-						<font size="10" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-			</frame>
-		</band>
-	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>
 	</summary>
