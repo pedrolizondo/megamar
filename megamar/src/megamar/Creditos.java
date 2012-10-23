@@ -14,8 +14,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -885,6 +889,12 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
             tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
             tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            
+            TableColumn sportColumn = tablacreditos.getColumnModel().getColumn(1);
+            //JComboBox comboBox = new JComboBox();
+            JCheckBox checkbox = new JCheckBox();
+            sportColumn.setCellEditor(new DefaultCellEditor(checkbox));
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
         }
