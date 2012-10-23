@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporterecibos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3478011a-6cd2-4dbe-b1ec-bb56f01e93df">
 	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="119"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -29,7 +29,6 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 	<field name="compra" class="java.lang.Float"/>
 	<field name="pagado" class="java.lang.Integer"/>
 	<field name="saldo" class="java.lang.Float"/>
-	<field name="fecha_ultimo_pago" class="java.sql.Date"/>
 	<field name="atraso_total" class="java.lang.Integer"/>
 	<field name="fecha_cancelacion" class="java.sql.Date"/>
 	<field name="barrio_comercial" class="java.lang.String"/>
@@ -38,30 +37,7 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="136" splitType="Stretch">
-			<image>
-				<reportElement uuid="3c202dbc-dbeb-4885-b966-d23bfdb3a51a" x="0" y="0" width="164" height="126"/>
-				<imageExpression><![CDATA["coffee.jpg"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement uuid="0e542a12-94db-46d3-b989-0e803d18d8bd" style="Title" x="170" y="0" width="263" height="62"/>
-				<textElement verticalAlignment="Middle">
-					<font pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="7e17286c-8dc4-4012-bd1d-aa3e9a9bd86f" style="SubTitle" x="219" y="62" width="196" height="22"/>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee SubTitle]]></text>
-			</staticText>
-			<image>
-				<reportElement uuid="065151c3-ea8c-4767-9b64-5bd9d6e8fb9e" x="433" y="-115" width="267" height="209"/>
-				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
-			</image>
-		</band>
+		<band height="53" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
@@ -106,18 +82,13 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="da715fb9-554b-4f23-b845-08afe0d7b346" style="Detail" x="168" y="156" width="84" height="15"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{fecha_ultimo_pago}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b1c902cf-4e27-44b0-bde1-33814eea6850" style="Detail" x="252" y="156" width="42" height="15"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="b1c902cf-4e27-44b0-bde1-33814eea6850" style="Detail" x="208" y="156" width="42" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="478" y="156" width="68" height="15"/>
+				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="478" y="182" width="68" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{fecha_cancelacion}]]></textFieldExpression>
 			</textField>
@@ -127,19 +98,79 @@ WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.i
 				<textFieldExpression><![CDATA[$F{barrio_comercial}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="61ea50bd-1b65-4f3e-953c-42b86b530c74" style="Detail" x="145" y="80" width="145" height="15"/>
+				<reportElement uuid="61ea50bd-1b65-4f3e-953c-42b86b530c74" style="Detail" x="145" y="80" width="132" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{barrio_particular}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="6904cfa2-4c91-4e8c-8f16-97676170bed6" style="Detail" x="130" y="0" width="164" height="15"/>
+				<reportElement uuid="6904cfa2-4c91-4e8c-8f16-97676170bed6" style="Detail" x="101" y="0" width="164" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{apellido}+", "+$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="72e2c0e2-4a8b-4ddc-82c5-36f32c4bc7d7" style="Detail" x="0" y="0" width="130" height="15"/>
+				<reportElement uuid="72e2c0e2-4a8b-4ddc-82c5-36f32c4bc7d7" style="Detail" x="0" y="0" width="101" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{idcliente}+" / "+$F{num_creditos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="eda62300-eed2-4305-a3b8-e5dd9c82a31e" style="Detail" x="297" y="35" width="145" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{domicilio_comercial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="eda62300-eed2-4305-a3b8-e5dd9c82a31e" style="Detail" x="442" y="35" width="145" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{barrio_comercial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="72e2c0e2-4a8b-4ddc-82c5-36f32c4bc7d7" style="Detail" x="297" y="0" width="101" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{idcliente}+" / "+$F{num_creditos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="6904cfa2-4c91-4e8c-8f16-97676170bed6" style="Detail" x="394" y="0" width="164" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{apellido}+", "+$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="61ea50bd-1b65-4f3e-953c-42b86b530c74" style="Detail" x="442" y="80" width="123" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{barrio_particular}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="61ea50bd-1b65-4f3e-953c-42b86b530c74" style="Detail" x="297" y="80" width="145" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{domicilio_particular}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="297" y="114" width="83" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="583d3ca8-a6f4-4add-b263-6323f3a1d852" style="Detail" x="425" y="114" width="84" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="b1c902cf-4e27-44b0-bde1-33814eea6850" style="Detail" x="511" y="156" width="42" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{atraso_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b5c0135a-6855-46a6-89d9-4a7e32911a49" style="Detail" x="422" y="156" width="48" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="370a65c1-194c-4d85-bce4-3f519b849070" style="Detail" x="301" y="156" width="60" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="c2ec3557-01d9-472a-b65d-df3b97d0f369" style="Detail" x="361" y="156" width="61" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pagado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
