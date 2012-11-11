@@ -178,7 +178,13 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem10);
 
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/planes_24.png"))); // NOI18N
         jMenuItem11.setText("Impresion de Recibos");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem11);
 
         jMenuBar1.add(jMenu6);
@@ -281,6 +287,11 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         EstadoZonas E = new EstadoZonas(this, true);
         E.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    ImprimirRecibos I = new ImprimirRecibos(idzona);
+    I.setVisible(true);
+}//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
