@@ -13,6 +13,7 @@ package megamar;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,11 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import reportes.MetodosImpresion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -34,6 +40,7 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         idzona = idz;
+        completartablaclientes();
     }
 
     /** This method is called from within the constructor to
@@ -48,9 +55,11 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         comboestado = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaclientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,6 +68,19 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
         jLabel1.setText("Tipo de Cliente");
 
         comboestado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "ACTIVO", "INACTIVO", "NUEVO" }));
+        comboestado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboestadoActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/printer_32.png"))); // NOI18N
+        jButton1.setText("Imprimir Listado de Clientes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,7 +91,9 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(comboestado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(529, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,19 +101,12 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(comboestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(comboestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Seleccione el tipo de cliente que desea imprimir");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Cancel.png"))); // NOI18N
         jButton2.setText("Cancelar");
@@ -99,6 +116,19 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
             }
         });
 
+        tablaclientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tablaclientes);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,14 +136,10 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                    .addComponent(jLabel2)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 977, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,43 +147,36 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Conectar();
         String estado = comboestado.getSelectedItem().toString();
         try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporteclientes.jasper");
-            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
-            Map parametros = new HashMap();
-            parametros.put("pidzona", idzona);
-            parametros.put("pestado", estado);
-            
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-            //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print,false);
-            view.setTitle("Ejemplo Jasper Report");
-            view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            new MetodosImpresion().ReporteClientes(estado,idzona);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ImprimirListadoClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (SQLException ex) {
+            Logger.getLogger(ImprimirListadoClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void comboestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboestadoActionPerformed
+        completartablaclientes();
+    }//GEN-LAST:event_comboestadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,6 +220,8 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaclientes;
     // End of variables declaration//GEN-END:variables
     private conexion db;
     private Statement stmt;
@@ -213,6 +234,48 @@ public class ImprimirListadoClientes extends javax.swing.JFrame {
             stmt = conn.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void completartablaclientes() {
+        String estado = comboestado.getSelectedItem().toString();
+        String where_estado;
+        
+        if(estado.equals("TODOS")){
+            where_estado = "";
+        }else{
+            where_estado = "and c.estado='"+estado+"'";
+        }
+        String consulta = "Select idcliente as 'Codigo', CONCAT(apellido,', ',nombre) as 'Nombre', dni as DNI, num_creditos as Creditos, r.descripcion as 'Rubro', "
+                + "domicilio_particular as 'Domicilio Particular', barrio_particular as 'Barrio Particular', domicilio_comercial as 'Domicilio Comercial', "
+                + "barrio_comercial as 'Barrio Comercial', telefono as 'Telefono', perno as 'Perno', estado as 'Estado' "
+                + "from cliente c, rubro r "
+                + "where c.idrubro=r.idrubro and c.idzona='" + idzona + "' "+where_estado;
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            tablaclientes.setModel(modelo);
+            ConversorRSaDefaultTableModel.completar(rs, modelo);
+            //codigo para ocultar la primera columna (idplan)
+            tablaclientes.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(1).setMaxWidth(100);
+            tablaclientes.getColumnModel().getColumn(1).setMinWidth(100);
+            tablaclientes.getColumnModel().getColumn(2).setMaxWidth(70);
+            tablaclientes.getColumnModel().getColumn(2).setMinWidth(70);
+            tablaclientes.getColumnModel().getColumn(3).setMaxWidth(60);
+            tablaclientes.getColumnModel().getColumn(3).setMinWidth(60);
+            tablaclientes.getColumnModel().getColumn(9).setMaxWidth(70);
+            tablaclientes.getColumnModel().getColumn(9).setMinWidth(70);
+            tablaclientes.getColumnModel().getColumn(10).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(10).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(11).setMaxWidth(50);
+            tablaclientes.getColumnModel().getColumn(11).setMinWidth(50);
+            tablaclientes.getColumnModel().getColumn(0).setPreferredWidth(50);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al cargar la tabla de clientes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

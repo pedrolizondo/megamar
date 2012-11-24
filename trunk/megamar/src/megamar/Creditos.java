@@ -7,6 +7,7 @@ package megamar;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -25,6 +28,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import reportes.MetodosImpresion;
 
 /**
  *
@@ -635,41 +639,31 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
     private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-            int fila = tablacreditos.getSelectedRow();
-            String id = String.valueOf(tablacreditos.getValueAt(fila, 0));
+            //int fila = tablacreditos.getSelectedRow();
+            /*String id = String.valueOf(tablacreditos.getValueAt(fila, 0));
             String monto_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 2));
             String plan = String.valueOf(tablacreditos.getValueAt(fila, 3));
             String monto_cuota = String.valueOf(tablacreditos.getValueAt(fila, 5));
             String fecha_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 6));
-            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));
-            
-            try {
-                JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reportecuentacorrientecliente.jasper");
-                //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
-                Map parametros = new HashMap();
-                parametros.put("idcredito", id);
-                parametros.put("pnombre",txtnombre.getText());
-                parametros.put("pcodigo",id_cliente);
-                parametros.put("ptelefono",txttelefono.getText());
-                parametros.put("pdom_particular",txtdomicilioparticular.getText());
-                parametros.put("pdom_comercial",txtdomiciliocomercial.getText());
-                parametros.put("prubro",txtrubro.getText());
-                parametros.put("pmontoprestamo",monto_prestamo);
-                parametros.put("pplan",plan);
-                parametros.put("pmontocuota",monto_cuota);
-                parametros.put("pfechaprestamo",fecha_prestamo);
-                parametros.put("pfechacancelacion",fecha_cancelacion);
-                
-                JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-                //JasperViewer.viewReport(print);
-                JasperViewer view = new JasperViewer(print, false);
-                view.setTitle("Detalles del credito.");
-                view.setExtendedState(view.MAXIMIZED_BOTH);
-                view.setVisible(true);
+            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));*/
 
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            
+            String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
+            /*String monto_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 2));
+            String plan = String.valueOf(tablacreditos.getValueAt(fila, 3));
+            String monto_cuota = String.valueOf(tablacreditos.getValueAt(fila, 5));
+            String fecha_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 6));
+            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));
+             */
+
+            try {
+                new MetodosImpresion().ReporteCuentaCorrienteCliente(id);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
     }//GEN-LAST:event_tablacreditosMouseClicked
 
