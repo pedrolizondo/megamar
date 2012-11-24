@@ -49,8 +49,8 @@
 				<textFieldExpression><![CDATA[$P{pzona}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="ddde3287-a2c0-4703-864c-0984481498a1" x="356" y="-18" width="221" height="60"/>
-				<imageExpression><![CDATA["C:\\Users\\CoLiSa\\Documents\\NetBeansProjects\\trunk\\megamar\\src\\reportes\\logomegamar.png"]]></imageExpression>
+				<reportElement uuid="041fcd3e-f559-4a5d-9225-ae73dfde42cd" x="334" y="-15" width="221" height="60"/>
+				<imageExpression><![CDATA["C:\\Users\\Lizondo1\\Documents\\NetBeansProjects\\megamar\\src\\reportes\\logomegamar.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

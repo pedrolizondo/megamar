@@ -12,9 +12,12 @@ package megamar;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -22,6 +25,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import reportes.MetodosImpresion;
 /**
  *
  * @author Lizondo1
@@ -132,25 +136,13 @@ public class EstadoZonas extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
         }
-
+                
         try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporteestadozona.jasper");
-            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
-            Map parametros = new HashMap();
-            parametros.put("pzona", zona);
-            parametros.put("pestadozona", estado_zona);
-            parametros.put("ptotalacobrar", total_cobrar);
-            parametros.put("pcantrecibos", num_recibos);
-
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-            //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print, false);
-            view.setTitle("Estado de la Zona.");
-            view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            new MetodosImpresion().ReporteEstadoZona(zona, estado_zona, total_cobrar, num_recibos);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EstadoZonas.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (SQLException ex) {
+            Logger.getLogger(EstadoZonas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbimprimirActionPerformed
 
