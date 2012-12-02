@@ -26,6 +26,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         completarcombozonas();
         this.setLocationRelativeTo(null);
+        
     }
 
     /** This method is called from within the constructor to
@@ -80,7 +81,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        txtpass.setFont(new java.awt.Font("Tahoma", 0, 14));
+        txtpass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtpass.setText("123");
         txtpass.setPreferredSize(new java.awt.Dimension(150, 20));
         txtpass.addKeyListener(new java.awt.event.KeyAdapter() {

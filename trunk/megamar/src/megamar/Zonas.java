@@ -345,6 +345,11 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     int idzona = Integer.parseInt(txtidzona.getText());
     String nombre = txtnombrezona.getText();
     
+    if(nombre.equals("")){
+        JOptionPane.showMessageDialog(null,"Ingrese el Nombre de la Zona.","Error!",JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
     String consulta = "insert into zona values('" + idzona + "', '" + nombre + "' )";
     try {
         Conectar();

@@ -4,6 +4,11 @@
  */
 package megamar;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pedro.lizondo
@@ -31,7 +36,7 @@ public class Usuarios extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtusuario = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -44,7 +49,7 @@ public class Usuarios extends javax.swing.JDialog {
 
         jLabel2.setText("Perfil");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Operador", "Administrador" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "OPERADOR", "ADMINISTRADOR" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -61,7 +66,7 @@ public class Usuarios extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -71,7 +76,7 @@ public class Usuarios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -81,32 +86,35 @@ public class Usuarios extends javax.swing.JDialog {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
+        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
         jLabel4.setText("NOTA: El nuevo usuario se crea con contraseña 123.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 16, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 163, Short.MAX_VALUE)
-                                .addComponent(jButton1)))
-                        .addContainerGap())))
+                        .addComponent(jLabel4)
+                        .addGap(0, 16, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 163, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,6 +125,29 @@ public class Usuarios extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String usuario = txtusuario.getText();
+        String perfil = jComboBox1.getSelectedItem().toString();
+
+        if (usuario.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese el Nombre del Usuario.", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String consulta = "insert into login(usuario,pass,perfil) values('" + usuario + "', md5('" + 123 + "'), '" + perfil + "' )";
+        try {
+            Conectar();
+            int done = stmt.executeUpdate(consulta);
+            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se guardaron los datos del nuevo usuario", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            db.close(stmt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos del nuevo usuario", JOptionPane.ERROR_MESSAGE);
+        }
+        db.destroy();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,10 +184,10 @@ public class Usuarios extends javax.swing.JDialog {
          * Create and display the form
          */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Usuarios().setVisible(true);
-            }
+        
+        public void run() {
+        new Usuarios().setVisible(true);
+        }
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,6 +197,19 @@ public class Usuarios extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
+    private conexion db;
+    private Statement stmt;
+
+    public void Conectar() {
+        try {
+            db = new conexion();      //instancia de la clase conexion.java
+            db.init();
+            Connection conn = db.getMyConnection();
+            stmt = conn.createStatement();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
