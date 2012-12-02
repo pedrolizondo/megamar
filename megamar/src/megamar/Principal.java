@@ -29,11 +29,12 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Lizondo1
  */
 public class Principal extends javax.swing.JFrame {
+
     private String zona;
     private int idzona;
     private String idusuario;
     private String perfil;
-    
+
     /** Creates new form Principal */
     public Principal(String nombrezona, int idz, String idu, String perf) {
         initComponents();
@@ -48,6 +49,12 @@ public class Principal extends javax.swing.JFrame {
         idzona = idz;
         idusuario = idu;
         perfil = perf;
+        if (!perfil.equals("ADMINISTRADOR")) {
+            jMenu3.setVisible(false);
+            jMenuItem2.setVisible(false);
+            jMenuItem4.setVisible(false);
+            JMenu5.setVisible(false);
+        }
         Conectar();
     }
 
@@ -80,6 +87,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Megamar Financiera");
@@ -213,6 +221,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/llaves.png"))); // NOI18N
+        jMenuItem12.setText("Cambiar Contaseña");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem12);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -239,32 +256,32 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    Clientes C = new Clientes(Integer.toString(idzona),this,true);
+    Clientes C = new Clientes(Integer.toString(idzona), this, true);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    Zonas Z = new Zonas(this,true);
+    Zonas Z = new Zonas(this, true);
     Z.setVisible(true);
 }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    Planes P = new Planes(this,true);
+    Planes P = new Planes(this, true);
     P.setVisible(true);
 }//GEN-LAST:event_jMenuItem4ActionPerformed
 
 private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-    Rubros R = new Rubros(this,true);
+    Rubros R = new Rubros(this, true);
     R.setVisible(true);
 }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    Creditos C = new Creditos(Integer.toString(idzona),zona,this,true);
+    Creditos C = new Creditos(Integer.toString(idzona), zona, this, true);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-    Usuarios U = new Usuarios(this,true);
+    Usuarios U = new Usuarios(this, true);
     U.setVisible(true);
 }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -292,6 +309,11 @@ private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     ImprimirRecibos I = new ImprimirRecibos(idzona);
     I.setVisible(true);
 }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        UsuarioModificarPass U = new UsuarioModificarPass(this, true, idusuario);
+        U.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,10 +344,10 @@ private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
         /* Create and display the form */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        
+        public void run() {
+        new Principal().setVisible(true);
+        }
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,6 +362,7 @@ private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -350,16 +373,15 @@ private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel labelzona;
     // End of variables declaration//GEN-END:variables
-
     private conexion db;
     private Statement stmt;
     private Connection conn;
-    
+
     public void Conectar() {
         try {
             db = new conexion();      //instancia de la clase conexion.java
             db.init();
-             conn = db.getMyConnection();
+            conn = db.getMyConnection();
             stmt = conn.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
