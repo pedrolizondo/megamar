@@ -16,9 +16,6 @@
 	<parameter name="idcredito" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\CoLiSa\\Documents\\NetBeansProjects\\trunk\\megamar\\src\\reportes\\"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="pnombre" class="java.lang.String"/>
 	<parameter name="ptelefono" class="java.lang.String"/>
 	<parameter name="pcodigo" class="java.lang.String"/>
@@ -30,6 +27,7 @@
 	<parameter name="pfechacancelacion" class="java.lang.String"/>
 	<parameter name="pmontocuota" class="java.lang.String"/>
 	<parameter name="pplan" class="java.lang.String"/>
+	<parameter name="REPORT_DIR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from pago where idcredito = $P{idcredito}]]>
 	</queryString>
@@ -54,7 +52,7 @@
 					<subreportParameterExpression><![CDATA[$F{idcredito}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\Lizondo1\\Documents\\NetBeansProjects\\megamar\\src\\reportes\\reportecuentacorrientecliente_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{REPORT_DIR} + "reportecuentacorrientecliente_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</title>

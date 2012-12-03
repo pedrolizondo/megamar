@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -29,9 +29,13 @@ public class MetodosImpresion {
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteclientes.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
+            
             Map parametros = new HashMap();
             parametros.put("pidzona", idzona);
             parametros.put("pestado", estado);
+            parametros.put("REPORT_DIR", reportsDirPath);
+            
             
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
@@ -52,8 +56,10 @@ public class MetodosImpresion {
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reportecuentacorrientecliente.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             Map parametros = new HashMap();
             parametros.put("idcredito", id);
+            parametros.put("REPORT_DIR", reportsDirPath);
             /*parametros.put("pnombre",nombre);
             parametros.put("pcodigo",id_cliente);
             parametros.put("ptelefono",telefono);
@@ -84,12 +90,13 @@ public class MetodosImpresion {
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteestadozona.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             Map parametros = new HashMap();
             parametros.put("pzona", zona);
             parametros.put("pestadozona", estado_zona);
             parametros.put("ptotalacobrar", total_cobrar);
             parametros.put("pcantrecibos", num_recibos);
-
+            parametros.put("REPORT_DIR", reportsDirPath);
 
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
@@ -109,6 +116,7 @@ public class MetodosImpresion {
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteliquidacion.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             Map parametros = new HashMap();
             parametros.put("ptotalacobrar", param[0]);
             parametros.put("ptotalcobrado", param[1]);
@@ -160,6 +168,7 @@ public class MetodosImpresion {
             parametros.put("psubtotal3", param[42]);
             
             parametros.put("ptotalapagar", param[43]);
+            parametros.put("REPORT_DIR", reportsDirPath);
             
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
