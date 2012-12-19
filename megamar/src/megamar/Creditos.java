@@ -591,7 +591,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String cuota = txtcuota.getText();
         String pagado = "0";
         String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
-        String fecha_ultimo_pago = "0000-00-00";
+        //String fecha_ultimo_pago = "0000-00-00";
+        String fecha_ultimo_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
         /*Calculo de la fecha de cancelacion*/
         Calendar c1 = Calendar.getInstance();
         c1.setTime(jdfechacredito.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
