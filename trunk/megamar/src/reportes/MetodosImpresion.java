@@ -4,12 +4,16 @@
  */
 package reportes;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import megamar.conexion;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -17,15 +21,23 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
  * @author Lizondo1
  */
 public class MetodosImpresion {
+    private Toolkit tk = Toolkit.getDefaultToolkit();
+    private Dimension screenSize = tk.getScreenSize();
+    
     public void ReporteClientes(String estado, int idzona)throws ClassNotFoundException, SQLException{
         Conectar();
         try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
+            
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteclientes.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
@@ -39,10 +51,14 @@ public class MetodosImpresion {
             
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print,false);
+           /* JasperViewer view = new JasperViewer(print,false);
             view.setTitle("Ejemplo Jasper Report");
             view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
+            view.setVisible(true);*/
+            
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -53,6 +69,9 @@ public class MetodosImpresion {
     public void ReporteCuentaCorrienteCliente(String id)throws ClassNotFoundException, SQLException{
         Conectar();
         try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reportecuentacorrientecliente.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
@@ -74,10 +93,13 @@ public class MetodosImpresion {
             
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print,false);
+            /*JasperViewer view = new JasperViewer(print,false);
             view.setTitle("Detalles del credito");
             view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
+            view.setVisible(true);*/
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -87,6 +109,9 @@ public class MetodosImpresion {
     public void ReporteEstadoZona(String zona, String estado_zona, String total_cobrar, String num_recibos) throws ClassNotFoundException, SQLException {
         Conectar();
         try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteestadozona.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
@@ -100,11 +125,13 @@ public class MetodosImpresion {
 
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print, false);
+            /*JasperViewer view = new JasperViewer(print, false);
             view.setTitle("Estado de la Zona");
             view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
-
+            view.setVisible(true);*/
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -113,6 +140,9 @@ public class MetodosImpresion {
     public void ReporteLiquidacion(String param[])throws ClassNotFoundException, SQLException{
         Conectar();
         try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteliquidacion.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
@@ -172,11 +202,42 @@ public class MetodosImpresion {
             
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print,false);
+            /*JasperViewer view = new JasperViewer(print,false);
             view.setTitle("Ejemplo Jasper Report");
             view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
-
+            view.setVisible(true);*/
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void ReporteRecibos(int idzona)throws ClassNotFoundException, SQLException{
+        Conectar();
+        try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporterecibos.jasper"));
+            //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
+            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
+            
+            Map parametros = new HashMap();
+            parametros.put("pzona", idzona);
+            parametros.put("REPORT_DIR", reportsDirPath);
+            
+            
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            /*JasperViewer view = new JasperViewer(print,false);
+            view.setTitle("Recibos");
+            view.setExtendedState(view.MAXIMIZED_BOTH);
+            view.setVisible(true);*/
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

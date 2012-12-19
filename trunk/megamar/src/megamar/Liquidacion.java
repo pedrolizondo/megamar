@@ -35,7 +35,7 @@ import reportes.MetodosImpresion;
  *
  * @author Lizondo1
  */
-public class Liquidacion extends javax.swing.JFrame {
+public class Liquidacion extends javax.swing.JDialog {
     private int idzona;
     private float pagos [][] = new float[4][3];  //4=dias; 3=porcentajes(5,4,3)
     private int total_recibos[] = new int[3];    //Total Recibos cortados: 1=5%; 2=4%; 3=5%
@@ -45,7 +45,7 @@ public class Liquidacion extends javax.swing.JFrame {
     private float[] comision_monto = new float[3];
     /** Creates new form Liquidacion */
     public Liquidacion(java.awt.Frame parent, boolean modal, int idz) {
-        //super(parent, modal);
+        super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         idzona = idz;

@@ -30,11 +30,11 @@ import reportes.MetodosImpresion;
  *
  * @author Lizondo1
  */
-public class EstadoZonas extends javax.swing.JFrame {
+public class EstadoZonas extends javax.swing.JDialog {
 
     /** Creates new form EstadoZonas */
     public EstadoZonas(java.awt.Frame parent, boolean modal) {
-        //super(parent, modal);
+        super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         cargartabla();

@@ -15,28 +15,23 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import reportes.MetodosImpresion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.poifs.property.Parent;
 
 
 /**
  *
  * @author Lizondo1
  */
-public class ImprimirListadoClientes extends javax.swing.JFrame {
+public class ImprimirListadoClientes extends javax.swing.JDialog {
     private int idzona;
     /** Creates new form ImprimirListadoClientes */
-    public ImprimirListadoClientes(int idz) {
+    public ImprimirListadoClientes(java.awt.Frame parent, boolean modal, int idz) {
+        super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         idzona = idz;

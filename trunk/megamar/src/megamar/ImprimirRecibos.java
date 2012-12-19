@@ -13,30 +13,28 @@ package megamar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
+import reportes.MetodosImpresion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.SQLException;
 
 /**
  *
  * @author CoLiSa
  */
-public class ImprimirRecibos extends javax.swing.JFrame {
+public class ImprimirRecibos extends javax.swing.JDialog {
+
     private int idzona;
-    
+
     /** Creates new form ImprimirRecibos */
-    public ImprimirRecibos(int idz) {
+    public ImprimirRecibos(java.awt.Frame parent, boolean modal, int idz) {
+        super(parent, modal);
         initComponents();
-        
         idzona = idz;
         this.setLocationRelativeTo(null);
         cargartabla();
@@ -82,12 +80,14 @@ public class ImprimirRecibos extends javax.swing.JFrame {
 
             }
         ));
+        tablaestadozona.setColumnSelectionAllowed(true);
         tablaestadozona.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaestadozonaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaestadozona);
+        tablaestadozona.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,50 +116,17 @@ public class ImprimirRecibos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jbimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbimprimirActionPerformed
-        /*
-         * Cuando se imprime el formulario "Estado de Zona" se registra:
-         * numero de recibos cortados, estado de la zona y total a cobrar por el cobrador.
-         * Estos datos sirven para calcular luego la liquidacion de los cobradores.
-         */
-        /*int fila = tablaestadozona.getSelectedRow();
-        String idzona = String.valueOf(tablaestadozona.getValueAt(fila, 0));
-        String zona = String.valueOf(tablaestadozona.getValueAt(fila, 1));
-        String num_recibos = String.valueOf(tablaestadozona.getValueAt(fila, 2));
-        String estado_zona = String.valueOf(tablaestadozona.getValueAt(fila, 3));
-        String total_cobrar = String.valueOf(tablaestadozona.getValueAt(fila, 4));
-
-        String consulta = "UPDATE zona "
-                + "SET num_recibos = '" + num_recibos + "', estado_zona='" + estado_zona + "', total_cobrar='" + total_cobrar + "' "
-                + "WHERE idzona='" + idzona + "'";
-        try {
-            Conectar();
-            int done = stmt.executeUpdate(consulta);
-            JOptionPane.showMessageDialog(null, "Se actualizaron los datos del estado de la Zona.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
-        }*/
-
-        try {
-            JasperReport reporte = (JasperReport) JRLoader.loadObject("src//reportes//reporterecibos.jasper");
-            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
-            Map parametros = new HashMap();
-            parametros.put("pzona", idzona);
-
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
-            //JasperViewer.viewReport(print);
-            JasperViewer view = new JasperViewer(print, false);
-            view.setTitle("Recibo");
-            view.setExtendedState(view.MAXIMIZED_BOTH);
-            view.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    try {
+        new MetodosImpresion().ReporteRecibos(idzona);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_jbimprimirActionPerformed
 
 private void tablaestadozonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaestadozonaMouseClicked
-        jbimprimir.setEnabled(true);
+    jbimprimir.setEnabled(true);
 }//GEN-LAST:event_tablaestadozonaMouseClicked
 
     /**
@@ -188,23 +155,28 @@ private void tablaestadozonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-F
             java.util.logging.Logger.getLogger(ImprimirRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-/*        java.awt.EventQueue.invokeLater(new Runnable() {
-
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ImprimirRecibos().setVisible(true);
+                EstadoZonas dialog = new EstadoZonas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
-        }); */
+        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbimprimir;
     private javax.swing.JTable tablaestadozona;
     // End of variables declaration//GEN-END:variables
-private conexion db;
+    private conexion db;
     private Statement stmt;
-    
+
     public void Conectar() {
         try {
             db = new conexion();      //instancia de la clase conexion.java
@@ -215,29 +187,35 @@ private conexion db;
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void cargartabla() {
-        String consulta ="SELECT x.idcliente, x.nombre as 'Nombre', x.apellido as 'Apellido', x.domicilio_comercial as 'Dom. Comercial', x.barrio_comercial as 'Bº Comercial', x.domicilio_particular as 'Dom. Particular', x.barrio_particular as 'Bº Particular', r.descripcion as 'Rubro', x.telefono as 'Telefono', c.compra as 'Compra', c.pagado as 'Pagado', c.saldo as 'Saldo', c.fecha_ultimo_pago as 'Ultimo Pago', c.atraso_total as 'Atraso', c.fecha_cancelacion as 'Cancelacion'"
+        //System.out.println("ID Zona: "+idzona);
+        String consulta = "SELECT true as '', x.idcliente, x.nombre as 'Nombre', x.apellido as 'Apellido', x.domicilio_comercial as 'Dom. Comercial', x.barrio_comercial as 'Bº Comercial', x.domicilio_particular as 'Dom. Particular', x.barrio_particular as 'Bº Particular', r.descripcion as 'Rubro', x.telefono as 'Telefono', c.compra as 'Compra', c.pagado as 'Pagado', c.saldo as 'Saldo', c.fecha_ultimo_pago as 'Ultimo Pago', c.atraso_total as 'Atraso', c.fecha_cancelacion as 'Cancelacion' "
                 + "FROM credito c, cliente x, rubro r, zona z "
-                + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idrubro = r.idrubro and x.idzona = '"+idzona+"' ";
+                + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idrubro = r.idrubro and x.idzona = '" + idzona + "' ";
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
-            DefaultTableModel modelo = new DefaultTableModel();
+            //DefaultTableModel modelo = new DefaultTableModel();
+            MiModelo modelo = new MiModelo();
             tablaestadozona.setModel(modelo);
             ConversorRSaDefaultTableModel.completar(rs, modelo);
             //codigo para ocultar la primera columna (idplan)
             tablaestadozona.getColumnModel().getColumn(0).setMaxWidth(30);
             tablaestadozona.getColumnModel().getColumn(0).setMinWidth(30);
             tablaestadozona.getColumnModel().getColumn(0).setPreferredWidth(30);
-            
+            //TableColumn col = new TableColumn(modelo.getColumnCount());
+            //tablaestadozona.addColumn(col);
+             
+
             TableColumn sportColumn = tablaestadozona.getColumnModel().getColumn(0);
             //JComboBox comboBox = new JComboBox();
+            //tablaestadozona.setColumnModel
+            
             JCheckBox checkbox = new JCheckBox();
             sportColumn.setCellEditor(new DefaultCellEditor(checkbox));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }

@@ -291,7 +291,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        ImprimirListadoClientes I = new ImprimirListadoClientes(idzona);
+        ImprimirListadoClientes I = new ImprimirListadoClientes(this,true,idzona);
         I.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
@@ -305,15 +305,15 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         E.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
-private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-    ImprimirRecibos I = new ImprimirRecibos(idzona);
-    I.setVisible(true);
-}//GEN-LAST:event_jMenuItem11ActionPerformed
-
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         UsuarioModificarPass U = new UsuarioModificarPass(this, true, idusuario);
         U.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        ImprimirRecibos I = new ImprimirRecibos(this, true, idzona);
+        I.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments

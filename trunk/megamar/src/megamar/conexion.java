@@ -28,6 +28,7 @@ public class conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             myConnection = DriverManager.getConnection("jdbc:mysql://localhost/megamar", "root", "root");
+            //myConnection = DriverManager.getConnection("jdbc:mysql://192.168.5.26/megamar", "root", "german");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
