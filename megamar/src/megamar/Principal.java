@@ -23,6 +23,11 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.SQLException;
+import reportes.MetodosImpresion;
+
 
 /**
  *
@@ -76,6 +81,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -146,6 +152,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem8);
+
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/planes_24.png"))); // NOI18N
+        jMenuItem13.setText("Listado de Creditos Activos");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem13);
 
         jMenuBar1.add(jMenu4);
 
@@ -315,6 +330,16 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         I.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        try {
+            new MetodosImpresion().ReporteCreditosActivos(idzona);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -363,6 +388,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

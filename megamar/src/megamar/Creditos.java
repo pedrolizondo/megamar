@@ -554,7 +554,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     txtcomision.setText(rs.getString("comision"));
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al cargar los RUBROS.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al cargar los PLANES.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             int credito = Integer.parseInt(txtcreditoinicial.getText());
             int interes = Integer.parseInt(txtinteres.getText());

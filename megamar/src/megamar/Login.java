@@ -56,7 +56,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
 
         txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtusuario.setText("pedro");
         txtusuario.setPreferredSize(new java.awt.Dimension(150, 20));
         txtusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,7 +86,6 @@ public class Login extends javax.swing.JFrame {
         });
 
         txtpass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtpass.setText("123");
         txtpass.setPreferredSize(new java.awt.Dimension(150, 20));
         txtpass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -229,6 +227,7 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     if (access == true) {
         Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil);
         P.setVisible(true);
+        this.setVisible(false);
     }
 }//GEN-LAST:event_jbaceptarActionPerformed
 

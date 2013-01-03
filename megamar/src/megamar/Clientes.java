@@ -656,13 +656,6 @@ public class Clientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbguardarActionPerformed
-    if(existedni(txtdni.getText())){
-        txtdni.requestFocus();
-        return;
-    }
-    
-    int idcliente = Integer.parseInt(txtidcliente.getText());
-    int dni = Integer.parseInt(txtdni.getText());
     String nombre = txtnombre.getText();
     String apellido = txtapellido.getText();
     String domicilio_particular = txtdomicilioparticular.getText();
@@ -671,12 +664,17 @@ private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     String barrio_comercial = txtbarriocomercial.getText();
     String telefono = txttelefono.getText();
     int num_creditos = 0;   //Cuando se da de alta un cliente se guarda como /0
-    String perno = "NO";          //Perno = 0
+    String perno = "NO";    //Perno = 0
     String estado = "NUEVO";
-    //String idz = idzona;
     int rubro = comborubro.getSelectedIndex();
+    //String idz = idzona;
+    
     if(txtdni.getText().equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el DNI del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if(existedni(txtdni.getText())){
+        txtdni.requestFocus();
         return;
     }
     if(nombre.equals("")){
@@ -696,6 +694,8 @@ private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         return;
     }
     
+    int idcliente = Integer.parseInt(txtidcliente.getText());
+    int dni = Integer.parseInt(txtdni.getText());
     
     String consulta = "insert into cliente values('"+idcliente+"', '"+dni+"', '"+nombre+"', '"+apellido+"', '"+domicilio_particular+"', '"+barrio_particular+"', '"+domicilio_comercial+"', '"+barrio_comercial+"', "
             + " '"+telefono+"', '"+num_creditos+"', '"+perno+"', '"+estado+"', '"+idzona+"', '"+rubro+"' )";
