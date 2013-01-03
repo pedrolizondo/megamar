@@ -350,7 +350,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         return;
     }
     
-    String consulta = "insert into zona values('" + idzona + "', '" + nombre + "' )";
+    String consulta = "insert into zona values('" + idzona + "', '" + nombre + "',0,0,0 )";
     try {
         Conectar();
         int done = stmt.executeUpdate(consulta);

@@ -72,25 +72,14 @@ public class MetodosImpresion {
             JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
             viewer.setSize(screenSize.width, screenSize.height);
             viewer.setLocationRelativeTo(null);
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reportecuentacorrientecliente.jasper"));
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteresumencuenta.jasper"));
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
             String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             Map parametros = new HashMap();
             parametros.put("idcredito", id);
             parametros.put("REPORT_DIR", reportsDirPath);
-            /*parametros.put("pnombre",nombre);
-            parametros.put("pcodigo",id_cliente);
-            parametros.put("ptelefono",telefono);
-            parametros.put("pdom_particular",domiciliop);
-            parametros.put("pdom_comercial",domicilioc);
-            parametros.put("prubro",rubro);
-            parametros.put("pmontoprestamo",monto_prestamo);
-            parametros.put("pplan",plan);
-            parametros.put("pmontocuota",monto_cuota);
-            parametros.put("pfechaprestamo",fecha_prestamo);
-            parametros.put("pfechacancelacion",fecha_cancelacion);*/
-            
+                        
             JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
             //JasperViewer.viewReport(print);
             /*JasperViewer view = new JasperViewer(print,false);
@@ -225,7 +214,37 @@ public class MetodosImpresion {
             String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             
             Map parametros = new HashMap();
-            parametros.put("pzona", idzona);
+            parametros.put("idzona", idzona);
+            parametros.put("REPORT_DIR", reportsDirPath);
+            
+            
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, db.getMyConnection());
+            //JasperViewer.viewReport(print);
+            /*JasperViewer view = new JasperViewer(print,false);
+            view.setTitle("Recibos");
+            view.setExtendedState(view.MAXIMIZED_BOTH);
+            view.setVisible(true);*/
+            JRViewer jrv = new JRViewer(print);
+            viewer.getContentPane().add(jrv);
+            viewer.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void ReporteCreditosActivos(int idzona)throws ClassNotFoundException, SQLException{
+        Conectar();
+        try {
+            JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
+            viewer.setSize(screenSize.width, screenSize.height);
+            viewer.setLocationRelativeTo(null);
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reportecuentacorrienteclientes.jasper"));
+            //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
+            //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
+            String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
+            
+            Map parametros = new HashMap();
+            parametros.put("idzona", idzona);
             parametros.put("REPORT_DIR", reportsDirPath);
             
             
