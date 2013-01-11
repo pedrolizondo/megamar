@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteclientes" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9751af3a-e9f8-46d6-949b-6167730e5acc">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="963"/>
+	<property name="ireport.x" value="405"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
@@ -14,13 +14,15 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="pidzona" class="java.lang.String"/>
-	<parameter name="pestado" class="java.lang.String"/>
+	<parameter name="where_estado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<parameter name="REPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[Select idcliente as 'Codigo', CONCAT(apellido,', ',nombre) as 'Nombre', dni as DNI, num_creditos as Creditos, r.descripcion as 'Rubro', domicilio_particular as 'Domicilio Particular', barrio_particular as 'Barrio Particular', domicilio_comercial as 'Domicilio Comercial', barrio_comercial as 'Barrio Comercial', telefono as 'Telefono', estado as 'Estado'
-from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona=$P{pidzona} and c.estado = $P{pestado}]]>
+from cliente c, rubro r where c.idrubro=r.idrubro and c.idzona=$P{pidzona} $P!{where_estado}]]>
 	</queryString>
 	<field name="Codigo" class="java.lang.Integer"/>
 	<field name="Nombre" class="java.lang.String"/>

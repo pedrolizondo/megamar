@@ -166,6 +166,7 @@ public class Zonas extends javax.swing.JDialog {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/save_32.png"))); // NOI18N
         jButton5.setText("Guardar Cambios");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -198,6 +199,13 @@ public class Zonas extends javax.swing.JDialog {
 
         txtidzona1.setEditable(false);
         jPanel8.add(txtidzona1);
+
+        txtnombrezona1.setEditable(false);
+        txtnombrezona1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnombrezona1KeyPressed(evt);
+            }
+        });
         jPanel8.add(txtnombrezona1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -237,17 +245,17 @@ public class Zonas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jpanelmodificarzonaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addGroup(jpanelmodificarzonaLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(combozonas, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpanelmodificarzonaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jpanelmodificarzonaLayout.createSequentialGroup()
                             .addComponent(jButton6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton5))
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpanelmodificarzonaLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(combozonas, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpanelmodificarzonaLayout.setVerticalGroup(
@@ -259,7 +267,7 @@ public class Zonas extends javax.swing.JDialog {
                 .addGroup(jpanelmodificarzonaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(combozonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpanelmodificarzonaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -296,7 +304,7 @@ public class Zonas extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,7 +332,7 @@ public class Zonas extends javax.swing.JDialog {
                 .addComponent(jpanelnuevazona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpanelmodificarzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -397,7 +405,17 @@ private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void combozonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combozonasActionPerformed
     txtidzona1.setText(Integer.toString(combozonas.getSelectedIndex()));
     txtnombrezona1.setText(combozonas.getSelectedItem().toString());
+    if(combozonas.getSelectedIndex() > 0){
+        txtnombrezona1.setEditable(true);
+    }else{
+        txtnombrezona1.setEditable(false);
+        jButton5.setEnabled(false);
+    }
 }//GEN-LAST:event_combozonasActionPerformed
+
+    private void txtnombrezona1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombrezona1KeyPressed
+        jButton5.setEnabled(true);
+    }//GEN-LAST:event_txtnombrezona1KeyPressed
 
     /**
      * @param args the command line arguments
