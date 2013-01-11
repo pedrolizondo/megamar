@@ -32,20 +32,27 @@ public class MetodosImpresion {
     private Dimension screenSize = tk.getScreenSize();
     
     public void ReporteClientes(String estado, int idzona)throws ClassNotFoundException, SQLException{
+        String where_estado;
         Conectar();
+        if(estado.equals("TODOS")){
+            where_estado = "";
+        }else{
+            where_estado = " and c.estado = '"+estado+"'";
+        }
         try {
             JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
             viewer.setSize(screenSize.width, screenSize.height);
             viewer.setLocationRelativeTo(null);
             
             JasperReport reporte = (JasperReport) JRLoader.loadObject(this.getClass().getResource("reporteclientes.jasper"));
+            
             //JasperReport reporte = (JasperReport) JRLoader.loadObject("reportes//reporteclientes.jasper");
             //JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteclientes.jrxml");
             String reportsDirPath = String.valueOf(this.getClass().getResource("/reportes/"));
             
             Map parametros = new HashMap();
             parametros.put("pidzona", idzona);
-            parametros.put("pestado", estado);
+            parametros.put("where_estado", where_estado);
             parametros.put("REPORT_DIR", reportsDirPath);
             
             
