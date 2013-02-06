@@ -1,0 +1,7 @@
+MODIFICACION EN LA BD
+======================
+
+Tabla credito: campo "pagado" -> se cambio el tipo a FLOAT.
+Tabla plan: nuevo campo tipo_sistema -> valores aceptados: SISTEMA_VIEJO, SISTEMA_NUEVO
+
+BUG -> Arreglar el combo de los planes en Nuevo Credito

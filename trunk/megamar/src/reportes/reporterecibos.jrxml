@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporterecibos" language="groovy" pageWidth="595" pageHeight="870" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="3478011a-6cd2-4dbe-b1ec-bb56f01e93df">
 	<property name="ireport.zoom" value="1.6105100000000008"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="63"/>
+	<property name="ireport.x" value="108"/>
+	<property name="ireport.y" value="86"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -16,7 +16,7 @@
 	<parameter name="idzona" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT x.idcliente, x.num_creditos, x.nombre,x.apellido, x.domicilio_comercial, x.barrio_comercial,
-x.domicilio_particular, x.barrio_particular, r.descripcion, x.telefono, c.compra, c.pagado, c.saldo,
+x.domicilio_particular, x.barrio_particular, r.descripcion, x.telefono, c.compra_total, c.pagado, c.saldo,
 c.fecha_ultimo_pago, c.atraso_total, c.fecha_cancelacion, c.plan, c.cuota, c.comision
 FROM credito c, cliente x, rubro r, zona z
 WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona
@@ -32,7 +32,7 @@ and x.idrubro = r.idrubro and x.idzona = $P{idzona}]]>
 	<field name="barrio_particular" class="java.lang.String"/>
 	<field name="descripcion" class="java.lang.String"/>
 	<field name="telefono" class="java.lang.String"/>
-	<field name="compra" class="java.lang.Float"/>
+	<field name="compra_total" class="java.lang.Float"/>
 	<field name="pagado" class="java.lang.Integer"/>
 	<field name="saldo" class="java.lang.Float"/>
 	<field name="fecha_ultimo_pago" class="java.sql.Date"/>
@@ -94,7 +94,7 @@ and x.idrubro = r.idrubro and x.idzona = $P{idzona}]]>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{compra_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement uuid="0919b9fd-7600-480b-a9f3-3be40abda4e2" style="Detail" x="76" y="126" width="50" height="15"/>
@@ -143,7 +143,7 @@ and x.idrubro = r.idrubro and x.idzona = $P{idzona}]]>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{compra}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{compra_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 				<reportElement uuid="dabd9fb2-3048-4d50-9d23-4d19014a6409" style="Detail" x="439" y="126" width="53" height="15"/>
