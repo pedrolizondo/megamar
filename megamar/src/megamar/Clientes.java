@@ -983,7 +983,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_txtcodigoclienteKeyPressed
 
 private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarclienteActionPerformed
-        String consulta = "Select * from credito where idcliente = '" + txtidcliente1.getText() + "' and saldo > 0";
+    String consulta = "Select * from credito where idcliente = '" + txtidcliente1.getText() + "' and saldo > 0";
     try {
         Conectar();
         ResultSet rs = stmt.executeQuery(consulta);
@@ -997,8 +997,8 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
                 done = stmt.executeUpdate(consulta);
                 consulta = "Delete from pago where idcliente='" + txtidcliente1.getText() + "' ";
                 done = stmt.executeUpdate(consulta);
+                JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Cliente seleccionado.","Baja de Cliente", JOptionPane.INFORMATION_MESSAGE);
             }
-            JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Cliente seleccionado.","Baja de Cliente", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se puede eliminar al Cliente seleccionado porque registra creditos impagos.\nVerifique el historial de los Creditos del Cliente.","Error", JOptionPane.ERROR_MESSAGE);

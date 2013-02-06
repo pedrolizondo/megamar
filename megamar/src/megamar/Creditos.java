@@ -4,7 +4,10 @@
  */
 package megamar;
 
+import com.toedter.calendar.IDateEditor;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +21,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -35,27 +39,48 @@ import reportes.MetodosImpresion;
  * @author pedro.lizondo
  */
 public class Creditos extends javax.swing.JFrame {
+
     private String idzona;
     private int num_creditos;
     private int id_cliente;
     private float compra_total;
     private boolean clientevalido;
+    private String tipo_sistema;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
+    public DefaultComboBoxModel value;
     /**
      * Creates new form creditos
      */
-    public Creditos(String idz, String nomzona, java.awt.Frame parent, boolean modal) {
+    public Creditos(String idz, String nomzona, java.awt.Frame parent, boolean modal, String sistema) {
         //super(parent, modal);
         initComponents();
-        
         jdfechacredito.setLocale(Locale.getDefault());  //Define el idioma del calendar
+        IDateEditor editorDC = (IDateEditor) jdfechacredito.getDateEditor();
+        editorDC.getUiComponent().addKeyListener(new KeyListener() {
+
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == e.VK_ENTER) {
+                    txtcreditoinicial.requestFocusInWindow();
+                }
+            }
+
+            public void keyReleased(KeyEvent keyEvent) {
+                //printIt("Released", keyEvent);
+            }
+
+            public void keyTyped(KeyEvent keyEvent) {
+                //printIt("Typed", keyEvent);
+            }
+        });
         idzona = idz;
-        labelzona.setText(nomzona);
+        tipo_sistema = sistema;
+        //labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
         completarcomboplan();
+        txtcodigocliente.requestFocusInWindow();
     }
-    
-    public boolean getclientevalido(){
+
+    public boolean getclientevalido() {
         return clientevalido;
     }
 
@@ -68,7 +93,7 @@ public class Creditos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton4 = new javax.swing.JButton();
+        jButtonAceptar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtcodigocliente = new javax.swing.JTextField();
@@ -88,8 +113,6 @@ public class Creditos extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtcomision = new javax.swing.JTextField();
         comboplanes = new javax.swing.JComboBox();
-        jPanel1 = new javax.swing.JPanel();
-        labelzona = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -114,16 +137,24 @@ public class Creditos extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablacreditos = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonImprimirCredito = new javax.swing.JButton();
+        jButtonEliminarCredito = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creditos");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
-        jButton4.setText("Aceptar");
-        jButton4.setPreferredSize(new java.awt.Dimension(111, 41));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(111, 41));
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
+        jButtonAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButtonAceptarKeyPressed(evt);
             }
         });
 
@@ -214,15 +245,6 @@ public class Creditos extends javax.swing.JFrame {
 
         txtinteres.setEditable(false);
 
-        jdfechacredito.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jdfechacreditoKeyTyped(evt);
-            }
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jdfechacreditoKeyPressed(evt);
-            }
-        });
-
         jLabel8.setText("Cuota ($)");
 
         txtcuota.setEditable(false);
@@ -234,6 +256,11 @@ public class Creditos extends javax.swing.JFrame {
         comboplanes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboplanesActionPerformed(evt);
+            }
+        });
+        comboplanes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboplanesKeyPressed(evt);
             }
         });
 
@@ -299,27 +326,6 @@ public class Creditos extends javax.swing.JFrame {
                                 .addComponent(txtcreditoinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(comboplanes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
-        );
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Zona"));
-
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 24));
-        labelzona.setText("nombre zona");
-        labelzona.setToolTipText("");
-        labelzona.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelzona)
-                .addContainerGap(713, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(labelzona)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Cliente"));
@@ -437,16 +443,52 @@ public class Creditos extends javax.swing.JFrame {
         ));
         tablacreditos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablacreditos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablacreditosMouseClicked(evt);
-            }
-        });
-        tablacreditos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tablacreditosFocusLost(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tablacreditosMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tablacreditos);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jButtonImprimirCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/printer_32.png"))); // NOI18N
+        jButtonImprimirCredito.setText("Imprimir Credito Seleccionado");
+        jButtonImprimirCredito.setEnabled(false);
+        jButtonImprimirCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirCreditoActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminarCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Delete.png"))); // NOI18N
+        jButtonEliminarCredito.setText("Eliminar Credito Seleccionado");
+        jButtonEliminarCredito.setEnabled(false);
+        jButtonEliminarCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarCreditoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonImprimirCredito)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonEliminarCredito)
+                .addContainerGap(423, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonImprimirCredito)
+                    .addComponent(jButtonEliminarCredito))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -455,34 +497,34 @@ public class Creditos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, 0, 859, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
                 .addContainerGap())
         );
 
@@ -526,7 +568,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void txtcreditoinicialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyReleased
         if (comboplanes.getSelectedIndex() == 0 || txtinteres.getText().equals("")) {
             //return
-        }else{
+        } else {
             int credito = Integer.parseInt(txtcreditoinicial.getText());
             int interes = Integer.parseInt(txtinteres.getText());
             int plan = Integer.parseInt(comboplanes.getSelectedItem().toString());
@@ -537,12 +579,13 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_txtcreditoinicialKeyReleased
 
     private void comboplanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboplanesActionPerformed
-        String consulta = "Select interes, comision from plan where idplan = '" + comboplanes.getSelectedIndex() + "' ";
-        if (comboplanes.getSelectedIndex() == 0){
+        ComboboxItem selected_item = (ComboboxItem) comboplanes.getSelectedItem();
+        String consulta = "Select interes, comision from plan where idplan = '" + selected_item.getId() + "' ";
+        if (comboplanes.getSelectedIndex() == 0) {
             txtinteres.setText("");
             txtcuota.setText("");
-            txtcomision.setText("");            
-        }else if(txtcreditoinicial.getText().equals("")) {
+            txtcomision.setText("");
+        } else if (txtcreditoinicial.getText().equals("")) {
             //return
         } else {
             try {
@@ -569,7 +612,7 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         //System.out.println((String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate()));
         //System.out.println(jdfechacredito.getDate().toString());
         if (txtcodigocliente.getText().equals("")) {
@@ -584,93 +627,62 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, "Por favor ingrese el monto del credito en cuadro Credito Inicial.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        float compra = Float.parseFloat(txtcreditoinicial.getText());
-        String plan = comboplanes.getSelectedItem().toString();
-        String interes = txtinteres.getText();
-        String comision = txtcomision.getText();
-        String cuota = txtcuota.getText();
-        String pagado = "0";
-        String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
-        //String fecha_ultimo_pago = "0000-00-00";
-        String fecha_ultimo_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
-        /*Calculo de la fecha de cancelacion*/
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(jdfechacredito.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
-        c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
-        //System.out.println("La fecha de hoy más  X días es : " + FORMATO_YYYY_MM_DD.format(c1.getTime()));
-        //jdfechacredito.add(jdfechacredito.getDate(), 5);
-        String fecha_cancelacion = (String) FORMATO_YYYY_MM_DD.format(c1.getTime());
-        int credito_numero = num_creditos + 1;
-        String estado = "DEBE";
-        float saldo = compra_total;
-        String idcliente = txtcodigocliente.getText();
+        int res = JOptionPane.showConfirmDialog(null, "¿Desea guardar los datos del Credito?", "Nuevo Credito", JOptionPane.YES_NO_OPTION);
+        if (res == JOptionPane.YES_OPTION) {
+            float compra = Float.parseFloat(txtcreditoinicial.getText());
+            String plan = comboplanes.getSelectedItem().toString();
+            String interes = txtinteres.getText();
+            String comision = txtcomision.getText();
+            String cuota = txtcuota.getText();
+            String pagado = "0";
+            String fecha_compra = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
+            //String fecha_ultimo_pago = "0000-00-00";
+            String fecha_ultimo_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechacredito.getDate());
+            /*Calculo de la fecha de cancelacion*/
+            Calendar c1 = Calendar.getInstance();
+            c1.setTime(jdfechacredito.getDate());               //Le asignamos la fecha seleccionada en el jdfechacredito
+            c1.add(Calendar.DATE, Integer.parseInt(plan) * 7);  //Le sumamos la cantidad de dias = semanas * 7
+            //System.out.println("La fecha de hoy más  X días es : " + FORMATO_YYYY_MM_DD.format(c1.getTime()));
+            //jdfechacredito.add(jdfechacredito.getDate(), 5);
+            String fecha_cancelacion = (String) FORMATO_YYYY_MM_DD.format(c1.getTime());
+            int credito_numero = num_creditos + 1;
+            String estado = "DEBE";
+            float saldo = compra_total;
+            String idcliente = txtcodigocliente.getText();
 
-        /*Alta del CREDITO*/
-        String consulta = "insert into credito (compra,compra_total,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente,atraso_total,incremento_total) "
-                + "values('" + compra + "', '" + compra_total + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
-                + " '" + fecha_cancelacion + "', '" + credito_numero + "', '" + estado + "', '" + saldo + "', '" + idcliente + "',0,0 )";
-        try {
-            Conectar();
-            int done = stmt.executeUpdate(consulta);
-            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null, "Se guardaron los datos del Credito.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo cargar los datos del cliente", JOptionPane.ERROR_MESSAGE);
-        }
-        db.destroy();
+            /*Alta del CREDITO*/
+            String consulta = "insert into credito (compra,compra_total,plan,interes,comision,cuota,pagado,fecha_compra,fecha_ultimo_pago,fecha_cancelacion,credito_numero,estado,saldo,idcliente,atraso_total,incremento_total) "
+                    + "values('" + compra + "', '" + compra_total + "', '" + plan + "', '" + interes + "', '" + comision + "', '" + cuota + "', '" + pagado + "', '" + fecha_compra + "', '" + fecha_ultimo_pago + "', "
+                    + " '" + fecha_cancelacion + "', '" + credito_numero + "', '" + estado + "', '" + saldo + "', '" + idcliente + "',0,0 )";
+            try {
+                Conectar();
+                int done = stmt.executeUpdate(consulta);
+                //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se guardaron los datos del Credito.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo cargar los datos del cliente", JOptionPane.ERROR_MESSAGE);
+            }
+            db.destroy();
 
-        /*Modificacion de los datos del Cliente*/
-        String consulta2 = "update cliente "
-                + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
-                + "where idcliente='" + idcliente + "'";
-
-        try {
-            Conectar();
-            int done = stmt.executeUpdate(consulta2);
-            //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
-            //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
-        }
-        db.destroy();
-        this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void tablacreditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseClicked
-        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-            //int fila = tablacreditos.getSelectedRow();
-            /*String id = String.valueOf(tablacreditos.getValueAt(fila, 0));
-            String monto_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 2));
-            String plan = String.valueOf(tablacreditos.getValueAt(fila, 3));
-            String monto_cuota = String.valueOf(tablacreditos.getValueAt(fila, 5));
-            String fecha_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 6));
-            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));*/
-
-            
-            String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
-            /*String monto_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 2));
-            String plan = String.valueOf(tablacreditos.getValueAt(fila, 3));
-            String monto_cuota = String.valueOf(tablacreditos.getValueAt(fila, 5));
-            String fecha_prestamo = String.valueOf(tablacreditos.getValueAt(fila, 6));
-            String fecha_cancelacion = String.valueOf(tablacreditos.getValueAt(fila, 9));
-             */
+            /*Modificacion de los datos del Cliente*/
+            String consulta2 = "update cliente "
+                    + "set num_creditos='" + credito_numero + "', estado='ACTIVO' "
+                    + "where idcliente='" + idcliente + "'";
 
             try {
-                new MetodosImpresion().ReporteCuentaCorrienteCliente(id);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
+                Conectar();
+                int done = stmt.executeUpdate(consulta2);
+                //JOptionPane.showMessageDialog(null,"alta","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
             }
-
+            db.destroy();
+            this.dispose();
         }
-    }//GEN-LAST:event_tablacreditosMouseClicked
-
-    private void tablacreditosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tablacreditosFocusLost
-        //jButtonModificar.setEnabled(false);
-    }//GEN-LAST:event_tablacreditosFocusLost
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
@@ -678,23 +690,68 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }//GEN-LAST:event_txtcodigoclienteKeyPressed
 
-    private void jdfechacreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdfechacreditoKeyPressed
-        
-    }//GEN-LAST:event_jdfechacreditoKeyPressed
-
     private void txtcreditoinicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcreditoinicialKeyPressed
-        if(evt.getKeyCode() == evt.VK_ENTER){
+        if (evt.getKeyCode() == evt.VK_ENTER) {
             comboplanes.requestFocus();
         }
     }//GEN-LAST:event_txtcreditoinicialKeyPressed
 
-private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdfechacreditoKeyTyped
-    int k = (int) evt.getKeyChar();
-    if (k == 10) {
-        //transfiere el foco si presionas enter
-        txtcreditoinicial.requestFocusInWindow();
-    }
-}//GEN-LAST:event_jdfechacreditoKeyTyped
+    private void comboplanesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboplanesKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            jButtonAceptar.requestFocus();
+        }
+    }//GEN-LAST:event_comboplanesKeyPressed
+
+    private void jButtonAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonAceptarKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            jButtonAceptar.doClick();
+        }
+    }//GEN-LAST:event_jButtonAceptarKeyPressed
+
+    private void jButtonImprimirCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirCreditoActionPerformed
+        String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
+        try {
+            new MetodosImpresion().ReporteCuentaCorrienteCliente(id);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Creditos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonImprimirCreditoActionPerformed
+
+    private void jButtonEliminarCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCreditoActionPerformed
+        int res = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el credito seleccionado?","Eliminar Credito",JOptionPane.YES_NO_OPTION);
+        if (res == JOptionPane.YES_OPTION) {
+            
+        }
+        String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
+        String consulta = "Select * from pago where idcredito = '" + id + "' ";
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            rs.last();
+            if (rs.getRow() == 0) {
+                //int res = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el Cliente seleccionado?");
+                //if (res == JOptionPane.OK_OPTION) {
+                    consulta = "delete from credito where idcredito='" + id + "' ";
+                    int done = stmt.executeUpdate(consulta);
+                    JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Credito seleccionado.","Eliminar Credito", JOptionPane.INFORMATION_MESSAGE);
+                //}
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede eliminar el Credito seleccionado porque este registra Pagos.\nVerifique el historial de los Pagos.","Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar los Pagos del Credito", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonEliminarCreditoActionPerformed
+
+    private void tablacreditosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablacreditosMouseReleased
+        if(tablacreditos.getSelectedRow() >= 0){
+            jButtonImprimirCredito.setEnabled(true);
+            jButtonEliminarCredito.setEnabled(true);
+        }
+    }//GEN-LAST:event_tablacreditosMouseReleased
 
     /**
      * @param args the command line arguments
@@ -731,18 +788,20 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
          * Create and display the form
          */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Creditos().setVisible(true);
-            }
+        
+        public void run() {
+        new Creditos().setVisible(true);
+        }
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox comboplanes;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonEliminarCredito;
+    private javax.swing.JButton jButtonImprimirCredito;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -769,7 +828,6 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbvercreditos;
     private com.toedter.calendar.JDateChooser jdfechacredito;
-    private javax.swing.JLabel labelzona;
     private javax.swing.JTable tablacreditos;
     private javax.swing.JTextField txtbarriocomercial;
     private javax.swing.JTextField txtbarrioparticular;
@@ -785,10 +843,9 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
     private javax.swing.JTextField txtrubro;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
-
     private conexion db;
     private Statement stmt;
-    
+
     public void Conectar() {
         try {
             db = new conexion();      //instancia de la clase conexion.java
@@ -799,22 +856,26 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void completarcomboplan() {
-        String consulta = "Select semanas from plan";
-         try {
+        String consulta = "Select * from plan where tipo_sistema = '"+tipo_sistema+"'";
+        try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
             rs.beforeFirst();
-            comboplanes.addItem("-");
+            value = new DefaultComboBoxModel();
+            comboplanes.setModel(value);
+            //comboplanes.addItem("-");
+            value.addElement(new ComboboxItem(0, ""));
             while (rs.next()) {
-                comboplanes.addItem(rs.getString(1));
+                //comboplanes.addItem(rs.getString(1));
+                value.addElement(new ComboboxItem(rs.getInt(1),rs.getString(2)));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los RUBROS.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al cargar los PLANES.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void cargardatos() {
         id_cliente = Integer.parseInt(txtcodigocliente.getText());
         String consulta = "Select dni,apellido,nombre,domicilio_particular,barrio_particular,domicilio_comercial,barrio_comercial,telefono,num_creditos,perno,r.descripcion"
@@ -829,7 +890,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
                 clientevalido = false;
-            }else if (rs.getString("perno").equals("SI")) {
+            } else if (rs.getString("perno").equals("SI")) {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado esta marcado como PERNO!. No se le puede asignar un credito. \nSi desea darle un credito debe modificar el campo PERNO en el menu Actualizaciones -> Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
                 clientevalido = false;
@@ -838,7 +899,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
                 while (rs.next()) {
                     //txtidcliente.setText(rs.getString("idcliente"));
                     txtdni.setText(rs.getString("dni"));
-                    txtnombre.setText(rs.getString("apellido")+", "+rs.getString("nombre"));
+                    txtnombre.setText(rs.getString("apellido") + ", " + rs.getString("nombre"));
                     txtdomicilioparticular.setText(rs.getString("domicilio_particular"));
                     txtbarrioparticular.setText(rs.getString("barrio_particular"));
                     txtdomiciliocomercial.setText(rs.getString("domicilio_comercial"));
@@ -853,7 +914,7 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void limpiarcampos() {
         txtcodigocliente.setText("");
         txtdni.setText("");
@@ -870,9 +931,9 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
 
     private void cargartablacreditos() {
         String consulta = "SELECT idcredito, compra as 'Compra',compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
-            + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
-            + "comision as 'Comision(%)', saldo as 'Saldo' "
-            + "FROM credito where idcliente = '"+id_cliente+"'";
+                + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
+                + "comision as 'Comision(%)', saldo as 'Saldo' "
+                + "FROM credito where idcliente = '" + id_cliente + "'";
         /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
         try {
             Conectar();
@@ -884,11 +945,8 @@ private void jdfechacreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:ev
             tablacreditos.getColumnModel().getColumn(0).setMaxWidth(0);
             tablacreditos.getColumnModel().getColumn(0).setMinWidth(0);
             tablacreditos.getColumnModel().getColumn(0).setPreferredWidth(0);
-            
-            
-            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

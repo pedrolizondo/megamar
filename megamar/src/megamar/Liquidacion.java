@@ -859,9 +859,9 @@ public class Liquidacion extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int res = JOptionPane.showConfirmDialog(null, "¿Desea cancelar la operacion?","Liquidacion",JOptionPane.YES_NO_OPTION);
-            if (res == JOptionPane.YES_OPTION) {
-                this.dispose();
-            }
+        if (res == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

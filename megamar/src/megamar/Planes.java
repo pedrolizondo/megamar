@@ -21,13 +21,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Lizondo1
  */
 public class Planes extends javax.swing.JDialog {
-
+    private String tipo_sistema;
     /** Creates new form Planes */
-    public Planes(java.awt.Frame parent, boolean modal) {
+    public Planes(java.awt.Frame parent, boolean modal, String sistema) {
         super(parent,modal);
         initComponents();
         this.setSize(new Dimension(500, 350));
         jpanelnuevoplan.setVisible(false);
+        tipo_sistema = sistema;
         this.setLocationRelativeTo(null);
         completartablaplanes();
     }
@@ -265,7 +266,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         return;
     }
     
-    String consulta = "insert into plan (semanas,interes,comision) values('" + semanas + "', '" + interes + "', '" + comision + "' )";
+    String consulta = "insert into plan (semanas,interes,comision,tipo_sistema) values('" + semanas + "', '" + interes + "', '" + comision + "', '" + tipo_sistema + "' )";
     try {
         Conectar();
         int done = stmt.executeUpdate(consulta);
@@ -356,7 +357,8 @@ private void tablaplanesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
     }
     
     private void completartablaplanes() {
-        String consulta = "Select idplan as Plan, semanas as Semanas, interes as 'Interes (%)', comision as 'Comision(%)' from plan ";
+        String consulta = "Select idplan as Plan, semanas as Semanas, interes as 'Interes (%)', comision as 'Comision(%)' from plan "
+                + "where tipo_sistema = '"+tipo_sistema+"'";
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);

@@ -4,6 +4,9 @@
  */
 package megamar;
 
+import com.toedter.calendar.IDateEditor;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,10 +23,11 @@ import javax.swing.table.DefaultTableModel;
  * @author pedro.lizondo
  */
 public class Pagos extends javax.swing.JDialog {
+
     private String idzona;
     //private int num_creditos;
     private int id_cliente;
-    private int valor_cuota;
+    private float valor_cuota;
     private float compra_total;
     public static final SimpleDateFormat FORMATO_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd"); //Here put your format
     private boolean clientevalido;
@@ -32,10 +36,37 @@ public class Pagos extends javax.swing.JDialog {
     /**
      * Creates new form Pagos
      */
-    public Pagos(String idz, String nomzona, String idus, java.awt.Frame parent,boolean modal) {
+    public Pagos(String idz, String nomzona, String idus, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jdfechapago.setLocale(Locale.getDefault());  //Define el idioma del calendar
+        IDateEditor editorDC = (IDateEditor) jdfechapago.getDateEditor();
+        editorDC.getUiComponent().addKeyListener(new KeyListener() {
+
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == e.VK_ENTER) {
+                    // put the code you want to execute when Enter is pressed here 
+                    //System.out.println("ENTER PRESSED");
+                    txtpago.requestFocusInWindow();
+                }
+            }
+
+            public void keyReleased(KeyEvent keyEvent) {
+                //printIt("Released", keyEvent);
+            }
+
+            public void keyTyped(KeyEvent keyEvent) {
+                //printIt("Typed", keyEvent);
+            }
+
+/*            private void printIt(String title, KeyEvent keyEvent) {
+                int keyCode = keyEvent.getKeyCode();
+                String keyText = KeyEvent.getKeyText(keyCode);
+                System.out.println(title + " : " + keyText + " / " + keyEvent.getKeyChar());
+            }
+ * 
+ */
+        });
         idzona = idz;
         labelzona.setText(nomzona);
         this.setLocationRelativeTo(null);
@@ -43,8 +74,8 @@ public class Pagos extends javax.swing.JDialog {
         jpanelpago.setVisible(false);
         idusuario = idus;
     }
-    
-    public boolean getclientevalido(){
+
+    public boolean getclientevalido() {
         return clientevalido;
     }
 
@@ -93,7 +124,7 @@ public class Pagos extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         txtincremento = new javax.swing.JTextField();
         jdfechapago = new com.toedter.calendar.JDateChooser("dd/MM/yyyy", "##/##/##", '_');
-        jButton4 = new javax.swing.JButton();
+        jButtonAceptar = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -299,17 +330,19 @@ public class Pagos extends javax.swing.JDialog {
         jLabel3.setText("Pago ($)");
 
         txtpago.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtpagoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtpagoKeyTyped(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtpagoKeyPressed(evt);
             }
         });
 
         jLabel6.setText("Incremento ($)");
 
         txtincremento.setText("0");
+        txtincremento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtincrementoKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpanelpagoLayout = new javax.swing.GroupLayout(jpanelpago);
         jpanelpago.setLayout(jpanelpagoLayout);
@@ -351,12 +384,17 @@ public class Pagos extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
-        jButton4.setText("Aceptar");
-        jButton4.setPreferredSize(new java.awt.Dimension(111, 41));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Ok.png"))); // NOI18N
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(111, 41));
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
+        jButtonAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButtonAceptarKeyPressed(evt);
             }
         });
 
@@ -474,7 +512,7 @@ public class Pagos extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -494,7 +532,7 @@ public class Pagos extends javax.swing.JDialog {
                 .addComponent(jpanelpago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -533,103 +571,110 @@ public class Pagos extends javax.swing.JDialog {
         CreditosClientesHistorial C = new CreditosClientesHistorial(this, true, id_cliente);
         C.setVisible(true);
         if (C.getidcredito() == 0) {
-        //return;
+            //return;
         } else {
-        txtcompra.setText(Float.toString(C.getcompra()));
-        txtpagado.setText(Float.toString(C.getpagado()));
-        txtsaldo.setText(Float.toString(C.getsaldo()));
-        //cargardatos();
-        //jbvercreditos.setEnabled(true);
+            txtcompra.setText(Float.toString(C.getcompra()));
+            txtpagado.setText(Float.toString(C.getpagado()));
+            txtsaldo.setText(Float.toString(C.getsaldo()));
+            //cargardatos();
+            //jbvercreditos.setEnabled(true);
         }
     }//GEN-LAST:event_jbvercreditosActionPerformed
 
-    private void txtpagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpagoKeyReleased
-       
-    }//GEN-LAST:event_txtpagoKeyReleased
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(txtcodigocliente.getText().equals("")){
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        if (txtcodigocliente.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un Cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(txtpago.getText().equals("")){
+        if (txtpago.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor ingrese el monto del Pago.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtpago.requestFocusInWindow();
             return;
         }
-        if(txtincremento.getText().equals("")){
+        if (txtincremento.getText().equals("")) {
             txtincremento.setText("0");
         }
-        int pago = Integer.parseInt(txtpago.getText());
-        String fecha_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
-        String fecha_carga_pago = (String) FORMATO_YYYY_MM_DD.format(new Date());
-        int incremento = Integer.parseInt(txtincremento.getText());
-        int incremento_total = Integer.parseInt(txtincrementototal.getText());
-        int saldo = Integer.parseInt(txtsaldo.getText());
-        int atraso = 0;
-        int atraso_total = Integer.parseInt(txtatrasototal.getText());
         
-        String id_usuario = idusuario;
-        
-        int fila = tablacreditos.getSelectedRow();
-        int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
-        int pagado = Integer.parseInt(txtpagado.getText());
-        
-        int totalapagar = valor_cuota + atraso_total;       //Monto que debe pagar el Cliente en esta semana(Valor de la cuota + atraso total)
-        atraso = totalapagar - pago;                        //Calculo del atraso.
-        if(atraso < 0){
-            atraso = 0;                                     //Si el atraso es menor que 0 entonces no hay atraso.
-        }
-        atraso_total = atraso;                              //El atraso es el nuevo atraso_total
-        saldo = saldo - pago + incremento;                  //Calculo del Saldo. El incremento modifica el saldo.
-        pagado = pagado + pago;                             //Calculo de lo que lleva Pagado el Cliente.
-        compra_total = compra_total + incremento;           //El incremento modifica tambien la Compra Total del cliente.
-        incremento_total = incremento_total + incremento;
+        int res = JOptionPane.showConfirmDialog(null, "¿Desea guardar los datos del pago?","Nuevo Pago",JOptionPane.YES_NO_OPTION);
+        if (res == JOptionPane.YES_OPTION) {
+            float pago = Float.parseFloat(txtpago.getText());
+            String fecha_pago = (String) FORMATO_YYYY_MM_DD.format(jdfechapago.getDate());
+            String fecha_carga_pago = (String) FORMATO_YYYY_MM_DD.format(new Date());
+            float incremento = Float.parseFloat(txtincremento.getText());
+            float incremento_total = Float.parseFloat(txtincrementototal.getText());
+            float saldo = Float.parseFloat(txtsaldo.getText());
+            float atraso = 0;
+            float atraso_total = Integer.parseInt(txtatrasototal.getText());
 
-        /*
-         * Alta del PAGO
-         */
-        String consulta = "insert into pago (compra, pagado, saldo, pago, fecha, incremento, atraso, idcliente, idusuario, idcredito, fecha_carga_pago, liquidado) "
-                + "values('" + compra_total + "', '" + pagado + "', '" + saldo + "', '" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "', '" + fecha_carga_pago + "', 'NO' )";
-        try {
-            Conectar();
-            int done = stmt.executeUpdate(consulta);
-            JOptionPane.showMessageDialog(null, "Se guardaron los datos del Pago.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos del pago", JOptionPane.ERROR_MESSAGE);
-        }
-        db.destroy();
-        
-        /*
-         * Modificacion de la tabla Credito
-         */
-        String estado;
-        if(pagado >= compra_total){
-            estado = "PAGADO";
-            JOptionPane.showMessageDialog(null,"Se completo el pago del Credito.","Aviso", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            estado = "DEBE";
-        }
-            
-        
-        
-        String consulta2 = "update credito "
-                + "set compra_total='"+compra_total+"', pagado='" + pagado + "', fecha_ultimo_pago='"+fecha_pago+"', saldo='"+saldo+"', atraso_total='"+atraso_total+"', incremento_total='"+incremento_total+"', estado='"+estado+"' "
-                + "where idcredito='" + id_credito + "'";
+            String id_usuario = idusuario;
 
-        try {
-            Conectar();
-            int done = stmt.executeUpdate(consulta2);
-            //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
-            db.close(stmt);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
+            int fila = tablacreditos.getSelectedRow();
+            int id_credito = Integer.parseInt(tablacreditos.getValueAt(fila, 0).toString());
+            float pagado = Float.parseFloat(txtpagado.getText());
+
+            float totalapagar = valor_cuota + atraso_total;     //Monto que debe pagar el Cliente en esta semana(Valor de la cuota + atraso total)
+            atraso = totalapagar - pago;                        //Calculo del atraso.
+            if (atraso < 0) {
+                atraso = 0;                                     //Si el atraso es menor que 0 entonces no hay atraso.
+            }
+
+            if (atraso >= saldo) {                              // caso: al cliente le queda menos de una cuota en el  saldo, entonces el atraso ya no se debe incrementar.
+                atraso_total = atraso_total;
+            } else {
+                atraso_total = atraso;                          //El atraso es el nuevo atraso_total
+            }
+
+            saldo = saldo - pago + incremento;                  //Calculo del Saldo. El incremento modifica el saldo.
+            pagado = pagado + pago;                             //Calculo de lo que lleva Pagado el Cliente.
+            compra_total = compra_total + incremento;           //El incremento modifica tambien la Compra Total del cliente.
+            incremento_total = incremento_total + incremento;
+
+            /*
+             * Alta del PAGO
+             */
+            String consulta = "insert into pago (compra, pagado, saldo, pago, fecha, incremento, atraso, idcliente, idusuario, idcredito, fecha_carga_pago, liquidado) "
+                    + "values('" + compra_total + "', '" + pagado + "', '" + saldo + "', '" + pago + "', '" + fecha_pago + "', '" + incremento + "', '" + atraso + "', '" + id_cliente + "', '" + id_usuario + "', '" + id_credito + "', '" + fecha_carga_pago + "', 'NO' )";
+            try {
+                Conectar();
+                int done = stmt.executeUpdate(consulta);
+                JOptionPane.showMessageDialog(null, "Se guardaron los datos del Pago.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo guardar los datos del pago", JOptionPane.ERROR_MESSAGE);
+            }
+            db.destroy();
+
+            /*
+             * Modificacion de la tabla Credito
+             */
+            String estado;
+            if (pagado >= compra_total) {
+                estado = "PAGADO";
+                JOptionPane.showMessageDialog(null, "Se completo el pago del Credito.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                estado = "DEBE";
+            }
+
+
+
+            String consulta2 = "update credito "
+                    + "set compra_total='" + compra_total + "', pagado='" + pagado + "', fecha_ultimo_pago='" + fecha_pago + "', saldo='" + saldo + "', atraso_total='" + atraso_total + "', incremento_total='" + incremento_total + "', estado='" + estado + "' "
+                    + "where idcredito='" + id_credito + "'";
+
+            try {
+                Conectar();
+                int done = stmt.executeUpdate(consulta2);
+                //JOptionPane.showMessageDialog(null,"Se actualizaron los datos de la zona.","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error! No se pudo actualizar los datos del Cliente.", JOptionPane.ERROR_MESSAGE);
+            }
+            db.destroy();
+            limpiarcampos();
+            txtcodigocliente.requestFocus();
+            //this.dispose();
         }
-        db.destroy();
-        limpiarcampos();
-        txtcodigocliente.requestFocus();
-        //this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
@@ -653,28 +698,39 @@ public class Pagos extends javax.swing.JDialog {
                 txtsaldo.setText(rs.getString("saldo"));
                 txtatrasototal.setText(rs.getString("atraso_total"));
                 txtincrementototal.setText(rs.getString("incremento_total"));
-                valor_cuota = Integer.parseInt(rs.getString("cuota"));
+                valor_cuota = Float.parseFloat(rs.getString("cuota"));
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Credito.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         jpanelpago.setVisible(true);
-        txtpago.requestFocusInWindow();
+        jdfechapago.requestFocusInWindow();
     }//GEN-LAST:event_tablacreditosMouseClicked
 
-private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
-    if (evt.getKeyCode() == evt.VK_ENTER) {
-        jButton7.doClick();
-    }
-}//GEN-LAST:event_txtcodigoclienteKeyPressed
-
-    private void txtpagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpagoKeyTyped
-        int k = (int) evt.getKeyChar();
-        if (k == 10) {
-            //transfiere el foco si presionas enter
-            txtpago.transferFocus();
+    private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoclienteKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            jButton7.doClick();
         }
-    }//GEN-LAST:event_txtpagoKeyTyped
+    }//GEN-LAST:event_txtcodigoclienteKeyPressed
+
+    private void txtpagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpagoKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            txtincremento.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_txtpagoKeyPressed
+
+    private void txtincrementoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtincrementoKeyPressed
+         if (evt.getKeyCode() == evt.VK_ENTER) {
+            //transfiere el foco si presionas enter
+            jButtonAceptar.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_txtincrementoKeyPressed
+
+    private void jButtonAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonAceptarKeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            jButtonAceptar.doClick();
+        }
+    }//GEN-LAST:event_jButtonAceptarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -711,25 +767,25 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
          * Create and display the dialog
          */
         /*java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                Pagos dialog = new Pagos(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        
+        public void run() {
+        Pagos dialog = new Pagos(new javax.swing.JFrame(), true);
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+        
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent e) {
+        System.exit(0);
+        }
+        });
+        dialog.setVisible(true);
+        }
         });*/
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButtonAceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
@@ -780,7 +836,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
     // End of variables declaration//GEN-END:variables
     private conexion db;
     private Statement stmt;
-    
+
     public void Conectar() {
         try {
             db = new conexion();      //instancia de la clase conexion.java
@@ -791,9 +847,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, "Problemas al concetarse a la Base de Datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
-    
+
     private void cargardatos() {
         id_cliente = Integer.parseInt(txtcodigocliente.getText());
         String consulta = "Select dni,apellido,nombre,domicilio_particular,barrio_particular,domicilio_comercial,barrio_comercial,telefono,num_creditos,perno,r.descripcion"
@@ -807,7 +861,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             if (rs.getRow() == 0) {
                 JOptionPane.showMessageDialog(null, "No existe ningun cliente con ese codigo. Por favor verifique el numero ingresado. ", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
-            }else if (rs.getString("perno").equals("SI")) {
+            } else if (rs.getString("perno").equals("SI")) {
                 JOptionPane.showMessageDialog(null, "El cliente seleccionado esta marcado como PERNO!. No se le puede asignar un credito. \nSi desea darle un credito debe modificar el campo PERNO en el menu Actualizaciones -> Clientes.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarcampos();
             } else {
@@ -815,7 +869,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
                 while (rs.next()) {
                     //txtidcliente.setText(rs.getString("idcliente"));
                     txtdni.setText(rs.getString("dni"));
-                    txtnombre.setText(rs.getString("apellido")+", "+rs.getString("nombre"));
+                    txtnombre.setText(rs.getString("apellido") + ", " + rs.getString("nombre"));
                     txtdomicilioparticular.setText(rs.getString("domicilio_particular"));
                     txtbarrioparticular.setText(rs.getString("barrio_particular"));
                     txtdomiciliocomercial.setText(rs.getString("domicilio_comercial"));
@@ -830,7 +884,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void limpiarcampos() {
         txtcodigocliente.setText("");
         txtdni.setText("");
@@ -852,7 +906,7 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
         txtpago.setText("");
         txtincremento.setText("");
     }
-        
+
     private void cargartablacreditos() {
         boolean creditos = false;
         String consulta = "SELECT idcredito, compra as 'Compra', compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
@@ -883,7 +937,8 @@ private void txtcodigoclienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRS
             //tablacreditosMouseClicked(new MouseEvent(this, 0, 0, 0, 0, 0, 0, creditos));
             tablacreditosMouseClicked(null);
             jdfechapago.setDate(new Date());
-            txtpago.requestFocusInWindow();
+            //txtpago.requestFocusInWindow();
+            jdfechapago.requestFocusInWindow();
         }
 
     }

@@ -20,8 +20,15 @@ import javax.swing.JOptionPane;
  * @author Lizondo1
  */
 public class Login extends javax.swing.JFrame {
-
     /** Creates new form login */
+    /*
+     * sistema -> sirve para diferenciar los planes nuevos de los viejos
+     * SISTEM_NUEVO: megamar.jar
+     * SISTEMA_VIEJO: megamar2.jar
+     */
+    private String sistema = "SISTEMA_NUEVO";
+    //private String sistema = "SISTEMA_VIEJO";
+    
     public Login() {
         initComponents();
         completarcombozonas();
@@ -225,7 +232,7 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
     }
     if (access == true) {
-        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil);
+        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil, sistema);
         P.setVisible(true);
         this.setVisible(false);
     }

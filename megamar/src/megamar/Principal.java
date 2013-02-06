@@ -39,9 +39,10 @@ public class Principal extends javax.swing.JFrame {
     private int idzona;
     private String idusuario;
     private String perfil;
+    private String tipo_sistema;
 
     /** Creates new form Principal */
-    public Principal(String nombrezona, int idz, String idu, String perf) {
+    public Principal(String nombrezona, int idz, String idu, String perf, String sistema) {
         initComponents();
         //codigo para maximizar la ventana principal al iniciar el sistema
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,6 +54,7 @@ public class Principal extends javax.swing.JFrame {
         zona = nombrezona;
         idzona = idz;
         idusuario = idu;
+        tipo_sistema = sistema;
         perfil = perf;
         if (!perfil.equals("ADMINISTRADOR")) {
             jMenu3.setVisible(false);
@@ -281,7 +283,7 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    Planes P = new Planes(this, true);
+    Planes P = new Planes(this, true,tipo_sistema);
     P.setVisible(true);
 }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -291,7 +293,7 @@ private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-    Creditos C = new Creditos(Integer.toString(idzona), zona, this, true);
+    Creditos C = new Creditos(Integer.toString(idzona), zona, this, true, tipo_sistema);
     C.setVisible(true);
 }//GEN-LAST:event_jMenuItem5ActionPerformed
 
