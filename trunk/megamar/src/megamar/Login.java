@@ -26,8 +26,8 @@ public class Login extends javax.swing.JFrame {
      * SISTEM_NUEVO: megamar.jar
      * SISTEMA_VIEJO: megamar2.jar
      */
-    private String sistema = "SISTEMA_NUEVO";
-    //private String sistema = "SISTEMA_VIEJO";
+    //private String sistema = "SISTEMA_NUEVO";
+    private String sistema = "SISTEMA_VIEJO";
     
     public Login() {
         initComponents();
