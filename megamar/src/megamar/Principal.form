@@ -12,7 +12,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/zona_24.png"/>
+                  <Image iconType="3" name="/iconos/world_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Zonas"/>
               </Properties>
@@ -45,7 +45,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/misionp.png"/>
+                  <Image iconType="3" name="/iconos/applications-office_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Rubros"/>
               </Properties>
@@ -63,7 +63,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/planes_24.png"/>
+                  <Image iconType="3" name="/iconos/report2_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Listado de Clientes"/>
               </Properties>
@@ -74,7 +74,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/planes_24.png"/>
+                  <Image iconType="3" name="/iconos/report_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Listado de Creditos Activos"/>
               </Properties>
@@ -110,7 +110,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/planes_24.png"/>
+                  <Image iconType="3" name="/iconos/money_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo Pago"/>
               </Properties>
@@ -128,7 +128,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/zona_24.png"/>
+                  <Image iconType="3" name="/iconos/world_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Estado de Zona"/>
               </Properties>
@@ -139,7 +139,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/planes_24.png"/>
+                  <Image iconType="3" name="/iconos/printer_24.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Impresion de Recibos"/>
               </Properties>

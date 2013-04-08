@@ -27,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.text.JTextComponent;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -60,7 +61,7 @@ public class Creditos extends javax.swing.JFrame {
 
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyChar() == e.VK_ENTER) {
-                    txtcreditoinicial.requestFocusInWindow();
+                    txtcreditoinicial.requestFocusInWindow();                    
                 }
             }
 
@@ -72,6 +73,7 @@ public class Creditos extends javax.swing.JFrame {
                 //printIt("Typed", keyEvent);
             }
         });
+        
         idzona = idz;
         tipo_sistema = sistema;
         //labelzona.setText(nomzona);
@@ -460,7 +462,7 @@ public class Creditos extends javax.swing.JFrame {
             }
         });
 
-        jButtonEliminarCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Delete.png"))); // NOI18N
+        jButtonEliminarCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/recycle_32.png"))); // NOI18N
         jButtonEliminarCredito.setText("Eliminar Credito Seleccionado");
         jButtonEliminarCredito.setEnabled(false);
         jButtonEliminarCredito.addActionListener(new java.awt.event.ActionListener() {
@@ -548,6 +550,9 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         cargartablacreditos();
         jdfechacredito.setDate(new Date());
         jdfechacredito.requestFocusInWindow();
+        //Para posicionar el cursor al principio de la fecha//
+        JTextComponent jt = (JTextComponent) jdfechacredito.getDateEditor();
+        jt.setCaretPosition(0);
     }
 }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -560,6 +565,9 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 cargartablacreditos();
                 jdfechacredito.setDate(new Date());
                 jdfechacredito.requestFocusInWindow();
+                //Para posicionar el cursor al principio de la fecha//
+                JTextComponent jt = (JTextComponent) jdfechacredito.getDateEditor();
+                jt.setCaretPosition(0);
                 jbvercreditos.setEnabled(true);
             }
         }
@@ -720,29 +728,38 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_jButtonImprimirCreditoActionPerformed
 
     private void jButtonEliminarCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCreditoActionPerformed
-        int res = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el credito seleccionado?","Eliminar Credito",JOptionPane.YES_NO_OPTION);
+        int res = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el credito seleccionado?", "Eliminar Credito", JOptionPane.YES_NO_OPTION);
         if (res == JOptionPane.YES_OPTION) {
-            
-        }
-        String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
-        String consulta = "Select * from pago where idcredito = '" + id + "' ";
-        try {
-            Conectar();
-            ResultSet rs = stmt.executeQuery(consulta);
-            rs.last();
-            if (rs.getRow() == 0) {
-                //int res = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el Cliente seleccionado?");
-                //if (res == JOptionPane.OK_OPTION) {
+            String id = String.valueOf(tablacreditos.getValueAt(tablacreditos.getSelectedRow(), 0));
+            String consulta = "Select * from pago where idcredito = '" + id + "' ";
+            try {
+                Conectar();
+                ResultSet rs = stmt.executeQuery(consulta);
+                rs.last();
+                if (rs.getRow() == 0) {
+                    //SI EL CLEINTE NO TIENE PAGOS DE ESE CREDITO, ELIMINAMOS EL CREDITO//
                     consulta = "delete from credito where idcredito='" + id + "' ";
                     int done = stmt.executeUpdate(consulta);
-                    JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Credito seleccionado.","Eliminar Credito", JOptionPane.INFORMATION_MESSAGE);
-                //}
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se puede eliminar el Credito seleccionado porque este registra Pagos.\nVerifique el historial de los Pagos.","Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar el Credito seleccionado porque este registra Pagos.\nVerifique el historial de los Pagos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al verificar los Pagos del Credito", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar los Pagos del Credito", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            //SE ACTUALIZA EL CAMPO num_creditos DEL CLIENTE//
+            consulta = "UPDATE cliente SET num_creditos = num_creditos - 1 WHERE idcliente = '" + id_cliente + "'";
+            try {
+                Conectar();
+                int done = stmt.executeUpdate(consulta);
+                JOptionPane.showMessageDialog(null, "Se eliminaron todos los datos del Credito seleccionado.", "Eliminar Credito", JOptionPane.INFORMATION_MESSAGE);
+                db.close(stmt);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el numero de creditos del cliente", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonEliminarCreditoActionPerformed
 
@@ -933,7 +950,8 @@ private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         String consulta = "SELECT idcredito, compra as 'Compra',compra_total as 'Compra Total', plan as 'Plan', interes as 'Interes(%)',cuota as 'Cuota', "
                 + "fecha_compra as 'Fecha Compra', estado as 'Estado', pagado as 'Pagado', fecha_cancelacion as 'Cancelacion', credito_numero as 'Credito Num', "
                 + "comision as 'Comision(%)', saldo as 'Saldo' "
-                + "FROM credito where idcliente = '" + id_cliente + "'";
+                + "FROM credito where idcliente = '" + id_cliente + "' "
+                + "ORDER BY credito_numero DESC";
         /*fecha_ultimo_pago as 'Ultimo Pago'    ->   ERROR: no puede mostrar la fecha cuando es del tipo 0000-00-00*/
         try {
             Conectar();
