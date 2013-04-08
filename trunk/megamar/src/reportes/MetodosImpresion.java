@@ -209,8 +209,14 @@ public class MetodosImpresion {
             System.out.println(e.getMessage());
         }
     }
-    public void ReporteRecibos(int idzona)throws ClassNotFoundException, SQLException{
+    public void ReporteRecibos(int idzona, String idcreditos)throws ClassNotFoundException, SQLException{
+        String where_idcreditos = "";
+        if(!idcreditos.equals("")){
+            where_idcreditos = " and c.idcredito in ("+idcreditos+") ";
+        }
+        
         Conectar();
+        
         try {
             JDialog viewer = new JDialog(new JFrame(), "Vista previa del reporte", true);
             viewer.setSize(screenSize.width, screenSize.height);
@@ -222,6 +228,7 @@ public class MetodosImpresion {
             
             Map parametros = new HashMap();
             parametros.put("idzona", idzona);
+            parametros.put("where_idcreditos", where_idcreditos);
             parametros.put("REPORT_DIR", reportsDirPath);
             
             
