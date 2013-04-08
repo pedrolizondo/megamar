@@ -136,6 +136,24 @@ public class EstadoZonas extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
         }
+        
+        consulta = "SELECT count(*) as rows, sum(c.saldo) as saldo, sum(c.cuota) as cuota "
+                + "FROM credito c, cliente x, zona z "
+                + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idzona = '" + idzona + "'";
+        try {
+            Conectar();
+            ResultSet rs = stmt.executeQuery(consulta);
+            rs.beforeFirst();
+            
+            while (rs.next()) {
+                estado_zona = rs.getString("saldo");
+                total_cobrar = rs.getString("cuota");
+                num_recibos = rs.getString("rows");
+            }
+            db.close(stmt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
+        }
                 
         try {
             new MetodosImpresion().ReporteEstadoZona(zona, estado_zona, total_cobrar, num_recibos);

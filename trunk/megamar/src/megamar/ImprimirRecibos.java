@@ -10,6 +10,7 @@
  */
 package megamar;
 
+import com.mysql.jdbc.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -22,6 +23,7 @@ import reportes.MetodosImpresion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
+import javax.swing.JTable;
 
 /**
  *
@@ -30,6 +32,7 @@ import java.sql.SQLException;
 public class ImprimirRecibos extends javax.swing.JDialog {
 
     private int idzona;
+    private JTable table;
 
     /** Creates new form ImprimirRecibos */
     public ImprimirRecibos(java.awt.Frame parent, boolean modal, int idz) {
@@ -37,7 +40,7 @@ public class ImprimirRecibos extends javax.swing.JDialog {
         initComponents();
         idzona = idz;
         this.setLocationRelativeTo(null);
-        cargartabla();
+        cargartabla("");
     }
 
     /** This method is called from within the constructor to
@@ -52,13 +55,15 @@ public class ImprimirRecibos extends javax.swing.JDialog {
         jbimprimir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaestadozona = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        txtidcliente = new javax.swing.JTextField();
+        jbbuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jbimprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/printer_48.png"))); // NOI18N
         jbimprimir.setText("Imprimir ");
         jbimprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jbimprimir.setEnabled(false);
         jbimprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jbimprimir.setIconTextGap(1);
         jbimprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -89,24 +94,48 @@ public class ImprimirRecibos extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tablaestadozona);
         tablaestadozona.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        jLabel1.setText("Codigo del Cliente");
+
+        jbbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Sherlocks_Tool.png"))); // NOI18N
+        jbbuscar.setText("Buscar Creditos");
+        jbbuscar.setPreferredSize(new java.awt.Dimension(111, 41));
+        jbbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbbuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbimprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1015, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1168, Short.MAX_VALUE))
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtidcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jbimprimir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jbimprimir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtidcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
                 .addContainerGap())
@@ -116,18 +145,38 @@ public class ImprimirRecibos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jbimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbimprimirActionPerformed
+    String idcreditos="";
+    //Guardamos los idcreditos que estan tildados en la tabla//
+    for(int i=0; i<table.getRowCount() ; i++){
+        if(String.valueOf(table.getValueAt(i, 0)).equals("true")){
+            //System.out.println(String.valueOf(table.getValueAt(i, 1)));
+            idcreditos = idcreditos + String.valueOf(table.getValueAt(i, 16))+",";
+        }
+    }
+    //Eliminamos la coma del final//
+    if(!idcreditos.equals("")){
+        idcreditos=idcreditos.substring(0, idcreditos.length()-1);
+    }
+    //System.out.println(idcreditos);
+
+ 
     try {
-        new MetodosImpresion().ReporteRecibos(idzona);
+        new MetodosImpresion().ReporteRecibos(idzona,idcreditos);
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
         Logger.getLogger(ImprimirRecibos.class.getName()).log(Level.SEVERE, null, ex);
     }
+ 
 }//GEN-LAST:event_jbimprimirActionPerformed
 
 private void tablaestadozonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaestadozonaMouseClicked
     jbimprimir.setEnabled(true);
 }//GEN-LAST:event_tablaestadozonaMouseClicked
+
+    private void jbbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbbuscarActionPerformed
+        cargartabla(txtidcliente.getText());
+    }//GEN-LAST:event_jbbuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,9 +219,12 @@ private void tablaestadozonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-F
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbbuscar;
     private javax.swing.JButton jbimprimir;
     private javax.swing.JTable tablaestadozona;
+    private javax.swing.JTextField txtidcliente;
     // End of variables declaration//GEN-END:variables
     private conexion db;
     private Statement stmt;
@@ -188,32 +240,97 @@ private void tablaestadozonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-F
         }
     }
 
-    private void cargartabla() {
+    private void cargartabla(String idcliente) {
+        Object data[][]=null;
+        String where_idcliente = "";
+        if(!idcliente.equals("")){
+            where_idcliente = " and x.idcliente="+idcliente;
+        }
         //System.out.println("ID Zona: "+idzona);
-        String consulta = "SELECT true as '', x.idcliente, x.nombre as 'Nombre', x.apellido as 'Apellido', x.domicilio_comercial as 'Dom. Comercial', x.barrio_comercial as 'Bº Comercial', x.domicilio_particular as 'Dom. Particular', x.barrio_particular as 'Bº Particular', r.descripcion as 'Rubro', x.telefono as 'Telefono', c.compra as 'Compra', c.pagado as 'Pagado', c.saldo as 'Saldo', c.fecha_ultimo_pago as 'Ultimo Pago', c.atraso_total as 'Atraso', c.fecha_cancelacion as 'Cancelacion' "
+        String consulta = "SELECT x.idcliente, x.nombre, x.apellido, x.domicilio_comercial, x.barrio_comercial, "
+                + "x.domicilio_particular, x.barrio_particular, r.descripcion, x.telefono, c.compra, c.pagado, c.saldo, "
+                + "c.fecha_ultimo_pago, c.atraso_total, c.fecha_cancelacion,c.idcredito "
                 + "FROM credito c, cliente x, rubro r, zona z "
-                + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idrubro = r.idrubro and x.idzona = '" + idzona + "' ";
+                + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idrubro = r.idrubro and x.idzona = '" + idzona + "' "+where_idcliente;
         try {
             Conectar();
             ResultSet rs = stmt.executeQuery(consulta);
-            //DefaultTableModel modelo = new DefaultTableModel();
-            MiModelo modelo = new MiModelo();
-            tablaestadozona.setModel(modelo);
-            ConversorRSaDefaultTableModel.completar(rs, modelo);
+            rs.last();
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+            int numFils = rs.getRow();
+            data = new Object[numFils][numCols + 1];
+            int j = 0, i=0;
+            
+            rs.beforeFirst();
+            while (rs.next()) {
+                data[j][i]= false;
+                for (i = 1; i <= numCols; i++) {
+                    data[j][i] = rs.getObject(i);
+                }
+                j++;
+                i=0;
+            }
+            
+            Object[] columnNames = {"", "Nº Cliente", "Nombre", "Apellido", "Dom. Comercial","B Comercial","Dom. Particular","B. Particular","Rubro","Telefono","Compra","Pagado","Saldo","Ultimo Pago","Atraso Total","Cancelacion","ID"};
+            
+            DefaultTableModel modelo = new DefaultTableModel(data, columnNames);
+//            DefaultTableModel modelo = new DefaultTableModel();
+//            MiModelo modelo = new MiModelo();
+            
+            table = new JTable(modelo) {
+
+                private static final long serialVersionUID = 1L;
+
+                /*@Override
+                public Class getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+                }*/
+                @Override
+                public Class getColumnClass(int column) {
+                    switch (column) {
+                        case 0:
+                            return Boolean.class;
+                        default:
+                            return String.class;
+                    }
+                }
+            };
+            table.setColumnSelectionAllowed(true);
+/*            table.addMouseListener(new java.awt.event.MouseAdapter() {
+
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tablaestadozonaMouseClicked(evt);
+                }
+            });
+             * 
+             */
+            jScrollPane1.setViewportView(table);
+            table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+
+
+//            tablaestadozona.setModel(modelo);
+//            ConversorRSaDefaultTableModel.completar(rs, modelo);
             //codigo para ocultar la primera columna (idplan)
-            tablaestadozona.getColumnModel().getColumn(0).setMaxWidth(30);
-            tablaestadozona.getColumnModel().getColumn(0).setMinWidth(30);
-            tablaestadozona.getColumnModel().getColumn(0).setPreferredWidth(30);
+//            tablaestadozona.getColumnModel().getColumn(0).setMaxWidth(30);
+//            tablaestadozona.getColumnModel().getColumn(0).setMinWidth(30);
+//            tablaestadozona.getColumnModel().getColumn(0).setPreferredWidth(30);
             //TableColumn col = new TableColumn(modelo.getColumnCount());
             //tablaestadozona.addColumn(col);
              
 
-            TableColumn sportColumn = tablaestadozona.getColumnModel().getColumn(0);
+/*            TableColumn sportColumn = tablaestadozona.getColumnModel().getColumn(0);
             //JComboBox comboBox = new JComboBox();
             //tablaestadozona.setColumnModel
             
             JCheckBox checkbox = new JCheckBox();
             sportColumn.setCellEditor(new DefaultCellEditor(checkbox));
+*/
+            table.getColumnModel().getColumn(0).setPreferredWidth(30);
+            table.getColumnModel().getColumn(13).setPreferredWidth(100);
+            table.getColumnModel().getColumn(15).setPreferredWidth(100);
+            table.getColumnModel().getColumn(16).setPreferredWidth(30);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al cargar la tabla de Creditos de Clientes.", JOptionPane.ERROR_MESSAGE);
         }

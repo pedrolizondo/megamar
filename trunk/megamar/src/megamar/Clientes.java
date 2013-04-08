@@ -104,12 +104,14 @@ public class Clientes extends javax.swing.JDialog {
         jLabel30 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         txtdomiciliocomercial1 = new javax.swing.JTextField();
         txtbarriocomercial1 = new javax.swing.JTextField();
         txttelefono1 = new javax.swing.JTextField();
         comboperno = new javax.swing.JComboBox();
         comborubro1 = new javax.swing.JComboBox();
+        txtnumcreditos = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtcodigocliente = new javax.swing.JTextField();
@@ -430,7 +432,7 @@ public class Clientes extends javax.swing.JDialog {
         });
         jPanel10.add(txtbarrioparticular1);
 
-        jPanel7.setLayout(new java.awt.GridLayout(5, 0, 5, 5));
+        jPanel7.setLayout(new java.awt.GridLayout(6, 0, 5, 5));
 
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel28.setText("Domicilio Comercial");
@@ -452,7 +454,10 @@ public class Clientes extends javax.swing.JDialog {
         jLabel31.setText("Rubro *");
         jPanel7.add(jLabel31);
 
-        jPanel8.setLayout(new java.awt.GridLayout(5, 0, 5, 5));
+        jLabel4.setText("Número de Creditos");
+        jPanel7.add(jLabel4);
+
+        jPanel8.setLayout(new java.awt.GridLayout(6, 0, 5, 5));
 
         txtdomiciliocomercial1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -490,6 +495,13 @@ public class Clientes extends javax.swing.JDialog {
         });
         jPanel8.add(comborubro1);
 
+        txtnumcreditos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnumcreditosKeyTyped(evt);
+            }
+        });
+        jPanel8.add(txtnumcreditos);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -509,13 +521,11 @@ public class Clientes extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -559,7 +569,7 @@ public class Clientes extends javax.swing.JDialog {
                 .addComponent(jbbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -610,9 +620,7 @@ public class Clientes extends javax.swing.JDialog {
             .addGroup(jpanelmodificarclienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpanelmodificarclienteLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(0, 363, Short.MAX_VALUE))
+                    .addComponent(jLabel8)
                     .addGroup(jpanelmodificarclienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jpanelmodificarclienteLayout.createSequentialGroup()
                             .addComponent(jButton2)
@@ -685,6 +693,7 @@ private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     
     if(txtdni.getText().equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el DNI del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtdni.requestFocus();
         return;
     }
     if(existedni(txtdni.getText())){
@@ -693,14 +702,17 @@ private void jbguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     }
     if(nombre.equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el Nombre del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtnombre.requestFocus();
         return;
     }
     if(apellido.equals("")){
         JOptionPane.showMessageDialog(null,"Ingrese el Apellido del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtapellido.requestFocus();
         return;
     }
     if(rubro == 0){
         JOptionPane.showMessageDialog(null,"Seleccione un Rubro de la lista.","Error!",JOptionPane.ERROR_MESSAGE);
+        comborubro.requestFocus();
         return;
     }
     if (altacliente == false) {
@@ -749,6 +761,12 @@ private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton4ActionPerformed
 
 private void jbguardarcambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbguardarcambiosActionPerformed
+    if(txtdni1.getText().equals("")){
+        JOptionPane.showMessageDialog(null,"Ingrese el DNI del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtdni1.requestFocus();
+        return;
+    }
+    
     int idcliente = Integer.parseInt(txtidcliente1.getText());
     int dni = Integer.parseInt(txtdni1.getText());
     String nombre = txtnombre1.getText();
@@ -758,12 +776,30 @@ private void jbguardarcambiosActionPerformed(java.awt.event.ActionEvent evt) {//
     String domicilio_comercial = txtdomiciliocomercial1.getText();
     String barrio_comercial = txtbarriocomercial1.getText();
     String telefono = txttelefono1.getText();
+    String num_creditos = txtnumcreditos.getText();
+    
 
     String perno = comboperno.getSelectedItem().toString();
     int rubro = comborubro1.getSelectedIndex();
+    
+    if(nombre.equals("")){
+        JOptionPane.showMessageDialog(null,"Ingrese el Nombre del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtnombre1.requestFocus();
+        return;
+    }
+    if(apellido.equals("")){
+        JOptionPane.showMessageDialog(null,"Ingrese el Apellido del Cliente.","Error!",JOptionPane.ERROR_MESSAGE);
+        txtapellido1.requestFocus();
+        return;
+    }
+    if(rubro == 0){
+        JOptionPane.showMessageDialog(null,"Seleccione un Rubro de la lista.","Error!",JOptionPane.ERROR_MESSAGE);
+        comborubro1.requestFocus();
+        return;
+    }
 
     String consulta = "update cliente "
-            + "set dni='" + dni + "', nombre='" + nombre + "', apellido='" + apellido + "', domicilio_particular='" + domicilio_particular + "', barrio_particular='" + barrio_particular + "', domicilio_comercial='" + domicilio_comercial + "', barrio_comercial='" + barrio_comercial + "', telefono='" + telefono + "', perno='" + perno + "', idrubro='" + rubro + "' "
+            + "set dni='" + dni + "', nombre='" + nombre + "', apellido='" + apellido + "', domicilio_particular='" + domicilio_particular + "', barrio_particular='" + barrio_particular + "', domicilio_comercial='" + domicilio_comercial + "', barrio_comercial='" + barrio_comercial + "', telefono='" + telefono + "', perno='" + perno + "', idrubro='" + rubro + "', num_creditos='" + num_creditos + "' "
             + "where idcliente='" + idcliente + "'";
 
     try {
@@ -805,19 +841,6 @@ private void txtdniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtd
         evt.setKeyChar((char) KeyEvent.VK_CLEAR);
     }
 }//GEN-LAST:event_txtdniKeyTyped
-
-private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
-    int k = (int) evt.getKeyChar();
-    if (k == 8) {
-        return;
-    }
-    if (k == 10) {
-        //transfiere el foco si presionas enter
-        txttelefono.transferFocus();
-    } else if (!Character.isDigit(k)) {
-        evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-    }
-}//GEN-LAST:event_txttelefonoKeyTyped
 
 private void txtnombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyTyped
     int k = (int) evt.getKeyChar();
@@ -937,19 +960,6 @@ private void txtbarriocomercial1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIR
     }
 }//GEN-LAST:event_txtbarriocomercial1KeyTyped
 
-private void txttelefono1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefono1KeyTyped
-    int k = (int) evt.getKeyChar();
-    if (k == 8) {
-        return;
-    }
-    if (k == 10) {
-        //transfiere el foco si presionas enter
-        txttelefono1.transferFocus();
-    } else if (!Character.isDigit(k) || txtdni.getText().length() > 7) {
-        evt.setKeyChar((char) KeyEvent.VK_CLEAR);
-    }
-}//GEN-LAST:event_txttelefono1KeyTyped
-
 private void combopernoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_combopernoKeyTyped
     int k = (int) evt.getKeyChar();
     if (k == 10) {
@@ -962,7 +972,7 @@ private void comborubro1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     int k = (int) evt.getKeyChar();
     if (k == 10) {
         //transfiere el foco si presionas enter
-        jbguardarcambios.requestFocus();
+        txtnumcreditos.requestFocus();
     }
 }//GEN-LAST:event_comborubro1KeyTyped
 
@@ -1023,6 +1033,32 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            txttelefono.transferFocus();
+        }
+
+    }//GEN-LAST:event_txttelefonoKeyTyped
+
+    private void txttelefono1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefono1KeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            txttelefono1.transferFocus();
+        }
+
+    }//GEN-LAST:event_txttelefono1KeyTyped
+
+    private void txtnumcreditosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnumcreditosKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (k == 10) {
+            //transfiere el foco si presionas enter
+            jbguardarcambios.requestFocus();
+        }
+    }//GEN-LAST:event_txtnumcreditosKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1086,6 +1122,7 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1124,6 +1161,7 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JTextField txtidcliente1;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnombre1;
+    private javax.swing.JTextField txtnumcreditos;
     private javax.swing.JTextField txttelefono;
     private javax.swing.JTextField txttelefono1;
     // End of variables declaration//GEN-END:variables
@@ -1198,6 +1236,7 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
                     txtdomiciliocomercial1.setText(rs.getString("domicilio_comercial"));
                     txtbarriocomercial1.setText(rs.getString("barrio_comercial"));
                     txttelefono1.setText(rs.getString("telefono"));
+                    txtnumcreditos.setText(rs.getString("num_creditos"));
                     if(rs.getString("perno").equals("SI")){
                         comboperno.setSelectedIndex(0);
                     }else{
@@ -1222,6 +1261,7 @@ private void jbeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {/
         txtbarriocomercial1.setText("");
         txttelefono1.setText("");
         comborubro1.setSelectedIndex(0);
+        txtnumcreditos.setText("");
     }
 
     private boolean existedni(String dni) {
