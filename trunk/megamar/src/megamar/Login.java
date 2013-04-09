@@ -144,7 +144,7 @@ public class Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
+                            .addComponent(txtpass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(combozonas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,9 +232,12 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
     }
     if (access == true) {
-        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil, sistema);
+        Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil, sistema,this);
         P.setVisible(true);
         this.setVisible(false);
+        txtusuario.setText("");
+        txtpass.setText("");
+        combozonas.setSelectedIndex(-1);
     }
 }//GEN-LAST:event_jbaceptarActionPerformed
 
