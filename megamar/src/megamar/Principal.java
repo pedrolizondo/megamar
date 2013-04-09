@@ -26,6 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import reportes.MetodosImpresion;
 
 
@@ -40,15 +41,17 @@ public class Principal extends javax.swing.JFrame {
     private String idusuario;
     private String perfil;
     private String tipo_sistema;
+    private JFrame login;
 
     /** Creates new form Principal */
-    public Principal(String nombrezona, int idz, String idu, String perf, String sistema) {
+    public Principal(String nombrezona, int idz, String idu, String perf, String sistema, JFrame jflogin) {
         initComponents();
         //codigo para maximizar la ventana principal al iniciar el sistema
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize((int) d.getWidth(), (int) d.getHeight());
         this.setTitle(this.getTitle() + " - " + nombrezona);
         this.labelzona.setText(nombrezona);
+        login = jflogin;
         //this.labelidzona.setVisible(false);
         //this.labelidzona.setText(Integer.toString(idzona));
         zona = nombrezona;
@@ -96,11 +99,12 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Megamar Financiera");
 
-        labelzona.setFont(new java.awt.Font("Calibri", 2, 48));
+        labelzona.setFont(new java.awt.Font("Calibri", 2, 48)); // NOI18N
         labelzona.setToolTipText("");
         labelzona.setEnabled(false);
 
@@ -247,6 +251,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem12);
 
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/world_24.png"))); // NOI18N
+        jMenuItem14.setText("Cambiar Zona");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem14);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -342,6 +355,11 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        this.dispose();
+        this.login.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +409,7 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
