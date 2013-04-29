@@ -43,6 +43,46 @@ public class Principal extends javax.swing.JFrame {
     private String tipo_sistema;
     private JFrame login;
 
+    public String getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(String idusuario) {
+        this.idusuario = idusuario;
+    }
+
+    public int getIdzona() {
+        return idzona;
+    }
+
+    public void setIdzona(int idzona) {
+        this.idzona = idzona;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getTipo_sistema() {
+        return tipo_sistema;
+    }
+
+    public void setTipo_sistema(String tipo_sistema) {
+        this.tipo_sistema = tipo_sistema;
+    }
+
+    public String getZona() {
+        return zona;
+    }
+
+    public void setZona(String zona) {
+        this.zona = zona;
+    }
+
     /** Creates new form Principal */
     public Principal(String nombrezona, int idz, String idu, String perf, String sistema, JFrame jflogin) {
         initComponents();
@@ -60,7 +100,7 @@ public class Principal extends javax.swing.JFrame {
         tipo_sistema = sistema;
         perfil = perf;
         if (!perfil.equals("ADMINISTRADOR")) {
-            jMenu3.setVisible(false);
+            jMenuItem7.setVisible(false);
             jMenuItem2.setVisible(false);
             jMenuItem4.setVisible(false);
             JMenu5.setVisible(false);
@@ -101,7 +141,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Megamar Financiera");
 
         labelzona.setFont(new java.awt.Font("Calibri", 2, 48)); // NOI18N
@@ -356,8 +396,10 @@ private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        this.dispose();
-        this.login.setVisible(true);
+        //this.dispose();
+        //this.login.setVisible(true);
+        CambiarZona C = new CambiarZona(this, true);
+        C.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     /**
