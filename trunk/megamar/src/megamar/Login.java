@@ -231,13 +231,13 @@ private void jbaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error al cargar los datos del Cliente", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    if (access == true) {
+    if (access == true) { 
         Principal P = new Principal(combozonas.getSelectedItem().toString(), combozonas.getSelectedIndex(), id_usuario, perfil, sistema,this);
         P.setVisible(true);
         this.setVisible(false);
         txtusuario.setText("");
         txtpass.setText("");
-        combozonas.setSelectedIndex(-1);
+        combozonas.setSelectedIndex(0);
     }
 }//GEN-LAST:event_jbaceptarActionPerformed
 
