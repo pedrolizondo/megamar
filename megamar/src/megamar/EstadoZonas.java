@@ -137,6 +137,7 @@ public class EstadoZonas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
         }
         
+        /*
         consulta = "SELECT count(*) as rows, sum(c.saldo) as saldo, sum(c.cuota) as cuota "
                 + "FROM credito c, cliente x, zona z "
                 + "WHERE c.estado='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona and x.idzona = '" + idzona + "'";
@@ -154,6 +155,7 @@ public class EstadoZonas extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al actualizar los datos del estado de la Zona.", JOptionPane.ERROR_MESSAGE);
         }
+        */
                 
         try {
             new MetodosImpresion().ReporteEstadoZona(zona, estado_zona, total_cobrar, num_recibos);
@@ -231,7 +233,17 @@ public class EstadoZonas extends javax.swing.JDialog {
     }
     
     private void cargartabla() {
-        String consulta ="SELECT distinct(x.idzona), z.descripcion as 'Zona', count(c.idcredito) as 'Cant. de Recibos', sum(c.compra_total) as 'Estado',sum(c.cuota) as 'Total a Cobrar' "
+        /*String consulta ="SELECT distinct(x.idzona), z.descripcion as 'Zona', count(c.idcredito) as 'Cant. de Recibos', sum(c.compra_total) as 'Estado',sum(c.cuota) as 'Total a Cobrar' "
+                + "FROM credito c, cliente x, zona z "
+                + "WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona "
+                + "GROUP BY x.idzona";
+        */
+        String consulta ="SELECT distinct(x.idzona), z.descripcion as 'Zona', count(c.idcredito) as 'Cant. de Recibos', "
+                + "sum(c.compra_total) as 'Estado', sum( "
+                + "(CASE "
+                +   "WHEN c.saldo >= c.cuota THEN c.cuota "
+                +   "WHEN c.saldo < c.cuota THEN c.saldo "
+                +   "END)) as 'Total a Cobrar' "
                 + "FROM credito c, cliente x, zona z "
                 + "WHERE c.estado ='DEBE' and c.idcliente=x.idcliente and z.idzona=x.idzona "
                 + "GROUP BY x.idzona";
