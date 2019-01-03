@@ -22,12 +22,14 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     /** Creates new form login */
     /*
-     * sistema -> sirve para diferenciar los planes nuevos de los viejos
+     * sistema -> sirve para diferenciar los planes de la tabla plan
      * SISTEM_NUEVO: megamar.jar
      * SISTEMA_VIEJO: megamar2.jar
+     * SISTEMA_2018: megamar3.jar
      */
     //private String sistema = "SISTEMA_NUEVO";       //megamar.jar
-    private String sistema = "SISTEMA_VIEJO";     //megamar2.jar
+    //private String sistema = "SISTEMA_VIEJO";     //megamar2.jar
+    private String sistema = "SISTEMA_2018";     //megamar3.jar
     
     public Login() {
         initComponents();
